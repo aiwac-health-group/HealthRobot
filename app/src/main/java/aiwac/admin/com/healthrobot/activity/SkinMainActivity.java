@@ -27,9 +27,10 @@ public class SkinMainActivity extends BaseActivity implements ViewDialogFragment
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_skin_main);
 
         setView();
+        addFragment(new HomeFragment());
     }
 
     public void selected(){
@@ -75,7 +76,7 @@ public class SkinMainActivity extends BaseActivity implements ViewDialogFragment
         if (keyCode == KeyEvent.KEYCODE_BACK){
             // 与上次点击返回时刻作差
             if ((System.currentTimeMillis() - mExitTime) > 2000){
-                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "click again to go back", Toast.LENGTH_SHORT).show();
                 mExitTime = System.currentTimeMillis();
             }else{
                 System.exit(0);
@@ -119,8 +120,8 @@ public class SkinMainActivity extends BaseActivity implements ViewDialogFragment
                 //权限被用户拒绝
                 //当拒绝了授权后，为提升用户体验，可以以弹窗的方式引导用户到设置中去进行设置
                 new AlertDialog.Builder(SkinMainActivity.this)
-                        .setMessage("需要开启权限才能使用此功能")
-                        .setPositiveButton("设置", new DialogInterface.OnClickListener() {
+                        .setMessage("permissions are needed to use this function")
+                        .setPositiveButton("go to set", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //引导用户到设置中去进行设置
@@ -131,7 +132,7 @@ public class SkinMainActivity extends BaseActivity implements ViewDialogFragment
 
                             }
                         })
-                        .setNegativeButton("取消", null)
+                        .setNegativeButton("cancel", null)
                         .create()
                         .show();
             }

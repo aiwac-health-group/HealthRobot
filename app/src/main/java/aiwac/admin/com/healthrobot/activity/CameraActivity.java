@@ -44,6 +44,7 @@ import java.io.IOException;
 //import static android.aiwac.com.common.constant.CommonConstant.UPDATE_FACE_RECT;
 
 public class CameraActivity extends FragmentActivity implements CameraHintDialogFragment.Callback{
+    private static final String TAG = "CameraActivity";
     //-------------------------------------------------------
     //触觉感知
     //人脸采集
@@ -104,7 +105,8 @@ public class CameraActivity extends FragmentActivity implements CameraHintDialog
                     break;
                 case TIME_TO_CAPTURE:
                     if(!hasFace){
-                        Toast.makeText(AiwacApplication.getContext(),"未检测出人脸",Toast.LENGTH_SHORT).show();
+                        //Log.d(LOG_TAG, "handleMessage: "+AiwacApplication.getContext());
+                        Toast.makeText(CameraActivity.this,"未检测出人脸",Toast.LENGTH_SHORT).show();
                         break;
                     }
                     if(isCapture){

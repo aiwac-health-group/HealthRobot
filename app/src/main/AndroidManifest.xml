@@ -3,6 +3,12 @@
     package="aiwac.admin.com.healthrobot">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--skin-->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--skin-->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,6 +22,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--skin activities-->
+        <activity android:name=".activity.BeautyResultActivity" />
+        <activity android:name=".activity.BaseActivity" />
+        <activity android:name=".activity.CameraActivity" />
+        <activity android:name=".activity.TestHelpActivity" />
+        <activity android:name=".activity.DetectProcessActivity"/>
+        <activity android:name=".activity.SkinMainActivity"/>
     </application>
 
 </manifest>
