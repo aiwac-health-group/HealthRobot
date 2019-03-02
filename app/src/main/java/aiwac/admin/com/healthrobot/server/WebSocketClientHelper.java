@@ -1,14 +1,10 @@
 package aiwac.admin.com.healthrobot.server;
 
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.support.v4.app.NotificationCompat;
 
+import org.greenrobot.eventbus.EventBus;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
 import org.java_websocket.drafts.Draft_6455;
@@ -20,12 +16,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import aiwac.admin.com.healthrobot.R;
 import aiwac.admin.com.healthrobot.bean.MessageInfo;
 import aiwac.admin.com.healthrobot.bean.TimerEntity;
 import aiwac.admin.com.healthrobot.common.Constant;
 import aiwac.admin.com.healthrobot.db.TimerSqliteHelper;
-import aiwac.admin.com.healthrobot.db.UserData;
 import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
 import aiwac.admin.com.healthrobot.utils.JsonUtil;
 import aiwac.admin.com.healthrobot.utils.LogUtil;
@@ -40,8 +34,6 @@ public class WebSocketClientHelper extends WebSocketClient {
     private Context context;
 
     private List<MessageInfo> messageInfos = Collections.synchronizedList(new ArrayList<MessageInfo>());
-
-    private MessageInfo monitorMessage; //监控模式下的消息
 
 
     public Context getContext() {
@@ -100,6 +92,11 @@ public class WebSocketClientHelper extends WebSocketClient {
 
         try{
             String businessType = JsonUtil.parseBusinessType(json);
+            if(businessType.equals(Constant.WEBSOCKET_VOICECHAT_BUSSINESSTYPE_CODE)){  //在线问诊房间号
+                EventBus.getDefault().post(json);
+            }else if(businessType.equals(Constant.WEBSOCKET_REGISTERRESULT_BUSSINESSTYPE_CODE)) { //语音挂号结果
+
+            }
 
         }catch (Exception e){
             e.printStackTrace();
@@ -111,7 +108,7 @@ public class WebSocketClientHelper extends WebSocketClient {
 
     //判断是否重新安装，是否需要同步
     private void checkSyncTimer(){
-        SharedPreferences pref = context.getSharedPreferences(Constant.DB_USER_TABLENAME, context.MODE_PRIVATE);
+        SharedPreferences pref = context.getSharedPreferences(Constant.DB_USER_TABLENAME, Context.MODE_PRIVATE);
         String timerSync = pref.getString(Constant.USER_DATA_FIELD_TIMER_SYNC, "");
         if(!StringUtil.isValidate(timerSync)) { // 新的线程中发送同步请求
             ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
@@ -157,10 +154,6 @@ public class WebSocketClientHelper extends WebSocketClient {
 
     public List<MessageInfo> getMessageInfos(){
         return messageInfos;
-    }
-
-    public MessageInfo getMonitorMessage(){
-        return monitorMessage;
     }
 
 

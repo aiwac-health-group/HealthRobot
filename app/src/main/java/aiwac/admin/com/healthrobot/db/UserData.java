@@ -16,7 +16,6 @@ public class UserData {
     private final static String LOG_TAG = "UserData";
     private final static UserData userData = new UserData();
     private boolean isNetwork = false; //用户是否联网标志
-    private boolean isMonitor = false; //用户是否开启监控模式标记
     private  Map<String, String> map;
 
 
@@ -59,11 +58,5 @@ public class UserData {
         isNetwork = network;
     }
 
-    public boolean isMonitor() {
-        return isMonitor;
-    }
-    public void setMonitor(boolean monitor) {
-        isMonitor = monitor;
-    }
 
 }

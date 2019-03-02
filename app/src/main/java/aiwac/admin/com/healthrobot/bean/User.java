@@ -4,16 +4,53 @@ package aiwac.admin.com.healthrobot.bean;
  * Created by luwang on 2017/10/17.
  */
 
-public class User {
+public class User extends BaseEntity{
 
     private Integer id;
     private String name;
     private String number;
     private String password;
+    private String sex;
+    private String birthday;
+    private String wechat;
+    private String place ;//plac = area+address
 
+    public String getSex() {
+        return sex;
+    }
 
-    public User(){
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
 
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getWechat() {
+        return wechat;
+    }
+
+    public void setWechat(String wechat) {
+        this.wechat = wechat;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public User(){}
+
+    public User(String number){
+        this.number = number;
     }
 
     public User(String name, String number){

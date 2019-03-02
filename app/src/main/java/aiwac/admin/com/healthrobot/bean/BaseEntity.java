@@ -1,14 +1,14 @@
 package aiwac.admin.com.healthrobot.bean;
 
 /**     基本的类，实现实体类共有的功能，如序列化等
- * Created by luwang on 2017/10/18.
+ * Created by zyt on 2017/10/18.
  */
 
 public class BaseEntity {
-    public String clientId;    //客户端id
+    public String clientId = "15844096407";    //客户端id
     public String businessType;    //事物类型，如：数据采集，数据查询等
     public String uuid;    //一次事务
-    public String clientType;  // 客户端类型 1表示机器人  2 表示终端
+    public String clientType = "1";  // 客户端类型 1表示手机  2 表示后台
     public String time;    //采集的时间
 
     public String getClientId() {

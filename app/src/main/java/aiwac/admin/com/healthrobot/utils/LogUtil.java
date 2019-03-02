@@ -37,7 +37,7 @@ public class LogUtil {
     public static boolean isAndroid = true;
     public static final String ROOT = Environment.getExternalStorageDirectory().getPath();// SD卡中的根目录
     public static final String PATH = "/vise/log";
-    public static String TAG = "Bluetooth"; // 自定义Tag的前缀，可以是作者名
+    public static String TAG = "LogUtil"; // 自定义Tag的前缀，可以是作者名
 
     public static boolean DEBUG = true;
     // 容许打印日志的类型，默认是true，设置为false则不打印
@@ -128,8 +128,9 @@ public class LogUtil {
     }
 
     public static void v(String content) {
-        if (!allowV)
+        if (!allowV) {
             return;
+        }
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
 
@@ -137,8 +138,9 @@ public class LogUtil {
     }
 
     public static void v(String content, boolean isSaveLog) {
-        if (!allowV)
+        if (!allowV) {
             return;
+        }
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
 
@@ -175,8 +177,9 @@ public class LogUtil {
     }
 
     public static void d(String content) {
-        if (!allowD)
+        if (!allowD) {
             return;
+        }
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
 
@@ -184,8 +187,9 @@ public class LogUtil {
     }
 
     public static void d(String content, boolean isSaveLog) {
-        if (!allowD)
+        if (!allowD) {
             return;
+        }
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
 
@@ -221,8 +225,9 @@ public class LogUtil {
     }
 
     public static void i(String content) {
-        if (!allowI)
+        if (!allowI) {
             return;
+        }
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
 
@@ -230,8 +235,9 @@ public class LogUtil {
     }
 
     public static void i(String content, boolean isSaveLog) {
-        if (!allowI)
+        if (!allowI) {
             return;
+        }
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
 
@@ -267,8 +273,9 @@ public class LogUtil {
     }
 
     public static void w(String content) {
-        if (!allowW)
+        if (!allowW) {
             return;
+        }
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
 
@@ -276,8 +283,9 @@ public class LogUtil {
     }
 
     public static void w(String content, boolean isSaveLog) {
-        if (!allowW)
+        if (!allowW) {
             return;
+        }
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
 
@@ -314,16 +322,18 @@ public class LogUtil {
     }
 
     public static void e(String content) {
-        if (!allowE)
+        if (!allowE) {
             return;
+        }
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
         loge(tag, content, null);
     }
 
     public static void e(String content, boolean isSaveLog) {
-        if (!allowE)
+        if (!allowE) {
             return;
+        }
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
 
@@ -358,16 +368,18 @@ public class LogUtil {
     }
 
     public static void e(String content, Throwable tr) {
-        if (!allowE)
+        if (!allowE) {
             return;
+        }
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
         Log.e(tag, content, tr);
     }
 
     public static void e(String uTag, String content, Throwable tr) {
-        if (!allowE)
+        if (!allowE) {
             return;
+        }
         TAG = uTag;
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
@@ -375,8 +387,9 @@ public class LogUtil {
     }
 
     public static void e(String content, Throwable tr, boolean isSaveLog) {
-        if (!allowE)
+        if (!allowE) {
             return;
+        }
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
         Log.e(tag, content, tr);
@@ -386,8 +399,9 @@ public class LogUtil {
     }
 
     public static void e(Throwable tr, boolean isSaveLog) {
-        if (!allowE)
+        if (!allowE) {
             return;
+        }
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
 
@@ -399,8 +413,9 @@ public class LogUtil {
     }
 
     public static void e(Throwable tr) {
-        if (!allowE)
+        if (!allowE) {
             return;
+        }
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
 
@@ -409,8 +424,9 @@ public class LogUtil {
     }
 
     public static void e(String uTag, String content, Throwable tr, boolean isSaveLog) {
-        if (!allowE)
+        if (!allowE) {
             return;
+        }
         TAG = uTag;
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
@@ -423,16 +439,18 @@ public class LogUtil {
     }
 
     public static void wtf(String content) {
-        if (!allowWtf)
+        if (!allowWtf) {
             return;
+        }
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
         logwtf(tag, content);
     }
 
     public static void wtf(String content, Throwable tr) {
-        if (!allowWtf)
+        if (!allowWtf) {
             return;
+        }
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
         logwtf(tag, content, tr);
@@ -464,8 +482,9 @@ public class LogUtil {
             dateFormat.applyPattern("[yyyy-MM-dd HH:mm:ss]");
             String time = dateFormat.format(date);
             File file = new File(path);
-            if (!file.exists())
+            if (!file.exists()) {
                 createDipPath(path);
+            }
             BufferedWriter out = null;
             try {
                 out = new BufferedWriter(new OutputStreamWriter(
