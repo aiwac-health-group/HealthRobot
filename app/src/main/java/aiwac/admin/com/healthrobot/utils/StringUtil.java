@@ -20,8 +20,9 @@ public class StringUtil {
      * @return  true ：有效， false无效
      */
     public static boolean isValidate(String str){
-        if(str != null && !str.trim().equals(""))
+        if(str != null && !str.trim().equals("")) {
             return true;
+        }
         return false;
     }
 
@@ -106,38 +107,49 @@ public class StringUtil {
     }
 
     public static String getTimerStrategy(String activationMode){
-        if(activationMode.equals("0000000"))
+        if(activationMode.equals("0000000")) {
             return "只响一次";
+        }
 
-        if(activationMode.equals("1111111"))
+        if(activationMode.equals("1111111")) {
             return "每天";
+        }
 
-        if(activationMode.equals("1100000"))
+        if(activationMode.equals("1100000")) {
             return "周末";
+        }
 
-        if(activationMode.equals("0011111"))
+        if(activationMode.equals("0011111")) {
             return "周一到周五";
+        }
 
-        if(activationMode.equals("0000001"))
+        if(activationMode.equals("0000001")) {
             return "周一";
+        }
 
-        if(activationMode.equals("0000010"))
+        if(activationMode.equals("0000010")) {
             return "周二";
+        }
 
-        if(activationMode.equals("0000100"))
+        if(activationMode.equals("0000100")) {
             return "周三";
+        }
 
-        if(activationMode.equals("0001000"))
+        if(activationMode.equals("0001000")) {
             return "周四";
+        }
 
-        if(activationMode.equals("0010000"))
+        if(activationMode.equals("0010000")) {
             return "周五";
+        }
 
-        if(activationMode.equals("0100000"))
+        if(activationMode.equals("0100000")) {
             return "周六";
+        }
 
-        if(activationMode.equals("1000000"))
+        if(activationMode.equals("1000000")) {
             return "周日";
+        }
 
         return "只响一次";
     }

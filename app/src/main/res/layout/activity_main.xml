@@ -15,4 +15,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/text"
         android:text="Hello World!" />
+
+    <Button
+        android:id="@+id/btn_voicechat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="133dp"
+        android:text="在线问诊" />
 </RelativeLayout>

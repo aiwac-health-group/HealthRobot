@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import aiwac.admin.com.healthrobot.bean.BaseEntity;
 import aiwac.admin.com.healthrobot.bean.MessageInfo;
+import aiwac.admin.com.healthrobot.bean.RegisterInfo;
 import aiwac.admin.com.healthrobot.bean.TimerEntity;
 import aiwac.admin.com.healthrobot.bean.User;
 import aiwac.admin.com.healthrobot.bean.WifiInfo;
@@ -113,6 +115,53 @@ public class JsonUtil {
         }
     }
 
+    //解析json result等
+    public static boolean parseResult(String jsonStr){
+        try{
+            JSONObject root = new JSONObject(jsonStr);
+            String errorCode = root.getString(Constant.WEBSOCKET_TIMER_ERRORCODE);
+            return Constant.MESSAGE_ERRORCODE_200.equals(errorCode);
+        }catch (Exception e){
+            e.printStackTrace();
+            LogUtil.d(Constant.JSON_PARSE_EXCEPTION);
+            throw new JsonException(Constant.JSON_PARSE_EXCEPTION, e);
+        }
+    }
+
+    /**
+     *
+     * @param jsonStr  json串
+     * @param key
+     * @return
+     */
+    public static String parseByKey(String jsonStr, String key){
+        try{
+            JSONObject root = new JSONObject(jsonStr);
+            return root.getString(key);
+        }catch (Exception e){
+            e.printStackTrace();
+            LogUtil.d(Constant.JSON_PARSE_EXCEPTION);
+            throw new JsonException(Constant.JSON_PARSE_EXCEPTION, e);
+        }
+    }
+
+    //将BaseEntity对象转换成json字符串
+    public static String baseEntity2Json(BaseEntity baseEntity){
+        JSONObject root = new JSONObject();
+        try{
+            root.put(Constant.WEBSOCKET_MESSAGE_CLIENTID, baseEntity.getClientId());
+            root.put(Constant.WEBSOCKET_MESSAGE_BUSSINESSTYPE, baseEntity.getBusinessType());
+            root.put(Constant.WEBSOCKET_MESSAGE_UUID, UUID.randomUUID().toString());
+            root.put(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE, baseEntity.getClientType());
+            root.put(Constant.WEBSOCKET_MESSAGE_TIME, System.currentTimeMillis());
+            LogUtil.d(Constant.JSON_GENERATE_SUCCESS + root.toString());
+            return root.toString();
+        }catch (Exception e){
+            e.printStackTrace();
+            LogUtil.d(Constant.JSON_GENERATE_EXCEPTION);
+            throw new JsonException(Constant.JSON_GENERATE_EXCEPTION, e);
+        }
+    }
 
     //将timerEntity对象转换成json字符串
     public static String timerEntity2Json(TimerEntity timerEntity){
@@ -324,19 +373,6 @@ public class JsonUtil {
     }
 
 
-    public static String parseCourseId(String jsonStr){
-        try{
-            JSONObject root = new JSONObject(jsonStr);
-            return root.getString("courseID");
-        }catch (Exception e) {
-            e.printStackTrace();
-            LogUtil.d( Constant.JSON_GENERATE_EXCEPTION);
-            throw new JsonException(Constant.JSON_GENERATE_EXCEPTION, e);
-        }
-    }
-
-
-
 
     public static String setBussinessType(String bussinessType){
         JSONObject root = new JSONObject();
@@ -368,7 +404,51 @@ public class JsonUtil {
     }
 
 
+    public static String userToJson(User user){
+        JSONObject root = new JSONObject();
+        try{
+            root.put(Constant.WEBSOCKET_MESSAGE_CLIENTID, user.getClientId());
+            root.put(Constant.WEBSOCKET_MESSAGE_BUSSINESSTYPE, user.getBusinessType());
+            root.put(Constant.WEBSOCKET_MESSAGE_UUID, user.getUuid());
+            root.put(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE, user.getClientType());
+            root.put(Constant.WEBSOCKET_MESSAGE_TIME, System.currentTimeMillis());
+            root.put(Constant.WEBSOCKET_USER_NAME, user.getName());
+            root.put(Constant.WEBSOCKET_USER_SEX, user.getSex());
+            root.put(Constant.WEBSOCKET_USER_BIRTHDAY, user.getBirthday());
+            root.put(Constant.WEBSOCKET_USER_WECHAT, user.getWechat());
+            root.put(Constant.WEBSOCKET_USER_ADDRESS, user.getPlace());
 
+            LogUtil.d(Constant.JSON_GENERATE_SUCCESS + root.toString());
+            return root.toString();
+        }catch (Exception e){
+            e.printStackTrace();
+            LogUtil.d(Constant.JSON_GENERATE_EXCEPTION);
+            throw new JsonException(Constant.JSON_GENERATE_EXCEPTION, e);
+        }
+    }
+
+
+    public static String registerInfoToJson(RegisterInfo registerInfo){
+        JSONObject root = new JSONObject();
+        try{
+            root.put(Constant.WEBSOCKET_MESSAGE_CLIENTID, registerInfo.getClientId());
+            root.put(Constant.WEBSOCKET_MESSAGE_BUSSINESSTYPE, registerInfo.getBusinessType());
+            root.put(Constant.WEBSOCKET_MESSAGE_UUID, UUID.randomUUID());
+            root.put(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE, registerInfo.getClientType());
+            root.put(Constant.WEBSOCKET_MESSAGE_TIME, System.currentTimeMillis());
+            root.put(Constant.WEBSOCKET_REGISTERINFO_PROVINCE, registerInfo.getProvince());
+            root.put(Constant.WEBSOCKET_REGISTERINFO_CITY, registerInfo.getCity());
+            root.put(Constant.WEBSOCKET_REGISTERINFO_HOSPITAL, registerInfo.getHospital());
+            root.put(Constant.WEBSOCKET_REGISTERINFO_DEPARTMENT, registerInfo.getDepartment());
+
+            LogUtil.d(Constant.JSON_GENERATE_SUCCESS + root.toString());
+            return root.toString();
+        }catch (Exception e){
+            e.printStackTrace();
+            LogUtil.d(Constant.JSON_GENERATE_EXCEPTION);
+            throw new JsonException(Constant.JSON_GENERATE_EXCEPTION, e);
+        }
+    }
 
 
 }

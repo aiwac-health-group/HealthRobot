@@ -5,9 +5,11 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,7 @@ import aiwac.admin.com.healthrobot.common.Constant;
 import aiwac.admin.com.healthrobot.exception.WifiException;
 
 /**     Wifi的工具类，用于判断Wifi是否开启以及wifi的强弱等
- * Created by luwang on 2017/11/8.
+ * Created by zyt on 2017/11/8.
  */
 
 public class WifiUtil {
@@ -76,25 +78,7 @@ public class WifiUtil {
     }
 
 
-    /*
 
-     // Wifi的连接速度及信号强度
-    public int obtainWifiInfo(Context context) {
-        int strength = 0;
-        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE); // 取得WifiManager对象
-        WifiInfo info = wifiManager.getConnectionInfo(); // 取得WifiInfo对象
-        if (info.getBSSID() != null) {
-            strength = WifiManager.calculateSignalLevel(info.getRssi(), 5); // 链接信号强度，5为获取的信号强度值在5以内
-            int speed = info.getLinkSpeed(); // 链接速度
-            String units = WifiInfo.LINK_SPEED_UNITS; // 链接速度单位
-            String ssid = info.getSSID(); // Wifi源名称
-            LogUtil.d(ssid + "wifi连接 : " + strength + speed + units);
-        }else{
-            LogUtil.d(Constant.WIFI_CLOSE);
-        }
-        return strength; // return info.toString();
-    }
-    */
 
     public static int obtainWifiStrong(Context context){
         try{
@@ -158,5 +142,103 @@ public class WifiUtil {
             LogUtil.d(Constant.WIFI_GET_CONNECTIVITYMANAGER_EXCEPTION);
             throw new WifiException(Constant.WIFI_GET_CONNECTIVITYMANAGER_EXCEPTION, e);
         }
+    }
+
+    private List<WifiConfiguration> wificonfigList = new ArrayList<WifiConfiguration>();
+    private WifiManager mWifiManager;//管理wifi
+    private Context context;
+
+    public WifiUtil(Context context){
+        this.context = context;
+        mWifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+
+    }
+
+
+    public boolean isOpenWifi(){
+        return mWifiManager.isWifiEnabled();
+    }
+
+    // 打开WIFI
+    public void openWifi() {
+        if (!mWifiManager.isWifiEnabled()) {
+            mWifiManager.setWifiEnabled(true);
+        }else if (mWifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLING) {
+            LogUtil.d("Wifi正在开启");
+
+        }else{
+            LogUtil.d("Wifi已经开启");
+
+        }
+    }
+
+    // 关闭WIFI
+    public void closeWifi() {
+        if (mWifiManager.isWifiEnabled()) {
+            mWifiManager.setWifiEnabled(false);
+        }else if(mWifiManager.getWifiState() == WifiManager.WIFI_STATE_DISABLED){
+            LogUtil.d("Wifi已经关闭");
+        }else{
+            LogUtil.d("请重新关闭");
+        }
+    }
+
+    /* 得到配置信息 */
+    public void getConfigurations() {
+        wificonfigList = mWifiManager.getConfiguredNetworks();
+    }
+
+    /**
+     * 该链接是否已经配置过
+     * @param SSID
+     * @return
+     */
+    public int isConfigured(String SSID) {
+        getConfigurations();
+        for (int i = 0; i < wificonfigList.size(); i++) {
+            if (wificonfigList.get(i).SSID.equals(SSID)) {
+                return wificonfigList.get(i).networkId;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 添加wifi配置
+     * @param ssid
+     * @param pwd
+     * @return
+     */
+    public int addWifiConfig(String ssid,String pwd){
+        int wifiId = -1;
+        WifiConfiguration wifiCong = new WifiConfiguration();
+        wifiCong.SSID = "\""+ssid+"\"";
+        wifiCong.preSharedKey = "\""+pwd+"\"";
+        wifiCong.hiddenSSID = false;
+        wifiCong.status = WifiConfiguration.Status.ENABLED;
+        wifiId = mWifiManager.addNetwork(wifiCong);
+        return wifiId;
+    }
+
+
+
+    public void connect(String ssid,String pass){
+
+        int wifiId = isConfigured("\""+ssid+"\"");
+        System.out.println("wifiId:"+wifiId);
+        if(wifiId != -1){
+            System.out.println("@@");
+            //mWifiManager.enableNetwork(wifiId, true);
+            mWifiManager.removeNetwork(wifiId);
+        }
+        int netWorkId = addWifiConfig(ssid, pass);//添加该网络的配置
+        System.out.println("netWorkId:"+netWorkId);
+        mWifiManager.enableNetwork(netWorkId, true);
+
+    }
+
+    public void delete(String ssid){
+        int wifiId = isConfigured("\""+ssid+"\"");
+        mWifiManager.removeNetwork(wifiId);
     }
 }

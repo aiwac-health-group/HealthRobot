@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+
+    <color name="colorPrimary">#4db8c4</color>
+    <color name="colorPrimaryDark">#328e9c</color>
+    <color name="colorAccent">#4db8c4</color>
+    <color name="colorWindowBackground">#FFFFFF</color>
+
+    <color name="colorText">#444444</color>
+
+    <!-- 描边颜色 -->
+    <color name="border_clo">#ccc</color>
+    <color name="text_clo">#333</color>
+    <color name="white">#fff</color>
+    <color name="blue">#419DE4</color>
+
+    <color name="theme">#4db8c4</color>
+    <color name="colorLightBlue">#dbf1f3</color>
+    <color name="colorBackivory">#f1f7f8</color>
 </resources>

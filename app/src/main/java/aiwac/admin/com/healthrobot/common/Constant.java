@@ -70,6 +70,8 @@ public class Constant {
     public final static String WEBSOCKET_MESSAGE_ERRORDESC = "errorDesc";
     public final static String WEBSOCKET_MESSAGE_DESCRIPTION = "description";
 
+    public final static String MESSAGE_ERRORCODE_200 = "200";
+    public final static String MESSAGE_ERRORCODE_201 = "201";
 
     public final static String WEBSOCKET_TIMER_OPERATIONTYPE = "operationType";
     public final static String WEBSOCKET_TIMER_ATTENTIONTYPE = "attentionType";
@@ -80,10 +82,30 @@ public class Constant {
     public final static String WEBSOCKET_BUSINESS_DATA = "data";
     public final static String WEBSOCKET_MESSAGE_TIME = "time";
 
+
+    public final static String WEBSOCKET_USER_NAME = "userName";
+    public final static String WEBSOCKET_USER_SEX = "sex";
+    public final static String WEBSOCKET_USER_BIRTHDAY = "birthday";
+    public final static String WEBSOCKET_USER_ADDRESS = "address";
+    public final static String WEBSOCKET_USER_WECHAT = "wechat";
+
+
+    public final static String WEBSOCKET_REGISTERINFO_PROVINCE = "province";
+    public final static String WEBSOCKET_REGISTERINFO_CITY = "city";
+    public final static String WEBSOCKET_REGISTERINFO_HOSPITAL = "hospital";
+    public final static String WEBSOCKET_REGISTERINFO_DEPARTMENT = "department";
+
+
+
     public final static String WEBSOCKET_MESSAGE_CLIENTTYPE_NUMBER = "2";
     public final static String WEBSOCKET_MESSAGE_BUSSINESSTYPE_CODE = "0005";
+    public final static String WEBSOCKET_PERSONAL_INFOMATION_BUSSINESSTYPE_CODE = "0006";
     public final static String WEBSOCKET_TIMER_BUSSINESSTYPE_CODE = "0008";
+    public final static String WEBSOCKET_VOICECHAT_BUSSINESSTYPE_CODE = "0017";
+    public final static String WEBSOCKET_VOICEREGISTER_BUSSINESSTYPE_CODE = "0019";//挂号医院信息
+    public final static String WEBSOCKET_REGISTERRESULT_BUSSINESSTYPE_CODE = "0020";//挂号结果
     public final static String WEBSOCKET_SYNC_REMINDER_BUSSINESSTYPE_CODE = "0018";
+
 
     public final static String WEBSOCKET_USER_IDENTITY_EXCEPTION = "没有用户异常";
     public final static String WEBSOCKET_CONNECTION_EXCEPTION = "WebSocket连接异常";
@@ -133,6 +155,15 @@ public class Constant {
     public final static String DB_NUMBER_EXCEPTION = "手机号码已经被注册";
 
     //wifi相关常量
+    public final static String AIWAC_CONFIG_ING = "正在配置AIWAC机器人";
+    public final static String AIWAC_CONFIG_SUCCESS = "配置AIWAC机器人成功";
+    public final static String AIWAC_CONFIG_EXCEPTION = "配置AIWAC机器人异常";
+    public final static String AIWAC_CONFIG_FAILURE= "配置AIWAC机器人失败";
+    public final static String AIWAC_CONFIG_PASSWORD = "请输入wifi密码";
+    public final static String AIWAC_CONFIG_PASSWORD_ERROR = "wifi密码不得少于8位";
+    public final static String AIWAC_CONFIG_SELECT = "请选择AIWAC机器人连接的Wifi";
+    public final static String AIWAC_CONFIG_PASSWORD_FAILURE = "Wifi密码错误或无权访问Wifi，请重新配置";
+
     public final static String WIFI_CLOSE = "Wifi没有打开,请打开Wifi";
     public final static String WIFI_NO_CONNECTABLE = "附近没有可用Wifi，请到有wifi环境下重试";
     public final static String WIFI_CONNECTABLE = "有可用Wifi";
@@ -167,6 +198,7 @@ public class Constant {
 
     //和activity相关常量
     public final static String ACTIVITY_SKIP= "页面跳转";
+    public final static String ACTIVITY_ERROR = "Error";
 
     //编码相关的
     public final static String CODE_ENCODE_EXCEPTION = "编码异常";
@@ -206,11 +238,39 @@ public class Constant {
     public final static String JSON_JSON = "json";  //json字符串的key
     public final static String JSON_OBJECT_USER_NAME = "user";  //json字符串操作对象user名
 
+
     //和默认设置相关的
     public final static String DEFAULT_POSITIVE_BUTTON = "确定";
     public final static String DEFAULT_NEGATIVE_BUTTON = "取消";
 
     //和用户有关
+    public final static String USER_INPUT_NUMBER_ERROR = "手机号码无效，请输入正确的号码";
+    public final static String USER_REGISTER = "该手机号码已被注册";
+    public final static String USER_REGISTING = "用户正在注册";
+    public final static String USER_CHECKCODE_MESSAGE_KEY= "checkcode";
+    public final static int USER_REGISTER_CODE = 1;
+    public final static int USER_LOGIN_CODE = 2;
+    public final static int USER_GET_CHECKCODE = 0;
+    public final static int USER_MODIFY_PASSWORD = 10;
+    public final static int USER_MODIFY_PASSWORD_EXCEPTION = 101;
+    public final static int USER_GET_CHECKCODE_EXCEPTION = 100;
+    public final static String USER_GET_CHECKCODE_EXCEPTION_MESSAGE = "网络信号不好，请重新获取验证码";
+    public final static int USER_POST_CHECKCODE_EXCEPTION = 101;
+    public final static String USER_POST_CHECKCODE_EXCEPTION_MESSAGE = "网络信号不好，请重新注册/登录";
+    public final static int USER_JSON_EXCEPTION = 102;
+    public final static String USER_JSON_EXCEPTION_MESSAGE = "服务器繁忙，等下再试";
+    public final static int USER_CHECKCODE_ERROR_EXCEPTION = 103;
+    public final static String USER_CHECKCODE_ERROR_EXCEPTION_MESSAGE = "验证码输入错误";
+    public final static int USER_CHECKCODE_SUCCESS = 104;
+    public final static String USER_CHECKCODE_SUCCESS_MESSAGE = "验证码输入正确";
+    public final static String USER_UNKNOW_EXCEPTION = "未知错误";
+    public final static String USER_PASSWORD_MODIFY_EXCEPTION_MESSAGE = "服务器繁忙，密码修改失败，请重试";
+    public final static String USER_PASSWORD_MODIFY_SUCCESS_MESSAGE = "密码修改成功，请记住修改后的密码";
+    public final static String USER_IS_LOGIN  = "判断用户是否登录";
+    public final static int USER_CHECKCODE_COUNTDOWNINTERVAL = 1000; //没一秒更新一次
+    public final static int USER_CHECKCODE_MILLISINFUTURE = 60 * USER_CHECKCODE_COUNTDOWNINTERVAL; //要倒计时的总时间
+
+
     public final static String USER_MODIFY_PASSWORD_OPT  = "modifyPasswd";
     public final static String USER_LOGIN_PASSWORD_OPT  = "loginWithPasswd";
     public final static String USER_GET_CHECKCODE_OPT  = "getIdentifyCode";

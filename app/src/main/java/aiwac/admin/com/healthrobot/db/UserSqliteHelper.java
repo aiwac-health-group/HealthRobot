@@ -119,10 +119,11 @@ public class UserSqliteHelper implements SQLiteHelper<User> {
     private void close(SQLiteDatabase sdb, boolean flag){
         if(sdb != null && sdb.isOpen()) {
             sdb.close();
-            if (flag)
+            if (flag) {
                 Log.d(LOG_TAG, Constant.DB_CLOSE_WRITE_CONNECTION);
-            else
+            } else {
                 Log.d(LOG_TAG, Constant.DB_CLOSE_READ_CONNECTION);
+            }
 
         }
     }
