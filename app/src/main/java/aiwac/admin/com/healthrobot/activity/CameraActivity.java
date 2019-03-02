@@ -33,7 +33,7 @@ import aiwac.admin.com.healthrobot.R;
 import aiwac.admin.com.healthrobot.camera.CameraSize;
 import aiwac.admin.com.healthrobot.camera.FaceDetect;
 import aiwac.admin.com.healthrobot.camera.FaceView;
-import aiwac.admin.com.healthrobot.db.AiwacApplication;
+import aiwac.admin.com.healthrobot.HealthRobotApplication;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -105,17 +105,17 @@ public class CameraActivity extends FragmentActivity implements CameraHintDialog
                     break;
                 case TIME_TO_CAPTURE:
                     if(!hasFace){
-                        //Log.d(LOG_TAG, "handleMessage: "+AiwacApplication.getContext());
+                        //Log.d(LOG_TAG, "handleMessage: "+HealthRobotApplication.getContext());
                         Toast.makeText(CameraActivity.this,"未检测出人脸",Toast.LENGTH_SHORT).show();
                         break;
                     }
                     if(isCapture){
-                        Toast.makeText(AiwacApplication.getContext(),"距离合适，开始拍照",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HealthRobotApplication.getContext(),"距离合适，开始拍照",Toast.LENGTH_SHORT).show();
                         mHandler.removeCallbacks(task);//停止循环
                         //stopGoogleFaceDetect();//停止人脸检测
                         capture();
                     }else{
-                        //Toast.makeText(AiwacApplication.getContext(),"请离摄像头近一点",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(HealthRobotApplication.getContext(),"请离摄像头近一点",Toast.LENGTH_SHORT).show();
                     }
                     break;
             }
@@ -234,7 +234,7 @@ public class CameraActivity extends FragmentActivity implements CameraHintDialog
             }
         });
         mHandler=new mHandler();
-        faceDetect=new FaceDetect(AiwacApplication.getContext(),mHandler);//人脸检测
+        faceDetect=new FaceDetect(HealthRobotApplication.getContext(),mHandler);//人脸检测
         mHandler.sendEmptyMessageDelayed(CAMERA_HAS_STARTED_PREVIEW, 1500);//发送预览开启信号
         mHandler.postDelayed(task,1500);
 

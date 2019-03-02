@@ -28,7 +28,7 @@ import android.widget.ViewSwitcher.ViewFactory;
 import aiwac.admin.com.healthrobot.R;
 //import aiwac.admin.com.healthrobot.adapter.ContentAdapter;
 //import aiwac.admin.com.healthrobot.bean.ContentEntity;
-//import aiwac.admin.com.healthrobot.db.AiwacApplication;
+//import aiwac.admin.com.healthrobot.HealthRobotApplication;
 //import aiwac.admin.com.healthrobot.ui.LoadMoreScrollView;
 //import aiwac.admin.com.healthrobot.utils.JsonUtil;
 //import aiwac.admin.com.healthrobot.utils.ThreadPoolManager;
@@ -81,16 +81,7 @@ public class HomeFragment extends Fragment implements ViewFactory{
         initView(view);
         setEvent(view);
 
-//        //模拟登录
-//        ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
-//            @Override
-//            public void run() {
-//               String json=JsonUtil.Loginpassword2Json("15274627852","15274627852");
-//               Object[] response=httpClientHelper.loginWithPasswd(json);
-//               AiwacApplication.getInstance().setUid((Long) response[0]);
-//               AiwacApplication.getInstance().setToken((String)response[1]);
-//            }
-//        });
+
 
 
         //setHeight(listview, contentAdapter);
@@ -112,7 +103,7 @@ public class HomeFragment extends Fragment implements ViewFactory{
 //        //动态listview
 //        listview = view.findViewById(R.id.home_listview);
 //        getContent();
-//        contentAdapter = new ContentAdapter(AiwacApplication.getContext(), contentEntities);
+//        contentAdapter = new ContentAdapter(HealthRobotApplication.getContext(), contentEntities);
 //        listview.setAdapter(contentAdapter);
 //        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override

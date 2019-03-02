@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
-import aiwac.admin.com.healthrobot.db.AiwacApplication;
+import aiwac.admin.com.healthrobot.HealthRobotApplication;
 
 import org.tensorflow.Graph;
 import org.tensorflow.Session;
@@ -169,7 +169,7 @@ public class CommonAlexnetExtract {
 
     public static byte[] InputStream2ByteArray(String fileName) throws IOException {
 
-        InputStream in = AiwacApplication.getContext().getAssets().open(fileName);
+        InputStream in = HealthRobotApplication.getContext().getAssets().open(fileName);
         byte[] data = toByteArray(in);
         in.close();
 
