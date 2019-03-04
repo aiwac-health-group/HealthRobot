@@ -63,6 +63,7 @@ public class AlarmActivity extends AppCompatActivity {
                 Intent intent = new Intent(AlarmActivity.this, SkinMainActivity.class);
                 startActivity(intent);
                 Log.d(TAG, "onClick: 去测肤");
+                finish();
 
             }
         });

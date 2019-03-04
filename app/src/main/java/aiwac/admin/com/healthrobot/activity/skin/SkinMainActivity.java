@@ -17,7 +17,7 @@ import aiwac.admin.com.healthrobot.R;
 
 import java.util.List;
 
-public class SkinMainActivity extends BaseActivity implements ViewDialogFragment.Callback {
+public class SkinMainActivity extends BaseActivity implements HomeFragment.Callback {
 
     private View homeView, societyView, serviceView, personalView;
     private long mExitTime;

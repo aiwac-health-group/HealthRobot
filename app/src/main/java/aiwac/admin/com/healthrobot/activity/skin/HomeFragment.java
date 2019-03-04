@@ -1,5 +1,6 @@
 package aiwac.admin.com.healthrobot.activity.skin;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ViewSwitcher.ViewFactory;
 
+import aiwac.admin.com.healthrobot.MainActivity;
 import aiwac.admin.com.healthrobot.R;
 //import aiwac.admin.com.healthrobot.adapter.ContentAdapter;
 //import aiwac.admin.com.healthrobot.bean.ContentEntity;
@@ -39,25 +41,15 @@ public class HomeFragment extends Fragment implements ViewFactory{
     private int curPos;
     private LinearLayout linearLayout;
     private ImageView[] tips;
-//    private ContentAdapter contentAdapter;
-    private ListView listview;
-//    private LoadMoreScrollView scrollView;
-//    private List<ContentEntity> contentEntities = new ArrayList<>();
-    private LinearLayout testBtn;
-    private LinearLayout skinBtn;
 
-//    @SuppressLint("HandlerLeak")
-//    private Handler handler=new Handler(){
-//        public void handleMessage(Message msg){
-//            switch (msg.what){
-//                case UPDATE_LISTVIEW:
-//                    //contentEntities.clear();
-//                    contentEntities.addAll((List<ContentEntity>)msg.obj);
-//                    contentAdapter.notifyDataSetChanged();
-//                    break;
-//            }
-//        }
-//    };
+
+    private LinearLayout testBtn;
+
+    public interface Callback{
+        void onClick(int which);
+    }
+
+    private HomeFragment.Callback callback;
 
     private String LOG_TAG="HomeFragment";
 
@@ -71,11 +63,25 @@ public class HomeFragment extends Fragment implements ViewFactory{
         setEvent(view);
 
 
-
-
         //setHeight(listview, contentAdapter);
 
         return view;
+    }
+    //callBack，在SkinMainActivity 中实现，用以跳转到照相界面CameraActivity
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof HomeFragment.Callback){
+            callback = (HomeFragment.Callback) context;
+        } else {
+            throw new RuntimeException(context.toString() + " must implement Callback");
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        callback = null;
     }
     private void initView(View view){
 
@@ -87,99 +93,34 @@ public class HomeFragment extends Fragment implements ViewFactory{
         //设置banner
         setImageSwitcher();
 
-
-//
-//        //动态listview
-//        listview = view.findViewById(R.id.home_listview);
-//        getContent();
-//        contentAdapter = new ContentAdapter(HealthRobotApplication.getContext(), contentEntities);
-//        listview.setAdapter(contentAdapter);
-//        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Intent intent = new Intent();
-//                intent.putExtra("art_id",contentEntities.get(i).getContentId());
-//                intent.setClass(HomeFragment.this.getContext(), ActiveMsgContentActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        LoadMore(view);//下拉加载更多
-
     }
 
-//    private void getContent(){
-//        ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
-//            @Override
-//            public void run() {
-//                Map<String,String> map= new HashMap<>();
-//                map.put("pageNo",""+pageNo);//参数列表
-//                Message msg=Message.obtain();
-//                msg.obj=httpClientHelper.getContentEntitise(map);
-//                msg.what=UPDATE_LISTVIEW;
-//                handler.sendMessage(msg);
-//            }
-//        });
-//    }
 
-//    private void LoadMore(View view){
-//        //sv_child=view.findViewById(R.id.linearLayout1);
-//        //scrollview上拉加载
-//        scrollView=view.findViewById(R.id.scrollview);
-//        //scrollView.setFootView(sv_child);//设置scrollview尾布局
-//        scrollView.setListsner(new LoadMoreScrollView.RefreshListener() {
-//           /* @Override
-//            public void startRefresh() {
-//                //下拉刷新
-//            }*/
-//
-//            @Override
-//            public void loadMore() {
-//                //上拉加载
-//                pageNo++;
-//                getContent();
-//            }
-//
-//            @Override
-//            public void hintChange(String hint) {
-//
-//            }
-//
-//            /*@Override
-//            public void setWidthX(int x) {
-//
-//            }*/
-//        });
-//    }
-
+    /**
+     * 按下按钮，开始测肤
+     * @param view
+     */
     private void setEvent(View view){
-//        msgView = view.findViewById(R.id.home_msg);
-//        msgView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(HomeFragment.this.getContext(), SysMsgsActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+
 
         testBtn = view.findViewById(R.id.testbtn_home);
         testBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ViewDialogFragment viewDialogFragment = new ViewDialogFragment();
-                viewDialogFragment.show(getFragmentManager());
+//                ViewDialogFragment viewDialogFragment = new ViewDialogFragment();
+//                viewDialogFragment.show(getFragmentManager());
+                if (callback != null){
+                    callback.onClick(1);
+                }
+
+
+
             }
         });
         Configuration mConfiguration = this.getResources().getConfiguration(); //获取设置的配置信息
         int ori = mConfiguration.orientation; //获取屏幕方向
         if (ori == mConfiguration.ORIENTATION_LANDSCAPE) {
-//            //横屏
-//            skinBtn=view.findViewById(R.id.skin);
-//            skinBtn.setOnClickListener(new View.OnClickListener(){
-//                public void onClick(View view){
-//                    Intent intent=new Intent(getActivity(),BeautyResultActivity.class);
-//                    startActivity(intent);
-//                }
-//            });
+
         }
     }
     private void setImageSwitcher(){
