@@ -10,7 +10,13 @@
 
         android:text="test skin"
         />
+    <Button
+        android:id="@+id/test_alarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
+        android:text="test alarm"
+        />
 
     android:id="@+id/text"
     android:text="Hello World!" />
