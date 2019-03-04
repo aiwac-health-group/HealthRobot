@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--switch轨道样式-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#ffffff" />
+            <stroke
+                android:width="5dp"
+                android:color="#00000000" />
+            <corners android:radius="30dp" />
+        </shape>
+    </item>
+    <item android:state_checked="false">
+        <shape android:shape="rectangle">
+            <solid android:color="#E3E3E3" />
+            <stroke
+                android:width="5dp"
+                android:color="#00000000" />
+            <corners android:radius="30dp" />
+        </shape>
+    </item>
+</selector>

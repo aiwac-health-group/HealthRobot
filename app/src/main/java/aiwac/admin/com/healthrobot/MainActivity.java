@@ -8,33 +8,28 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CalendarView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import aiwac.admin.com.healthrobot.activity.AlarmActivity;
-import aiwac.admin.com.healthrobot.activity.SkinMainActivity;
+
+import aiwac.admin.com.healthrobot.activity.skin.AlarmActivity;
+import aiwac.admin.com.healthrobot.activity.skin.SkinMainActivity;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
 import java.util.Calendar;
 
-import aiwac.admin.com.healthrobot.activity.ViewDialogFragment;
 import aiwac.admin.com.healthrobot.activity.voicechat.WaitChatActivity;
 import aiwac.admin.com.healthrobot.bean.BaseEntity;
 import aiwac.admin.com.healthrobot.common.Constant;
-import aiwac.admin.com.healthrobot.receiver.AlarmReceiver;
 import aiwac.admin.com.healthrobot.server.WebSocketApplication;
 import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
 import aiwac.admin.com.healthrobot.utils.ActivityUtil;
 import aiwac.admin.com.healthrobot.utils.JsonUtil;
 import aiwac.admin.com.healthrobot.utils.LogUtil;
-
-import static android.app.AlarmManager.RTC_WAKEUP;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -126,7 +121,17 @@ public class MainActivity extends AppCompatActivity {
         int INTERVAL = 1000 * 60 * 60 * 24;// 24h
 
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 15);
+
+        Log.d("what's the time now", "alarm: "+
+                calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE));
+        //如果超过了十二点，就明天再提醒
+        if(calendar.get(Calendar.HOUR_OF_DAY)>12  ||
+                (calendar.get(Calendar.HOUR_OF_DAY)==12 && calendar.get(Calendar.MINUTE)> 0))
+        {
+            calendar.add(Calendar.DATE,1);
+        }
+
+        calendar.set(Calendar.HOUR_OF_DAY, 12);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
 
@@ -144,18 +149,18 @@ public class MainActivity extends AppCompatActivity {
         //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),INTERVAL,pendingIntent);
 
         //10s 一次
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            alarmManager.setWindow(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),20000,pendingIntent);
-        } else {
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),20000,pendingIntent);
-        }
-
-//        //每天一次
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
+//            alarmManager.setWindow(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),20000,pendingIntent);
 //        } else {
-//            alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
+//            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),20000,pendingIntent);
 //        }
+
+        //每天一次
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
+        } else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
+        }
 
     }
 

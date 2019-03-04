@@ -1,4 +1,4 @@
-package aiwac.admin.com.healthrobot.activity;
+package aiwac.admin.com.healthrobot.activity.skin;
 
 import android.content.res.AssetManager;
 import android.os.Bundle;

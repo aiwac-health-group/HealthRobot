@@ -1,4 +1,4 @@
-package aiwac.admin.com.healthrobot.activity;
+package aiwac.admin.com.healthrobot.activity.skin;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;

@@ -1,4 +1,4 @@
-package aiwac.admin.com.healthrobot.activity;
+package aiwac.admin.com.healthrobot.activity.skin;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

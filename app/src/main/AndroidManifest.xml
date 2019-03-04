@@ -37,23 +37,23 @@
         </activity>
 
         <!-- skin activities -->
-        <activity android:name=".activity.BeautyResultActivity" />
-        <activity android:name=".activity.BaseActivity" />
-        <activity android:name=".activity.CameraActivity" />
-        <activity android:name=".activity.TestHelpActivity" />
-        <activity android:name=".activity.DetectProcessActivity" />
-        <activity android:name=".activity.SkinMainActivity" />
+        <activity android:name=".activity.skin.BeautyResultActivity" />
+        <activity android:name=".activity.skin.BaseActivity" />
+        <activity android:name=".activity.skin.CameraActivity" />
+        <activity android:name=".activity.skin.TestHelpActivity" />
+        <activity android:name=".activity.skin.DetectProcessActivity" />
+        <activity android:name=".activity.skin.SkinMainActivity" />
         <activity
             android:name=".activity.loginandregister.RegisterActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.loginandregister.PersonalInformationActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".activity.ConnectWifiActivity" />
+        <activity android:name=".activity.skin.ConnectWifiActivity" />
         <activity android:name=".activity.voicechat.VoiceChatActivity" />
         <activity android:name=".activity.voicechat.WaitChatActivity" />
         <activity
-            android:name=".activity.VoiceRegisterActivity"
+            android:name=".activity.skin.VoiceRegisterActivity"
             android:screenOrientation="landscape" />
 
         <receiver
@@ -61,7 +61,10 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activity.AlarmActivity"></activity>
+        <activity
+            android:name=".activity.skin.AlarmActivity"
+            android:theme="@style/ActivityDialog"
+            android:launchMode="singleTop"></activity>
     </application>
 
 </manifest>

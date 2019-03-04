@@ -1,4 +1,4 @@
-package aiwac.admin.com.healthrobot.activity;
+package aiwac.admin.com.healthrobot.activity.skin;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
