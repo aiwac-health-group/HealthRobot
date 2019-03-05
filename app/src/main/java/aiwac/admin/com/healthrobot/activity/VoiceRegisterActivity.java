@@ -2,7 +2,6 @@ package aiwac.admin.com.healthrobot.activity;
 
 import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -28,14 +27,16 @@ import aiwac.admin.com.healthrobot.server.WebSocketApplication;
 import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
 import aiwac.admin.com.healthrobot.utils.JsonUtil;
 import aiwac.admin.com.healthrobot.utils.LogUtil;
+import zuo.biao.library.base.BaseActivity;
 
-public class VoiceRegisterActivity extends AppCompatActivity {
+public class VoiceRegisterActivity extends BaseActivity {
 
     private Spinner spinner_province;
     private Spinner spinner_city;
     private Spinner spinner_hospital;
     private Spinner spinner_department;
     private Button btn_send;
+    private Button btn_registerHistory;
 
     private ArrayList<String> provinceList = new ArrayList<>(); //省
     private ArrayList<ArrayList<String>> cityList = new ArrayList<>();//市
@@ -65,6 +66,29 @@ public class VoiceRegisterActivity extends AppCompatActivity {
         spinner_city = (Spinner)findViewById(R.id.city);
         spinner_hospital = (Spinner)findViewById(R.id.hospital);
         spinner_department = (Spinner)findViewById(R.id.department);
+        btn_registerHistory = findView(R.id.btn_register_history);
+
+        btn_registerHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            BaseEntity baseEntity = new BaseEntity();
+                            baseEntity.setBusinessType(Constant.WEBSOCKET_REGISTERHISTORY_BUSSINESSTYPE_CODE);
+                            String json = JsonUtil.baseEntity2Json(baseEntity);
+                            WebSocketApplication.getWebSocketApplication().send(json);
+                        }catch (Exception e){
+                            LogUtil.d( e.getMessage());
+                            //其他异常处理
+                        }
+                    }
+                });*/
+
+
+            }
+        });
 
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -288,5 +312,20 @@ public class VoiceRegisterActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initEvent() {
+
     }
 }

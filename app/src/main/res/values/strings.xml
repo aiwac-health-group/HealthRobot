@@ -27,6 +27,11 @@
     <string name="infom_wechat">微信号</string>
 
 
+    <string-array name="sex">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+
     <!--医院科室-->
     <string-array name="hospital_department">
         <item>妇产科</item>

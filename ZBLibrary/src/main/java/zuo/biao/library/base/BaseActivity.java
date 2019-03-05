@@ -558,6 +558,7 @@ public abstract class BaseActivity extends FragmentActivity implements ActivityP
 
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
 
+		@Override
 		public void onReceive(Context context, Intent intent) {
 			String action = intent == null ? null : intent.getAction();
 			if (isAlive() == false || StringUtil.isNotEmpty(action, true) == false) {

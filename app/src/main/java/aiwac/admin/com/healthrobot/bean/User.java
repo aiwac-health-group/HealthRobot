@@ -7,13 +7,15 @@ package aiwac.admin.com.healthrobot.bean;
 public class User extends BaseEntity{
 
     private Integer id;
+    private Boolean isRegister;
     private String name;
     private String number;
     private String password;
     private String sex;
     private String birthday;
     private String wechat;
-    private String place ;//plac = area+address
+    private String area; //所在地区
+    private String address;//详细地址
 
     public String getSex() {
         return sex;
@@ -39,12 +41,21 @@ public class User extends BaseEntity{
         this.wechat = wechat;
     }
 
-    public String getPlace() {
-        return place;
+
+    public String getArea() {
+        return area;
     }
 
-    public void setPlace(String place) {
-        this.place = place;
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public User(){}
@@ -53,9 +64,9 @@ public class User extends BaseEntity{
         this.number = number;
     }
 
-    public User(String name, String number){
-        this.name = name;
+    public User(String number, String password){
         this.number = number;
+        this.password = password;
     }
 
     public User(int id, String name, String number){
@@ -94,6 +105,14 @@ public class User extends BaseEntity{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Boolean getRegister() {
+        return isRegister;
+    }
+
+    public void setRegister(Boolean register) {
+        isRegister = register;
     }
 
     @Override

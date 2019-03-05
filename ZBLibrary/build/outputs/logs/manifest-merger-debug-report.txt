@@ -166,7 +166,7 @@ ADDED from C:\Users\14750\Desktop\healthrobot\android3\HealthRobot\ZBLibrary\src
 activity#zuo.biao.library.ui.TimePickerWindow
 ADDED from C:\Users\14750\Desktop\healthrobot\android3\HealthRobot\ZBLibrary\src\main\AndroidManifest.xml:78:9-82:63
 	android:screenOrientation
-		ADDED from C:\Users\14750\Desktop\healthrobot\android3\HealthRobot\ZBLibrary\src\main\AndroidManifest.xml:80:13-49
+		ADDED from C:\Users\14750\Desktop\healthrobot\android3\HealthRobot\ZBLibrary\src\main\AndroidManifest.xml:80:13-50
 	android:windowSoftInputMode
 		ADDED from C:\Users\14750\Desktop\healthrobot\android3\HealthRobot\ZBLibrary\src\main\AndroidManifest.xml:82:13-60
 	android:theme

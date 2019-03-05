@@ -3,12 +3,9 @@ package aiwac.admin.com.healthrobot.server;
 import android.content.Context;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import aiwac.admin.com.healthrobot.bean.MessageInfo;
 import aiwac.admin.com.healthrobot.common.Constant;
 import aiwac.admin.com.healthrobot.db.UserData;
 import aiwac.admin.com.healthrobot.exception.WebSocketException;
@@ -44,8 +41,9 @@ public class WebSocketApplication {
 
     private void connection(Context context){
 
-        if(webSocketHelper == null)
+        if(webSocketHelper == null) {
             init(context);
+        }
 
         if(!webSocketHelper.isOpen() && !webSocketHelper.isConnecting()) {
             try{
@@ -89,12 +87,6 @@ public class WebSocketApplication {
         return webSocketHelper;
     }
 
-    public List<MessageInfo> getMessageInfos(){
-        if(webSocketHelper == null){
-            return new ArrayList<MessageInfo>();
-        }
-        return webSocketHelper.getMessageInfos();
-    }
 
 
     public UserData getUserData(){
