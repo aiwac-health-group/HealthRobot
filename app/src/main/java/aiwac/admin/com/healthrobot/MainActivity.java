@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -51,7 +52,7 @@ import aiwac.admin.com.healthrobot.utils.StringUtil;
 
 public class MainActivity extends AppCompatActivity  implements ViewSwitcher.ViewFactory {
 
-    private Button btn_voicechat;
+    private ImageButton btn_voicechat;
 
     //滚动动画用
     private ImageSwitcher mImageSwitcher;
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity  implements ViewSwitcher.Vie
 
 
         //测肤功能测试
-        Button sendButton = (Button) findViewById(R.id.skin);
+        ImageButton sendButton = (ImageButton) findViewById(R.id.skin);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
