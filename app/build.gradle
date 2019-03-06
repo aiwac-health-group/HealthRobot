@@ -19,6 +19,9 @@ android {
         ndk {
             abiFilters 'armeabi-v7a'
         }
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
+        }
 //        jackOptions {
 //            enabled true
 //        }
@@ -49,32 +52,33 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
     testImplementation 'junit:junit:4.12'
     implementation files('libs/Java-WebSocket-1.3.5.jar')
-    implementation project(':ZBLibrary')
     implementation files('src/main/jniLibs/agora-rtc-sdk.jar')
     implementation files('libs/com.baidu.tts_2.3.2.20180713_6101c2a.jar')
     implementation 'com.github.stuxuhai:jpinyin:1.1.8'
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation project(':core')
     implementation 'com.google.code.gson:gson:2.6.2'
-
     /**
-     * 测肤
+     *  测肤
      */
-
     //tensorflow
     implementation files('libs/libandroid_tensorflow_inference_java.jar')
     //used in DetectProcess
     implementation 'com.wang.avi:library:2.1.3'
     //------------------------------------------------
-
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
-
+    /**
+     *  给体检推荐要用到的
+     */
+    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation files('libs/tbs_sdk_thirdapp_v3.2.0.1104_43200_sharewithdownload_withfilereader_withoutGame_obfs_20170609_115346.jar')
+    implementation project(':uiasr')
+    implementation project(':ZBLibrary')
 }

@@ -8,37 +8,29 @@ import android.support.v7.app.AlertDialog;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 
+import aiwac.admin.com.healthrobot.activity.medicalexam.MedicalExamRecommendActivity;
 import aiwac.admin.com.healthrobot.activity.skin.AlarmActivity;
 import aiwac.admin.com.healthrobot.activity.skin.SkinMainActivity;
 
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
-
 import java.util.Calendar;
 
-import aiwac.admin.com.healthrobot.activity.loginandregister.LoginActivity;
-import aiwac.admin.com.healthrobot.activity.speechRecog.SpeechRecogActivity;
+import aiwac.admin.com.healthrobot.activity.speechrecog.SpeechRecogActivity;
 import aiwac.admin.com.healthrobot.activity.voicechat.WaitChatActivity;
 import aiwac.admin.com.healthrobot.bean.BaseEntity;
 import aiwac.admin.com.healthrobot.common.Constant;
-import aiwac.admin.com.healthrobot.db.UserData;
 import aiwac.admin.com.healthrobot.server.WebSocketApplication;
-import aiwac.admin.com.healthrobot.service.WebSocketService;
 import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
 import aiwac.admin.com.healthrobot.utils.ActivityUtil;
 import aiwac.admin.com.healthrobot.utils.JsonUtil;
 import aiwac.admin.com.healthrobot.utils.LogUtil;
-import aiwac.admin.com.healthrobot.utils.StringUtil;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -115,6 +107,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //体检推荐测试
+        Button btnMedicalExamRecommand=findViewById(R.id.btn_medical_exam_recommand);
+        btnMedicalExamRecommand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this,MedicalExamRecommendActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 //    //判断用户是否登录，如果没有登录，则跳转到登录界面

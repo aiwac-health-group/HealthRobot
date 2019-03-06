@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llDemoRoot"
+    style="@style/activity_page" >
+    <RelativeLayout style="@style/topbar_bg"
+        >
+
+        <ImageButton style="@style/topbar_return_img" />
+
+        <TextView
+            style="@style/topbar_title"
+            android:layout_centerHorizontal="true"
+            android:text="体检详情" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        style="@style/ll_vertical_match_wrap"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="10dp" >
+
+        <TextView
+            android:id="@+id/textview_rec_detail_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text="体检的名字 -- 体检的标题"
+            android:textStyle="bold" />
+
+
+
+        <TextView
+            android:id="@+id/textview_rec_detail_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text="2019/12/12"
+            android:textColor="@color/btn_gray_pressed"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textview_rec_detail_context"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text="体检的简介 -- 体检的简介" />
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -30,7 +30,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="离线语音" />
-
+    <Button
+        android:id="@+id/btn_medical_exam_recommand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="体检推荐" />
 </LinearLayout>
 
 

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ll_horizontal_match_wrap"
+    android:background="@drawable/white_to_alpha"
+    android:padding="10dp"
+    android:id="@+id/view_medical_exam_recommend">
+
+    <LinearLayout
+        style="@style/ll_vertical_match_wrap"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="4dp" >
+
+        <TextView
+            android:id="@+id/textview_rec_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text="体检的名字 -- 体检的标题"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textview_rec_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text="体检的简介 -- 体检的简介" />
+
+        <TextView
+            android:id="@+id/textview_rec_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text="2019/12/12"
+            android:textColor="@color/btn_gray_pressed"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+</LinearLayout>

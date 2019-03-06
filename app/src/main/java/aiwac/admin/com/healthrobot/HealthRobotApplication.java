@@ -4,8 +4,9 @@ import android.app.Application;
 import android.content.Context;
 
 import aiwac.admin.com.healthrobot.utils.LogUtil;
+import zuo.biao.library.base.BaseApplication;
 
-public class HealthRobotApplication extends Application {
+public class HealthRobotApplication extends BaseApplication {
     private static Context context;
 
     @Override
