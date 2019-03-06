@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_gravity="center"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/camera_dialog_bg"
+            android:padding="40dp">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:textColor="@color/colorText"
+                android:text="该拍照了~" />
+            <Button
+                android:id="@+id/ok_btn"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_test_bg"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp"
+                android:text="去拍照"
+                android:textColor="@drawable/btn_test_text"/>
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:textColor="@color/colorText"
+                android:text="" />
+
+            <Button
+                android:id="@+id/cancel_btn"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_test_bg"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="5dp"
+                android:text="取消"
+                android:textColor="@drawable/btn_test_text"/>
+        </LinearLayout>
+
+
+        <!--<ImageView-->
+            <!--android:layout_width="100dp"-->
+            <!--android:layout_height="80dp"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:src="@drawable/camera1"/>-->
+    </RelativeLayout>
+
+</LinearLayout>

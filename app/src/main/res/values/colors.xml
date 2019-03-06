@@ -17,4 +17,7 @@
     <color name="theme">#4db8c4</color>
     <color name="colorLightBlue">#dbf1f3</color>
     <color name="colorBackivory">#f1f7f8</color>
+
+    <!-- skin color -->
+    <color name="colorTest">#434343</color>
 </resources>
