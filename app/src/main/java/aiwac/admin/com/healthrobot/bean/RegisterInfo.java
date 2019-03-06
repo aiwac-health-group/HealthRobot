@@ -5,6 +5,24 @@ public class RegisterInfo extends BaseEntity {
     private String city;
     private String hospital;
     private String department;
+    private String registerStatus;
+    private String description;
+
+    public String getRegisterStatus() {
+        return registerStatus;
+    }
+
+    public void setRegisterStatus(String registerStatus) {
+        this.registerStatus = registerStatus;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public RegisterInfo(String province, String city, String hospital, String department){
         this.province = province;
@@ -12,6 +30,8 @@ public class RegisterInfo extends BaseEntity {
         this.hospital = hospital;
         this.department = department;
     }
+
+    public RegisterInfo(){}
 
 
     public String getProvince() {

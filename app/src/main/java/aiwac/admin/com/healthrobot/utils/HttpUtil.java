@@ -191,9 +191,10 @@ public class HttpUtil {
             // 判断请求是否成功
             if (urlConn.getResponseCode() == 200) {
                 // 获取返回的数据
-                String result = streamToString(urlConn.getInputStream());
+                /*String result = streamToString(urlConn.getInputStream());
                 LogUtil.d(Constant.HTTP_METHOD_POST_SUCCESS + result);
-                return result;
+                return result;*/
+                return  null;
             } else {
                 LogUtil.d(Constant.HTTP_METHOD_POST_FAILURE);
                 return null;
@@ -228,8 +229,9 @@ public class HttpUtil {
      * @return
      */
     private static String streamToString(InputStream is) {
-        if(is == null)
+        if(is == null) {
             return null;
+        }
 
         ByteArrayOutputStream baos = null;
         try {

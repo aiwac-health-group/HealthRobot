@@ -11,13 +11,15 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!-- skin -->
-
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
 
     <application
         android:name=".HealthRobotApplication"
@@ -26,16 +28,24 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".MainActivity"
-            android:screenOrientation="landscape">
+
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".activity.loginandregister.LoginActivity" />
+        <activity android:name=".activity.loginandregister.RegisterActivity"/>
+        <activity android:name=".activity.loginandregister.ConnectWifiActivity" />
+        <activity android:name=".activity.voicechat.VoiceChatActivity" />
+        <activity android:name=".activity.voicechat.WaitChatActivity" />
+        <activity android:name=".activity.setting.PersonInfoActivity" />
+        <activity android:name=".activity.setting.SettingActivity" />
+        <activity android:name=".activity.setting.AboutActivity" />
+        <activity android:name=".activity.voiceregister.VoiceRegisterActivity"></activity>
+        <activity android:name=".activity.voiceregister.RegisterHistoryActivity"></activity>
         <!-- skin activities -->
         <activity android:name=".activity.skin.BeautyResultActivity" />
         <activity android:name=".activity.skin.BaseActivity" />
@@ -44,27 +54,15 @@
         <activity android:name=".activity.skin.DetectProcessActivity" />
         <activity android:name=".activity.skin.SkinMainActivity" />
         <activity
-            android:name=".activity.loginandregister.RegisterActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".activity.loginandregister.PersonalInformationActivity"
-            android:screenOrientation="landscape" />
-        <activity android:name=".activity.skin.ConnectWifiActivity" />
-        <activity android:name=".activity.voicechat.VoiceChatActivity" />
-        <activity android:name=".activity.voicechat.WaitChatActivity" />
-        <activity
-            android:name=".activity.skin.VoiceRegisterActivity"
-            android:screenOrientation="landscape" />
-
-        <receiver
-            android:name=".receiver.AlarmReceiver"
-            android:enabled="true"
-            android:exported="true" />
-
-        <activity
             android:name=".activity.skin.AlarmActivity"
             android:theme="@style/ActivityDialog"
             android:launchMode="singleTop"></activity>
+
+        <!--<receiver-->
+            <!--android:name=".receiver.AlarmReceiver"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="true" />-->
+
     </application>
 
 </manifest>

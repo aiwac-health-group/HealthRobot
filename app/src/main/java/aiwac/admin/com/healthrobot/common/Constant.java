@@ -61,8 +61,8 @@ public class Constant {
     public final static String WEBSOCKET_BASE_URL = "ws://" + TEST_IP;
     public final static String WEBSOCKET_USER_IDENTITY = "number";
     public final static String WEBSOCKET_URL = WEBSOCKET_BASE_URL + "/web/websocket/socketServer";
-    public final static String WEBSOCKET_MESSAGE_BUSSINESSTYPE = "businessType";
-    public final static String WEBSOCKET_MESSAGE_CLIENTID = "clientID";
+    public final static String WEBSOCKET_MESSAGE_BUSSINESSTYPE = "code";
+    public final static String WEBSOCKET_MESSAGE_CLIENTID = "account";
     public final static String WEBSOCKET_MESSAGE_UUID = "uniqueID";
     public final static String WEBSOCKET_MESSAGE_CLIENTTYPE = "clientType";
     public final static String WEBSOCKET_MESSAGE_COMMANDPRIORITY = "commandPriority";
@@ -70,8 +70,8 @@ public class Constant {
     public final static String WEBSOCKET_MESSAGE_ERRORDESC = "errorDesc";
     public final static String WEBSOCKET_MESSAGE_DESCRIPTION = "description";
 
-    public final static String MESSAGE_ERRORCODE_200 = "200";
-    public final static String MESSAGE_ERRORCODE_201 = "201";
+    public final static String MESSAGE_ERRORCODE_2000 = "2000";
+    public final static String MESSAGE_ERRORCODE_2001 = "2001";
 
     public final static String WEBSOCKET_TIMER_OPERATIONTYPE = "operationType";
     public final static String WEBSOCKET_TIMER_ATTENTIONTYPE = "attentionType";
@@ -94,6 +94,8 @@ public class Constant {
     public final static String WEBSOCKET_REGISTERINFO_CITY = "city";
     public final static String WEBSOCKET_REGISTERINFO_HOSPITAL = "hospital";
     public final static String WEBSOCKET_REGISTERINFO_DEPARTMENT = "department";
+    public final static String WEBSOCKET_REGISTERINFO_STATUS = "registerStatus";
+    public final static String WEBSOCKET_REGISTERINFO_DESCRIPTION = "description";
 
     //测肤结果
     public final static String WEBSOCKET_SKINRESULT_FACE = "face";
@@ -113,13 +115,15 @@ public class Constant {
 
 
     public final static String WEBSOCKET_MESSAGE_CLIENTTYPE_NUMBER = "2";
-    public final static String WEBSOCKET_MESSAGE_BUSSINESSTYPE_CODE = "0005";
+    public final static String WEBSOCKET_QUERYPERSONINFO_BUSSINESSTYPE_CODE = "0005";
     public final static String WEBSOCKET_PERSONAL_INFOMATION_BUSSINESSTYPE_CODE = "0006";
     public final static String WEBSOCKET_TIMER_BUSSINESSTYPE_CODE = "0008";
     public final static String WEBSOCKET_VOICECHAT_BUSSINESSTYPE_CODE = "0017";
     public final static String WEBSOCKET_VOICEREGISTER_BUSSINESSTYPE_CODE = "0019";//挂号医院信息
-    public final static String WEBSOCKET_REGISTERRESULT_BUSSINESSTYPE_CODE = "0020";//挂号结果
+    public final static String WEBSOCKET_REGISTERHISTORY_BUSSINESSTYPE_CODE = "0020";//挂号历史纪录
+    public final static String WEBSOCKET_REGISTERRESULT_BUSSINESSTYPE_CODE = "0021";//挂号结果
     public final static String WEBSOCKET_SYNC_REMINDER_BUSSINESSTYPE_CODE = "0018";
+    public final static String WEBSOCKET_HANGUPCHAT_BUSSINESSTYPE_CODE = "0017"; //挂断在线问诊
 
 
     public final static String WEBSOCKET_USER_IDENTITY_EXCEPTION = "没有用户异常";
@@ -299,12 +303,13 @@ public class Constant {
     public final static String HTTP_USER_LOGIN_PASSWORD_BASEURL = HTTP_BASE_URL + "/web/login/" + USER_LOGIN_PASSWORD_OPT;
     public final static String HTTP_USER_LOGIN_IDENTIFYCODE_BASEURL = HTTP_BASE_URL + "/web/login/loginWithIdentifyCode";
 
-    public final static String USER_REGISTER_NUMBER ="phoneNumber";
+    public final static String USER_REGISTER_NUMBER ="account";
     public final static String USER_REGISTER_CHECKCODE ="identifyCode";
     public final static String USER_REGISTER_PHONENUMBER_EXIST ="isPhoneNumberExist";
     public final static String USER_REGISTER_PHONENUMBER_EXIST_YES ="1";
     public final static String USER_REGISTER_ISSUCCESS = "result";
     public final static String USER_REGISTER_SUCCESS = "1";
+    public final static String USER_DATA_FIELD_REGISTER = "register";
     public final static String USER_DATA_FIELD_PASSWORD = "password";
     public final static String USER_DATA_FIELD_NUMBER = "number";
     public final static String USER_DATA_FIELD_TIMER_SYNC = "timer_sync";

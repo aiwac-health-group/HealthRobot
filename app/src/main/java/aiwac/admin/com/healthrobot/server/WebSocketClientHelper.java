@@ -11,15 +11,10 @@ import org.java_websocket.drafts.Draft_6455;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
-import aiwac.admin.com.healthrobot.bean.MessageInfo;
-import aiwac.admin.com.healthrobot.bean.TimerEntity;
+import aiwac.admin.com.healthrobot.bean.User;
 import aiwac.admin.com.healthrobot.common.Constant;
-import aiwac.admin.com.healthrobot.db.TimerSqliteHelper;
 import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
 import aiwac.admin.com.healthrobot.utils.JsonUtil;
 import aiwac.admin.com.healthrobot.utils.LogUtil;
@@ -32,9 +27,15 @@ import aiwac.admin.com.healthrobot.utils.StringUtil;
 public class WebSocketClientHelper extends WebSocketClient {
 
     private Context context;
+    private User user;
 
-    private List<MessageInfo> messageInfos = Collections.synchronizedList(new ArrayList<MessageInfo>());
+    public User getUser(){
+        return user;
+    }
 
+    public void setUser(User user){
+        this.user = user;
+    }
 
     public Context getContext() {
         return context;
@@ -69,7 +70,7 @@ public class WebSocketClientHelper extends WebSocketClient {
         LogUtil.d( Constant.WEBSOCKET_CONNECTION_OPEN + getRemoteSocketAddress());
 
         //开启连接的时候检查要不要同步数据
-        checkSyncTimer();
+       // checkSyncTimer();
     }
 
     @Override
@@ -96,6 +97,13 @@ public class WebSocketClientHelper extends WebSocketClient {
                 EventBus.getDefault().post(json);
             }else if(businessType.equals(Constant.WEBSOCKET_REGISTERRESULT_BUSSINESSTYPE_CODE)) { //语音挂号结果
 
+            }else if(businessType.equals(Constant.WEBSOCKET_REGISTERHISTORY_BUSSINESSTYPE_CODE)){ //挂号历史纪录
+
+                EventBus.getDefault().post(json);
+               // re = JsonUtil.jsonToRegisterInfo(json);
+            }else if(businessType.equals(Constant.WEBSOCKET_QUERYPERSONINFO_BUSSINESSTYPE_CODE)){ //个人信息查询
+
+                user = JsonUtil.jsonToPersonInfo(json);
             }
 
         }catch (Exception e){
@@ -125,39 +133,6 @@ public class WebSocketClientHelper extends WebSocketClient {
             });
         }
     }
-
-
-    private void saveSyncTimer(final String json){
-        ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
-            @Override
-            public void run() {
-                try{
-                    //处理将定时提醒数据保存到数据库
-                    List<TimerEntity> timerEntities = JsonUtil.parseTimerSync(json);
-                    TimerSqliteHelper timerSqliteHelper = new TimerSqliteHelper(context);
-                    for(TimerEntity timerEntity : timerEntities){
-                        timerSqliteHelper.insert(timerEntity);
-                    }
-
-                    //设置为已经同步
-                    SharedPreferences.Editor editor = context.getSharedPreferences(Constant.DB_USER_TABLENAME, context.MODE_PRIVATE).edit();
-                    editor.putString(Constant.USER_DATA_FIELD_TIMER_SYNC, Constant.USER_DATA_FIELD_TIMER_SYNC_VALUE);
-                    editor.apply();
-                    LogUtil.d( Constant.USER_DATA_PERSISTENCE_TIMER_SYNC);
-                }catch (Exception e){
-                    LogUtil.d( "saveSyncTimer : " + e.getMessage());
-                }
-            }
-        });
-    }
-
-
-    public List<MessageInfo> getMessageInfos(){
-        return messageInfos;
-    }
-
-
-
 
 
 

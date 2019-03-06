@@ -11,26 +11,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ViewSwitcher.ViewFactory;
 
-import aiwac.admin.com.healthrobot.MainActivity;
 import aiwac.admin.com.healthrobot.R;
-//import aiwac.admin.com.healthrobot.adapter.ContentAdapter;
-//import aiwac.admin.com.healthrobot.bean.ContentEntity;
-//import aiwac.admin.com.healthrobot.HealthRobotApplication;
-//import aiwac.admin.com.healthrobot.ui.LoadMoreScrollView;
-//import aiwac.admin.com.healthrobot.utils.JsonUtil;
-//import aiwac.admin.com.healthrobot.utils.ThreadPoolManager;
-//
-//import java.util.ArrayList;
-//import java.util.HashMap;
-//import java.util.List;
-//import java.util.Map;
-//import java.util.zip.Inflater;
-//
-//import static aiwac.admin.com.healthrobot.activity.HTTPClientHelper.httpClientHelper;
 
 public class HomeFragment extends Fragment implements ViewFactory{
 

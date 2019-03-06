@@ -1,5 +1,13 @@
 <resources>
 
+    <style name="AppBaseTheme" parent="android:Theme.Holo.Light.NoActionBar">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
@@ -8,12 +16,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
     <!--dialog activity-->
     <style name="ActivityDialog" parent="Theme.AppCompat.Dialog">
         <item name="android:windowNoTitle">true</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowBackground">@null</item> //必须设置该属性为空，才能占满屏幕，否则会有边界空白
+        <item name="android:windowBackground">@null</item> <!--必须设置该属性为空，才能占满屏幕，否则会有边界空白-->
     </style>
+
 
 
 </resources>

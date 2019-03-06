@@ -16,8 +16,13 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import aiwac.admin.com.healthrobot.R;
+import aiwac.admin.com.healthrobot.bean.BaseEntity;
 import aiwac.admin.com.healthrobot.bean.MessageEvent;
+import aiwac.admin.com.healthrobot.common.Constant;
+import aiwac.admin.com.healthrobot.server.WebSocketApplication;
+import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
 import aiwac.admin.com.healthrobot.utils.JsonUtil;
+import aiwac.admin.com.healthrobot.utils.LogUtil;
 
 public class WaitChatActivity extends AppCompatActivity{
 
@@ -61,6 +66,22 @@ public class WaitChatActivity extends AppCompatActivity{
                             public void onClick(DialogInterface arg0, int arg1) {
                                 timer.stop();
                                 //挂断
+                                BaseEntity baseEntity = new BaseEntity();
+                                baseEntity.setBusinessType(Constant.WEBSOCKET_VOICECHAT_BUSSINESSTYPE_CODE);
+                                final String json = JsonUtil.baseEntity2Json(baseEntity);
+                                ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try{
+
+                                            WebSocketApplication.getWebSocketApplication().send(json);
+                                        }catch (Exception e){
+                                            LogUtil.d( e.getMessage());
+                                            //其他异常处理
+                                        }
+                                    }
+                                });
+                                finish();
                             }
                         }
                 ).show();
@@ -96,6 +117,7 @@ public class WaitChatActivity extends AppCompatActivity{
         Intent intent = new Intent(WaitChatActivity.this, VoiceChatActivity.class);
         intent.putExtra("roomID", roomID);
         startActivity(intent);
+        finish();
     }
 
 
@@ -113,6 +135,21 @@ public class WaitChatActivity extends AppCompatActivity{
                     public void onClick(DialogInterface arg0, int arg1) {
                         timer.stop();
                         //挂断
+                        BaseEntity baseEntity = new BaseEntity();
+                        baseEntity.setBusinessType(Constant.WEBSOCKET_VOICECHAT_BUSSINESSTYPE_CODE);
+                        final String json = JsonUtil.baseEntity2Json(baseEntity);
+                        ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
+                            @Override
+                            public void run() {
+                                try{
+
+                                    WebSocketApplication.getWebSocketApplication().send(json);
+                                }catch (Exception e){
+                                    LogUtil.d( e.getMessage());
+                                    //其他异常处理
+                                }
+                            }
+                        });
                         finish();
                     }
                 }
@@ -120,8 +157,8 @@ public class WaitChatActivity extends AppCompatActivity{
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
         EventBus.getDefault().unregister(this);
     }
 }

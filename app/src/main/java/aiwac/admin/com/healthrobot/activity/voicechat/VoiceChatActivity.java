@@ -15,9 +15,7 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
-import aiwac.admin.com.healthrobot.MainActivity;
 import aiwac.admin.com.healthrobot.R;
-import aiwac.admin.com.healthrobot.utils.ActivityUtil;
 import io.agora.rtc.Constants;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
@@ -183,7 +181,7 @@ public class VoiceChatActivity extends AppCompatActivity {
         showLongToast(String.format(Locale.US, "user %d left %d", (uid & 0xFFFFFFFFL), reason));
         View tipMsg = findViewById(R.id.quick_tips_when_use_agora_sdk); // optional UI
         tipMsg.setVisibility(View.VISIBLE);
-        ActivityUtil.skipActivity(VoiceChatActivity.this, MainActivity.class,true);
+        finish();
     }
 
     // Tutorial Step 6

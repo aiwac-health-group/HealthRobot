@@ -1,153 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/activity_page"
     android:id="@+id/activity_register"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/white"
     tools:context="aiwac.admin.com.healthrobot.activity.loginandregister.RegisterActivity">
+
+    <RelativeLayout style="@style/topbar_bg" >
+
+        <ImageButton style="@style/topbar_return_img" />
+
+        <TextView
+            style="@style/topbar_title"
+            android:layout_centerHorizontal="true"
+            android:text="填写信息" />
+    </RelativeLayout>
+
+    <View style="@style/divider_horizontal_1px" />
 
 
     <ScrollView
-        android:id="@+id/login_form"
+        style="@style/match_match"
 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="40sp"
-        android:layout_marginRight="40sp"
-        android:layout_weight="1">
+        android:layout_weight="1" >
 
+        <LinearLayout style="@style/ll_vertical_match_match" >
 
-        <LinearLayout
-            android:id="@+id/email_login_form"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            <LinearLayout
+                style="@style/ll_vertical_match_wrap"
+                android:layout_marginBottom="@dimen/padding_huge"
+                android:layout_marginTop="@dimen/padding_huge" >
+            </LinearLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="30sp"
-                android:layout_gravity="center"
-                android:src="@drawable/register_account_image" />
+            <View style="@style/divider_horizontal_1px" />
 
-            <android.support.design.widget.TextInputLayout
+            <!-- 姓名 -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40sp"
-                android:layout_marginBottom="20sp"
-                android:background="@drawable/register_account_bg"
-                >
-
-                <AutoCompleteTextView
-                    android:id="@+id/register_number_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_number"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/theme"
-                    android:layout_marginLeft="20sp"
-                    android:layout_marginRight="10sp"
-                    android:background="@null"
-                    android:textAlignment="center"
-                    />
-            </android.support.design.widget.TextInputLayout>
-
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="30sp"
-                android:layout_gravity="center"
-                android:src="@drawable/register_password_image" />
-
-
-
-            <LinearLayout android:id="@+id/regiter_btn_form"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:background="@drawable/radius_layout"
                 android:orientation="horizontal"
-                android:layout_marginBottom="30sp">
+                android:layout_marginBottom="20sp">
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="40sp"
-                    android:layout_weight="15"
-                    android:background="@drawable/register_account_bg"
-                    >
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5sp"
+                    android:layout_weight="6"
+                    android:paddingLeft="5sp">
 
-                    <EditText
-                        android:id="@+id/register_checkcode_edit"
+
+                    <AutoCompleteTextView
+                        android:id="@+id/tv_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/prompt_check_code"
-                        android:layout_gravity="center_vertical"
+                        android:background="@color/colorBackivory"
                         android:inputType="textEmailAddress"
-                        android:layout_marginLeft="20sp"
-                        android:layout_marginRight="20sp"
-                        android:textColor="@color/theme"
-                        android:background="@null"
-                        android:textAlignment="center"
+                        android:hint="@string/infom_name"
+                        android:maxLines="1"
+                        android:textColor="@color/border_clo"/>
 
-                        />
                 </android.support.design.widget.TextInputLayout>
 
 
             </LinearLayout>
 
 
-            <Button
-                android:id="@+id/register_check_code_button"
-                style="?android:textAppearanceSmall"
+            <LinearLayout
+                android:id="@+id/layout_sex"
                 android:layout_width="match_parent"
-                android:layout_height="30sp"
-                android:text="@string/action_checkcode"
-                android:textStyle="bold"
-                android:background="@drawable/login_logbutton"
-                android:layout_gravity="center"
-                android:textColor="@color/white"/>
+                android:layout_height="40sp"
+                android:background="@drawable/radius_layout"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20sp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5sp"
+                    android:layout_weight="6"
+                    android:paddingLeft="5sp">
 
 
+                    <AutoCompleteTextView
+                        android:id="@+id/tv_sex"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorBackivory"
+                        android:inputType="textEmailAddress"
+                        android:hint="@string/infom_sex"
+                        android:maxLines="1"
+                        android:textColor="@color/border_clo"/>
+
+                </android.support.design.widget.TextInputLayout>
 
 
+            </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/layout_birthday"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:background="@drawable/radius_layout"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20sp"
+                >
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5sp"
+                    android:layout_weight="6"
+                    android:clickable="false">
+
+
+                    <AutoCompleteTextView
+                        android:id="@+id/tv_birthday"
+                        android:clickable="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorBackivory"
+                        android:inputType="textEmailAddress"
+                        android:hint="@string/infom_birthday"
+                        android:maxLines="1"
+                        android:textColor="@color/border_clo"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:background="@drawable/radius_layout"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20sp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5sp"
+                    android:layout_weight="6"
+                    android:paddingLeft="5sp">
+
+
+                    <AutoCompleteTextView
+                        android:id="@+id/tv_wechat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorBackivory"
+                        android:inputType="textEmailAddress"
+                        android:hint="@string/infom_wechat"
+                        android:maxLines="1"
+                        android:textColor="@color/border_clo"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_area"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:background="@drawable/radius_layout"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20sp"
+                android:clickable="true">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5sp"
+                    android:layout_weight="6"
+                    android:paddingLeft="5sp">
+
+
+                    <AutoCompleteTextView
+                        android:id="@+id/tv_area"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorBackivory"
+                        android:inputType="textEmailAddress"
+                        android:hint="@string/infom_area"
+                        android:maxLines="1"
+                        android:textColor="@color/border_clo"/>
+
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:background="@drawable/radius_layout"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20sp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5sp"
+                    android:layout_weight="6"
+                    android:paddingLeft="5sp">
+
+
+                    <AutoCompleteTextView
+                        android:id="@+id/tv_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorBackivory"
+                        android:inputType="textEmailAddress"
+                        android:hint="@string/infom_address"
+                        android:maxLines="1"
+                        android:textColor="@color/border_clo"/>
+
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/send_button"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:background="@drawable/login_emptylogbutton"
+                android:text="确定"
+                android:textColor="@color/theme"
+                android:textAlignment="center"
+                android:layout_marginTop="10sp"
+                />
 
         </LinearLayout>
-
-
-
     </ScrollView>
-
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:orientation="vertical" >
-
-        <Button
-            android:id="@+id/register_button"
-            style="?android:textAppearanceSmall"
-            android:layout_width="40sp"
-            android:layout_height="30sp"
-            android:layout_gravity="center_horizontal"
-            android:clickable="false"
-            android:enabled="false"
-            android:background="@drawable/register_rightlog"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="确认登陆"
-            android:textColor="@color/white"
-            android:textAlignment="center"
-            />
-
-
-    </LinearLayout>
-
 </LinearLayout>
