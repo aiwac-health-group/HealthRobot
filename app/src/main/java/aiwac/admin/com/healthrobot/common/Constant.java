@@ -118,6 +118,7 @@ public class Constant {
     public final static String WEBSOCKET_QUERYPERSONINFO_BUSSINESSTYPE_CODE = "0005";
     public final static String WEBSOCKET_PERSONAL_INFOMATION_BUSSINESSTYPE_CODE = "0006";
     public final static String WEBSOCKET_TIMER_BUSSINESSTYPE_CODE = "0008";
+    public final static String WEBSOCKET_SKIN_RESULT_CODE = "0016";
     public final static String WEBSOCKET_VOICECHAT_BUSSINESSTYPE_CODE = "0017";
     public final static String WEBSOCKET_VOICEREGISTER_BUSSINESSTYPE_CODE = "0019";//挂号医院信息
     public final static String WEBSOCKET_REGISTERHISTORY_BUSSINESSTYPE_CODE = "0020";//挂号历史纪录

@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 //import android.text.Html;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.UUID;
@@ -27,6 +29,8 @@ public class BeautyResultActivity extends AppCompatActivity {
     private float[] cleanResults;
     private float[] fuseResults;
     private int skinType=1;
+
+    ImageView Back; //返回按钮
     TextView Age; //肌龄
     TextView BodyContent; //体质描述
     TextView DietContent; //饮食建议
@@ -44,11 +48,25 @@ public class BeautyResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beauty_result);
 
+
+        //点击标题栏的后退按钮，返回SkinMainActivity
+        Back =(ImageView)findViewById(R.id.tv_back) ;
+        Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BeautyResultActivity.this,SkinMainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
         Age=(TextView)findViewById(R.id.tv_age);
         BodyContent=(TextView)findViewById(R.id.tv_body_content);
         DietContent=(TextView)findViewById(R.id.tv_diet_content);
         TMedicine=(TextView)findViewById(R.id.tv_medicine_content);
         ShengYao=(TextView)findViewById(R.id.tv_shengyao_content);
+
 
         HeitouDegree=(TextView)findViewById(R.id.heitouDegree);
         HeitouDesprt=(TextView)findViewById(R.id.heitouDesprt);

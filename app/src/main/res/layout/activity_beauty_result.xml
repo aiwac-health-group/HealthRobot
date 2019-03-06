@@ -15,6 +15,7 @@
         android:background="@color/colorPrimary">
 
         <ImageView
+            android:id="@+id/tv_back"
             android:layout_width="12dp"
             android:layout_height="19dp"
             android:layout_alignParentLeft="true"

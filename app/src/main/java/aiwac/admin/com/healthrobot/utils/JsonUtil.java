@@ -443,30 +443,31 @@ public class JsonUtil {
 
 
             root.put(Constant.WEBSOCKET_SKINRESULT_FACE, ImageUtil.getBase64Str(skinResult.getFace()));
-            root.put(Constant.WEBSOCKET_SKINRESULT_SCORE, skinResult.getScore());
+
 
             JSONObject resultJson = new JSONObject();
+            resultJson.put(Constant.WEBSOCKET_SKINRESULT_SCORE, skinResult.getScore().toString());
 
             JSONArray heitou = new JSONArray();
-            heitou.put(skinResult.getHeitouResults()[0]);
-            heitou.put(skinResult.getHeitouResults()[1]);
+            heitou.put(""+skinResult.getHeitouResults()[0]);
+            heitou.put(""+skinResult.getHeitouResults()[1]);
             resultJson.put(Constant.WEBSOCKET_SKINRESULT_HEITOU, heitou);
 
             JSONArray dou = new JSONArray();
-            dou.put(skinResult.getDouResults()[0]);
-            dou.put(skinResult.getDouResults()[1]);
+            dou.put(""+skinResult.getDouResults()[0]);
+            dou.put(""+skinResult.getDouResults()[1]);
             resultJson.put(Constant.WEBSOCKET_SKINRESULT_DOU, dou);
 
             JSONArray ban = new JSONArray();
-            ban.put(skinResult.getBanResults()[0]);
-            ban.put(skinResult.getBanResults()[1]);
+            ban.put(""+skinResult.getBanResults()[0]);
+            ban.put(""+skinResult.getBanResults()[1]);
             resultJson.put(Constant.WEBSOCKET_SKINRESULT_BAN, ban);
 
 
             JSONArray fuse = new JSONArray();
-            fuse.put(skinResult.getFuseResults()[0]);
-            fuse.put(skinResult.getFuseResults()[1]);
-            fuse.put(skinResult.getFuseResults()[2]);
+            fuse.put(""+skinResult.getFuseResults()[0]);
+            fuse.put(""+skinResult.getFuseResults()[1]);
+            fuse.put(""+skinResult.getFuseResults()[2]);
             resultJson.put(Constant.WEBSOCKET_SKINRESULT_FUSE, fuse);
 
 

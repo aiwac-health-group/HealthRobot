@@ -18,6 +18,7 @@ public class SkinResult extends BaseEntity{
 
     public SkinResult()
     {
+        businessType = "0016";
         heitouResults = new float[2];
         douResults = new float[2];
         banResults = new float[2];

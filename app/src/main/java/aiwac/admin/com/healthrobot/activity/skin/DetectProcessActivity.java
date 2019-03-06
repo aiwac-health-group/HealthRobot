@@ -156,7 +156,7 @@ public class DetectProcessActivity extends AppCompatActivity{
                                 skinResult.setDrug(getResources().getString(R.string.drag1));
 
 
-                                skinResult.setBusinessType(Constant.WEBSOCKET_PERSONAL_INFOMATION_BUSSINESSTYPE_CODE);
+                                skinResult.setBusinessType(Constant.WEBSOCKET_SKIN_RESULT_CODE);
                                 skinResult.setUuid(UUID.randomUUID().toString());
                                 String json = JsonUtil.skinResultToJson(skinResult);
 
