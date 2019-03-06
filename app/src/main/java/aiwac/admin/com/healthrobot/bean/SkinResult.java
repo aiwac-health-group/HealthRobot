@@ -16,7 +16,13 @@ public class SkinResult extends BaseEntity{
     private String medicine;       //美容中药方剂
     private String drug;        //生药
 
-    public SkinResult(){}
+    public SkinResult()
+    {
+        heitouResults = new float[2];
+        douResults = new float[2];
+        banResults = new float[2];
+        fuseResults = new float[3];
+    }
     @Override
     public String toString() {
         return "Skin["+ face + ", " + score + "]";

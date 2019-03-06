@@ -1,5 +1,7 @@
 package aiwac.admin.com.healthrobot.utils;
 
+import android.graphics.Bitmap;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -459,16 +461,35 @@ public class JsonUtil {
             root.put(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE, skinResult.getClientType());
             root.put(Constant.WEBSOCKET_MESSAGE_TIME, System.currentTimeMillis());
 
-            root.put(Constant.WEBSOCKET_SKINRESULT_FACE, skinResult.getFace());
+
+
+            root.put(Constant.WEBSOCKET_SKINRESULT_FACE, ImageUtil.getBase64Str(skinResult.getFace()));
             root.put(Constant.WEBSOCKET_SKINRESULT_SCORE, skinResult.getScore());
 
-
-
             JSONObject resultJson = new JSONObject();
-            resultJson.put(Constant.WEBSOCKET_SKINRESULT_HEITOU, skinResult.getHeitouResults());
-            resultJson.put(Constant.WEBSOCKET_SKINRESULT_DOU, skinResult.getDouResults());
-            resultJson.put(Constant.WEBSOCKET_SKINRESULT_BAN, skinResult.getBanResults());
-            resultJson.put(Constant.WEBSOCKET_SKINRESULT_FUSE, skinResult.getFuseResults());
+
+            JSONArray heitou = new JSONArray();
+            heitou.put(skinResult.getHeitouResults()[0]);
+            heitou.put(skinResult.getHeitouResults()[1]);
+            resultJson.put(Constant.WEBSOCKET_SKINRESULT_HEITOU, heitou);
+
+            JSONArray dou = new JSONArray();
+            dou.put(skinResult.getDouResults()[0]);
+            dou.put(skinResult.getDouResults()[1]);
+            resultJson.put(Constant.WEBSOCKET_SKINRESULT_DOU, dou);
+
+            JSONArray ban = new JSONArray();
+            ban.put(skinResult.getBanResults()[0]);
+            ban.put(skinResult.getBanResults()[1]);
+            resultJson.put(Constant.WEBSOCKET_SKINRESULT_BAN, ban);
+
+
+            JSONArray fuse = new JSONArray();
+            fuse.put(skinResult.getFuseResults()[0]);
+            fuse.put(skinResult.getFuseResults()[1]);
+            fuse.put(skinResult.getFuseResults()[2]);
+            resultJson.put(Constant.WEBSOCKET_SKINRESULT_FUSE, fuse);
+
 
             resultJson.put(Constant.WEBSOCKET_SKINRESULT_BODY, skinResult.getBody());
             resultJson.put(Constant.WEBSOCKET_SKINRESULT_DIET, skinResult.getDiet());

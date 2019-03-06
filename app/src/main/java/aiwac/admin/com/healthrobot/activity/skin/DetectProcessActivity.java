@@ -15,10 +15,17 @@ import android.widget.TextView;
 import aiwac.admin.com.healthrobot.R;
 import aiwac.admin.com.healthrobot.SkinDetection.CommonAlexnetExtract;
 import aiwac.admin.com.healthrobot.SkinDetection.FuseExtract;
+import aiwac.admin.com.healthrobot.bean.SkinResult;
+import aiwac.admin.com.healthrobot.common.Constant;
+import aiwac.admin.com.healthrobot.server.WebSocketApplication;
+import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
+import aiwac.admin.com.healthrobot.utils.JsonUtil;
+import aiwac.admin.com.healthrobot.utils.LogUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.UUID;
 
 public class DetectProcessActivity extends AppCompatActivity{
 
@@ -122,6 +129,48 @@ public class DetectProcessActivity extends AppCompatActivity{
                     textView.setText("正在生成报告...");
                     break;
                 case 5:
+                    //把结果上传到后台
+                    ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
+                        @Override
+                        public void run() {
+                            try{
+                                SkinResult skinResult = new SkinResult();
+
+                                skinResult.setFace(srcBitmap);
+                                //一个个传
+                                skinResult.setHeitouResults(heitouResults[0],heitouResults[1]);
+                                skinResult.setDouResults(douResults[0],douResults[1]);
+                                skinResult.setBanResults(banResults[0],banResults[1]);
+                                skinResult.setFuseResults(fuseResults[0],fuseResults[1],fuseResults[2]);
+//                    //直接传
+//                    skinResult.setHeitouResults(heitouResults);
+//                    skinResult.setDouResults(douResults);
+//                    skinResult.setBanResults(banResults);
+//                    skinResult.setFuseResults(fuseResults);
+
+
+                                skinResult.setScore(21);
+                                skinResult.setBody(getResources().getString(R.string.bodyConstitution1));
+                                skinResult.setDiet(getResources().getString(R.string.food1));
+                                skinResult.setMedicine(getResources().getString(R.string.medicine1));
+                                skinResult.setDrug(getResources().getString(R.string.drag1));
+
+
+                                skinResult.setBusinessType(Constant.WEBSOCKET_PERSONAL_INFOMATION_BUSSINESSTYPE_CODE);
+                                skinResult.setUuid(UUID.randomUUID().toString());
+                                String json = JsonUtil.skinResultToJson(skinResult);
+
+                                WebSocketApplication.getWebSocketApplication().send(json);
+
+                            }catch (Exception e){
+                                LogUtil.d(e.getMessage());
+                                //其他异常处理
+                            }
+                        }
+                    } );
+
+                    //跳转到测肤结果页面:BeautyResultActivity
+
                     Intent intent = new Intent();
                     intent.putExtra("fuseResults", fuseResults);
                     intent.putExtra("douResults", douResults);
@@ -129,9 +178,14 @@ public class DetectProcessActivity extends AppCompatActivity{
                     intent.putExtra("heitouResults", heitouResults);
                     intent.putExtra("heiyanquanResults", heiyanquanResults);
                     intent.putExtra("cleanResults", cleanResults);
+
+
                     intent.setClass(DetectProcessActivity.this, BeautyResultActivity.class);
 //                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
+
+
+
                     break;
             }
         }
