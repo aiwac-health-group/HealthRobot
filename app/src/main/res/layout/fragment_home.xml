@@ -93,64 +93,7 @@
                     android:textSize="20sp" />
             </LinearLayout>
 
-            <!--_______________the following seems unnecessary in this project____________________-->
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="5dp"-->
-                <!--android:background="@color/white"-->
-                <!--android:orientation="vertical">-->
 
-                <!--<LinearLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="38dp"-->
-                    <!--android:layout_marginBottom="1dp"-->
-                    <!--android:background="@android:color/white"-->
-                    <!--android:gravity="center_horizontal"-->
-                    <!--android:orientation="horizontal">-->
-
-                    <!--<TextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_marginLeft="10dp"-->
-                        <!--android:layout_marginRight="10dp"-->
-                        <!--android:gravity="center"-->
-                        <!--android:text="今天看什么"-->
-                        <!--android:textColor="@color/colorPrimary"-->
-                        <!--android:textSize="18sp" />-->
-
-
-
-                    <!--&lt;!&ndash;<ImageView-->
-                    <!--android:layout_width="20dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--app:srcCompat="@drawable/previous"-->
-                    <!--android:layout_gravity="center" /> &ndash;&gt;-->
-
-                <!--</LinearLayout>-->
-                <!--&lt;!&ndash;分割线&ndash;&gt;-->
-                <!--<View-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="1dp"-->
-                    <!--android:background="#82BBBBBB"/>-->
-                <!--<aiwac.admin.com.healthrobot.adapter.MyListView-->
-                    <!--android:id="@+id/home_listview"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginStart="15sp"-->
-                    <!--android:layout_marginEnd="15sp"-->
-                    <!--android:background="@android:color/white"-->
-                    <!--android:divider="#82BBBBBB"-->
-                    <!--android:dividerHeight="1dp"-->
-                    <!--android:scrollbars="none">-->
-                <!--</aiwac.admin.com.healthrobot.adapter.MyListView>-->
-            <!--</LinearLayout>-->
-            <!--正在加载
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <include layout="@layout/load_more"/>
-            </LinearLayout>-->
         </LinearLayout>
     </LinearLayout>
 

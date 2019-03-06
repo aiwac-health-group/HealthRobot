@@ -67,6 +67,11 @@ public class HomeFragment extends Fragment implements ViewFactory{
         super.onDestroy();
         callback = null;
     }
+
+    /**
+     * 设置循环播放的图片
+     * @param view
+     */
     private void initView(View view){
 
         imgIds = new int[]{R.drawable.fig1, R.drawable.fig2, R.drawable.fig3};
@@ -107,6 +112,10 @@ public class HomeFragment extends Fragment implements ViewFactory{
 
         }
     }
+
+    /**
+     * 设置切换动画
+     */
     private void setImageSwitcher(){
         // 图片 index 布局的生成
         tips = new ImageView[imgIds.length];

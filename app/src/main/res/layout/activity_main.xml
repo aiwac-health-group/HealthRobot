@@ -1,36 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <Button
-        android:id="@+id/skin"
+
+    <!--标题栏-->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="test skin"
-        />
-    <Button
-        android:id="@+id/test_alarm"
+        android:background="@color/colorPrimary"
+        >
+
+    </LinearLayout>
+
+    <!--滚动图片-->
+    <LinearLayout
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="test alarm"
-        />
-    <Button
-        android:id="@+id/btn_voicechat"
+        android:scrollbars="none">
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="120sp"
+                android:layout_marginTop="0sp"
+                android:background="@android:color/white">
+
+                <ImageSwitcher
+                    android:id="@+id/imageSwitcher1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <LinearLayout
+                        android:id="@+id/viewGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--第一排-->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="在线问诊" />
-    <Button
-        android:id="@+id/setting"
+        android:layout_marginTop="10dp"
+        >
+
+        <!--语音挂号-->
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/before_click"
+
+            android:drawableTop="@drawable/register"
+
+            />
+        <!--24小时在线问诊-->
+
+        <Button
+            android:id="@+id/btn_voicechat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:drawableTop="@drawable/consult24h"
+            android:background="@drawable/before_click"
+            />
+        <!--健康讲座-->
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="80dp"
+            android:drawableTop="@drawable/lecture"
+            android:background="@drawable/before_click"
+             />
+
+
+    </LinearLayout>
+
+    <!--第二排-->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="个人中心" />
-    <Button
-        android:id="@+id/btn_speech_rec"
+        android:layout_marginTop="0dp"
+        >
+
+        <!-- android:text="智能测肤"-->
+        <Button
+            android:id="@+id/skin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="40dp"
+            android:drawableTop="@drawable/skin"
+            android:background="@drawable/before_click"
+
+            />
+
+        <!-- android:text="个人中心"-->
+        <Button
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:drawableTop="@drawable/recommendation"
+            android:background="@drawable/before_click"
+            android:text="其实是个人中心"
+            />
+        <!-- android:text="体检推荐"-->
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="80dp"
+            android:drawableTop="@drawable/recommendation"
+
+            android:background="@drawable/before_click"
+            />
+
+
+    </LinearLayout>
+
+    <!--测试用的按钮-->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="离线语音" />
+        android:layout_marginTop="0dp"
+        >
+        <Button
+            android:id="@+id/setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="个人中心" />
+
+
+
+        <Button
+            android:id="@+id/test_alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="test alarm"
+            />
+
+
+        <Button
+            android:id="@+id/btn_speech_rec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="离线语音" />
+
+    </LinearLayout>
+
+
+
+
+
 
 </LinearLayout>
-
-
