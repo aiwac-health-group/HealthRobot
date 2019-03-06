@@ -97,6 +97,21 @@ public class Constant {
     public final static String WEBSOCKET_REGISTERINFO_STATUS = "registerStatus";
     public final static String WEBSOCKET_REGISTERINFO_DESCRIPTION = "description";
 
+    //测肤结果
+    public final static String WEBSOCKET_SKINRESULT_FACE = "face";
+    public final static String WEBSOCKET_SKINRESULT_SCORE = "score";
+    public final static String WEBSOCKET_SKINRESULT_HEITOU = "heitou";
+    public final static String WEBSOCKET_SKINRESULT_DOU = "dou";
+    public final static String WEBSOCKET_SKINRESULT_BAN = "ban";
+    public final static String WEBSOCKET_SKINRESULT_FUSE = "fuse";
+
+    public final static String WEBSOCKET_SKINRESULT_BODY = "body";
+    public final static String WEBSOCKET_SKINRESULT_DIET = "diet";
+    public final static String WEBSOCKET_SKINRESULT_MEDICINE = "medicine";
+    public final static String WEBSOCKET_SKINRESULT_DRUG = "drug";
+
+    public final static String WEBSOCKET_SKINRESULT_RESULT = "result";
+
 
 
     public final static String WEBSOCKET_MESSAGE_CLIENTTYPE_NUMBER = "2";

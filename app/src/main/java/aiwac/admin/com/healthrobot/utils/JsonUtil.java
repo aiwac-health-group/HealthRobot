@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import aiwac.admin.com.healthrobot.bean.BaseEntity;
 import aiwac.admin.com.healthrobot.bean.RegisterInfo;
+import aiwac.admin.com.healthrobot.bean.SkinResult;
 import aiwac.admin.com.healthrobot.bean.TimerEntity;
 import aiwac.admin.com.healthrobot.bean.User;
 import aiwac.admin.com.healthrobot.bean.WifiInfo;
@@ -428,6 +429,42 @@ public class JsonUtil {
             throw new JsonException(Constant.JSON_GENERATE_EXCEPTION, e);
         }
     }
+    public static String skinResultToJson(SkinResult skinResult){
+        JSONObject root = new JSONObject();
+        try{
+            root.put(Constant.WEBSOCKET_MESSAGE_CLIENTID, skinResult.getClientId());
+            root.put(Constant.WEBSOCKET_MESSAGE_BUSSINESSTYPE, skinResult.getBusinessType());
+            root.put(Constant.WEBSOCKET_MESSAGE_UUID, skinResult.getUuid());
+            root.put(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE, skinResult.getClientType());
+            root.put(Constant.WEBSOCKET_MESSAGE_TIME, System.currentTimeMillis());
+
+            root.put(Constant.WEBSOCKET_SKINRESULT_FACE, skinResult.getFace());
+            root.put(Constant.WEBSOCKET_SKINRESULT_SCORE, skinResult.getScore());
+
+
+
+            JSONObject resultJson = new JSONObject();
+            resultJson.put(Constant.WEBSOCKET_SKINRESULT_HEITOU, skinResult.getHeitouResults());
+            resultJson.put(Constant.WEBSOCKET_SKINRESULT_DOU, skinResult.getDouResults());
+            resultJson.put(Constant.WEBSOCKET_SKINRESULT_BAN, skinResult.getBanResults());
+            resultJson.put(Constant.WEBSOCKET_SKINRESULT_FUSE, skinResult.getFuseResults());
+
+            resultJson.put(Constant.WEBSOCKET_SKINRESULT_BODY, skinResult.getBody());
+            resultJson.put(Constant.WEBSOCKET_SKINRESULT_DIET, skinResult.getDiet());
+            resultJson.put(Constant.WEBSOCKET_SKINRESULT_MEDICINE, skinResult.getMedicine());
+            resultJson.put(Constant.WEBSOCKET_SKINRESULT_DRUG, skinResult.getDrug());
+
+            root.put(Constant.WEBSOCKET_SKINRESULT_RESULT,resultJson);
+
+            LogUtil.d(Constant.JSON_GENERATE_SUCCESS + root.toString());
+            return root.toString();
+        }catch (Exception e){
+            e.printStackTrace();
+            LogUtil.d(Constant.JSON_GENERATE_EXCEPTION);
+            throw new JsonException(Constant.JSON_GENERATE_EXCEPTION, e);
+        }
+    }
+
 
 
     public static String queryPersonInfo(BaseEntity baseEntity){
