@@ -27,6 +27,7 @@ import android.support.v7.app.AlertDialog;
 import java.util.Calendar;
 
 import aiwac.admin.com.healthrobot.activity.loginandregister.LoginActivity;
+import aiwac.admin.com.healthrobot.activity.speechRecog.SpeechRecogActivity;
 import aiwac.admin.com.healthrobot.activity.voicechat.WaitChatActivity;
 import aiwac.admin.com.healthrobot.bean.BaseEntity;
 import aiwac.admin.com.healthrobot.common.Constant;
@@ -99,6 +100,18 @@ public class MainActivity extends AppCompatActivity {
                         }
                 ).show();
 
+            }
+        });
+
+
+        //离线语音识别测试--需要在AndroidManifest.xml添加权限
+        Button btnSpeechRecog=findViewById(R.id.btn_speech_rec);
+        btnSpeechRecog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this,SpeechRecogActivity.class);
+                startActivity(intent);
             }
         });
 

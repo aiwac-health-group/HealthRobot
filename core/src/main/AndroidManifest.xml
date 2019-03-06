@@ -7,13 +7,13 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application>
         <meta-data
-                android:name="com.baidu.speech.APP_ID"
-                android:value="15590577"/>
+            android:name="com.baidu.speech.APP_ID"
+            android:value="15691940"/>
         <meta-data
-                android:name="com.baidu.speech.API_KEY"
-                android:value="q2uPyBe6LmWTZlvb0g1dzcHV"/>
+            android:name="com.baidu.speech.API_KEY"
+            android:value="Okd49fCZRRvcgKe3fWPAgVgR"/>
         <meta-data
-                android:name="com.baidu.speech.SECRET_KEY"
-                android:value="y7S7hAI894BB3LF1yHYmvQEus1B6wPvj"/>
+            android:name="com.baidu.speech.SECRET_KEY"
+            android:value="0yK28tAvDl9HN1yuwTTgz7m4IIAVzuzg"/>
     </application>
 </manifest>
