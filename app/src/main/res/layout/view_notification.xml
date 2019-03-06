@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ll_horizontal_match_wrap"
+    android:background="@drawable/white_to_alpha"
+    android:padding="10dp"
+    android:id="@+id/view_notification">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        style="@style/ll_vertical_match_wrap"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="4dp" >
+
+        <TextView
+            android:id="@+id/textview_notification"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:padding="10dp"
+            android:text="这是一个消息"
+            android:textStyle="bold" />
+
+
+
+    </LinearLayout>
+</LinearLayout>

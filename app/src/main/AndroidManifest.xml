@@ -69,7 +69,8 @@
         <activity android:name=".activity.speechrecog.SpeechRecogActivity" />
         <activity android:name=".activity.medicalexam.MedicalExamRecommendActivity" />
         <activity android:name=".activity.medicalexam.MedicalExamDetailActivity" />
-        <activity android:name=".activity.medicalexam.MedicalExamMenuActivity"></activity>
+        <activity android:name=".activity.medicalexam.MedicalExamMenuActivity" />
+        <activity android:name=".activity.notification.NotificationActivity"></activity>
     </application>
 
 </manifest>

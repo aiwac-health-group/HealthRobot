@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 
 import aiwac.admin.com.healthrobot.activity.medicalexam.MedicalExamRecommendActivity;
+import aiwac.admin.com.healthrobot.activity.notification.NotificationActivity;
 import aiwac.admin.com.healthrobot.activity.skin.AlarmActivity;
 import aiwac.admin.com.healthrobot.activity.skin.SkinMainActivity;
 
@@ -114,6 +115,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this,MedicalExamRecommendActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //消息通知测试
+        Button btnNotification=findViewById(R.id.btn_notification);
+        btnNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this,NotificationActivity.class);
                 startActivity(intent);
             }
         });
