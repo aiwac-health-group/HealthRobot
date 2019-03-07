@@ -9,12 +9,21 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageSwitcher;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -44,23 +53,38 @@ import aiwac.admin.com.healthrobot.utils.LogUtil;
 import aiwac.admin.com.healthrobot.utils.StringUtil;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ViewSwitcher.ViewFactory {
 
-    private Button btn_voicechat;
+    private ImageButton btn_voicechat;
     private ArrayList<ExamInfoForCarousel> examInfoForCarousels;
+
+    //滚动动画用
+    private ImageSwitcher mImageSwitcher;
+    private int[] imgIds;
+    private LinearLayout linearLayout;
+    private ImageView[] tips;
+    private int curPos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //隐藏标题栏
+        ActionBar actionbar = getSupportActionBar();
+        if (actionbar != null) {
+            actionbar.hide();
+        }
+        //每天中午十二点提醒用户拍照测肤
         alarm(MainActivity.this);
+        //设置滚动动画
+        initView();
         //异步加载，查询体检推荐消息
         LoadThreeExamAsyc loadThreeExamAsyc = new LoadThreeExamAsyc();
         loadThreeExamAsyc.execute();
 
 
         //测肤功能测试
-        Button sendButton = (Button) findViewById(R.id.skin);
+        ImageButton sendButton = (ImageButton) findViewById(R.id.skin);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //体检推荐测试
-        Button btnMedicalExamRecommand=findViewById(R.id.btn_medical_exam_recommand);
+        ImageButton btnMedicalExamRecommand=findViewById(R.id.btn_medical_exam_recommand);
         btnMedicalExamRecommand.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //消息通知测试
-        Button btnNotification=findViewById(R.id.btn_notification);
+        ImageView btnNotification=findViewById(R.id.btn_notification);
         btnNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,26 +168,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    //判断用户是否登录，如果没有登录，则跳转到登录界面
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        LogUtil.d( Constant.USER_IS_LOGIN);
-        if(!StringUtil.isValidate(UserData.getUserData().getNumber())){
-            //用户没有登录, 跳转到登录界面
-            ActivityUtil.skipActivity(MainActivity.this, LoginActivity.class);
-        }
-
-
-        //开启服务，创建websocket连接
-        Intent intent = new Intent(this, WebSocketService.class);
-        intent.putExtra(Constant.SERVICE_TIMER_TYPE, Constant.SERVICE_TIMER_TYPE_WEBSOCKET);
-        startService(intent);
-
-        EventBus.getDefault().register(this);
-    }
+//
+//    //判断用户是否登录，如果没有登录，则跳转到登录界面
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//        LogUtil.d( Constant.USER_IS_LOGIN);
+//        if(!StringUtil.isValidate(UserData.getUserData().getNumber())){
+//            //用户没有登录, 跳转到登录界面
+//            ActivityUtil.skipActivity(MainActivity.this, LoginActivity.class);
+//        }
+//
+//
+//        //开启服务，创建websocket连接
+//        Intent intent = new Intent(this, WebSocketService.class);
+//        intent.putExtra(Constant.SERVICE_TIMER_TYPE, Constant.SERVICE_TIMER_TYPE_WEBSOCKET);
+//        startService(intent);
+//
+//        EventBus.getDefault().register(this);
+//    }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -198,6 +222,79 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    /**
+     * 设置循环播放的图片
+     *
+     */
+    private void initView(){
+
+        imgIds = new int[]{R.drawable.fig1, R.drawable.fig2, R.drawable.fig3};
+        mImageSwitcher = findViewById(R.id.imageSwitcher1);
+        mImageSwitcher.setFactory(this);
+        linearLayout = findViewById(R.id.viewGroup);
+
+        //设置banner
+        setImageSwitcher();
+
+    }
+    /**
+     * 设置切换动画
+     */
+    private void setImageSwitcher(){
+        // 图片 index 布局的生成
+        tips = new ImageView[imgIds.length];
+        for (int i=0; i<imgIds.length; i++){
+            ImageView mImageView = new ImageView(MainActivity.this);
+            tips[i] = mImageView;
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.rightMargin = 3;
+            layoutParams.leftMargin = 3;
+            layoutParams.height = 30;
+            layoutParams.width = 30;
+            mImageView.setBackgroundResource(R.drawable.dot_unfocus);
+            linearLayout.addView(mImageView, layoutParams);
+        }
+
+        // 设置动画
+        mImageSwitcher.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left));
+        mImageSwitcher.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right));
+        curPos=0;
+        mImageSwitcher.setImageResource(imgIds[curPos]);
+        setImageBackground(curPos);
+        // 按时切换图片
+        mImageSwitcher.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(curPos==imgIds.length-1){
+                    curPos=0;
+                }else{
+                    curPos++;
+                }
+                mImageSwitcher.setImageResource(imgIds[curPos]);
+                setImageBackground(curPos);
+                mImageSwitcher.postDelayed(this, 1500);
+            }
+        }, 1500);
+
+    }
+    private void setImageBackground(int selectItems) {
+        for (int i=0; i<tips.length; i++){
+            if(i==selectItems){
+                tips[i].setBackgroundResource(R.drawable.dot_focus);
+            }else{
+                tips[i].setBackgroundResource(R.drawable.dot_unfocus);
+            }
+        }
+    }
+    @Override
+    public View makeView() {
+        final ImageView i = new ImageView(this);
+        i.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        i.setLayoutParams(new ImageSwitcher.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
+        return i;
+    }
 
     /**
      *
