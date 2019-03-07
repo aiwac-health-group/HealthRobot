@@ -20,4 +20,9 @@
 
     <!-- skin color -->
     <color name="colorTest">#434343</color>
+
+    <!--lecture-->
+    <color name="text_normal">#FF4081</color>
+    <color name="text_press">#bbFF4081</color>
+    <color name="control_bar_bg">#77000000</color>
 </resources>

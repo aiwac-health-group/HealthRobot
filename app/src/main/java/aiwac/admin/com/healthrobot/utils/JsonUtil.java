@@ -1,6 +1,7 @@
 package aiwac.admin.com.healthrobot.utils;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -10,6 +11,10 @@ import java.util.UUID;
 
 import aiwac.admin.com.healthrobot.bean.BaseEntity;
 import aiwac.admin.com.healthrobot.bean.ExamInfoForCarousel;
+import aiwac.admin.com.healthrobot.bean.LectureAVDetail;
+import aiwac.admin.com.healthrobot.bean.LectureArticleDetail;
+import aiwac.admin.com.healthrobot.bean.LectureCourse;
+import aiwac.admin.com.healthrobot.bean.LectureCourseAbstractInfo;
 import aiwac.admin.com.healthrobot.bean.RegisterInfo;
 import aiwac.admin.com.healthrobot.bean.SkinResult;
 import aiwac.admin.com.healthrobot.bean.User;
@@ -17,6 +22,13 @@ import aiwac.admin.com.healthrobot.bean.WifiInfo;
 import aiwac.admin.com.healthrobot.common.Constant;
 import aiwac.admin.com.healthrobot.exception.JsonException;
 
+
+import static aiwac.admin.com.healthrobot.common.Constant.WEBSOCKET_LECTURE_ARTICLE_ABSTRACT_TYPE_CODE;
+import static aiwac.admin.com.healthrobot.common.Constant.WEBSOCKET_LECTURE_ARTICLE_DETAIL_TYPE_CODE;
+import static aiwac.admin.com.healthrobot.common.Constant.WEBSOCKET_LECTURE_AUDIO_ABSTRACT_TYPE_CODE;
+import static aiwac.admin.com.healthrobot.common.Constant.WEBSOCKET_LECTURE_AV_DETAIL_TYPE_CODE;
+import static aiwac.admin.com.healthrobot.common.Constant.WEBSOCKET_LECTURE_VIDEO_ABSTRACT_TYPE_CODE;
+import static aiwac.admin.com.healthrobot.common.Constant.WEBSOCKET_MESSAGE_SYSYTEM_CLIENTTYPE;
 
 
 /**     对象和json直接的相互转换
@@ -541,5 +553,267 @@ public class JsonUtil {
             throw new JsonException(Constant.JSON_PARSE_EXCEPTION, e);
         }
     }
+
+
+
+
+    //解析json 获取讲座  视频 音频的摘要信息
+    public static LectureCourseAbstractInfo parseLectureAVAbstractInfo(String jsonStr){
+        String errorCode = JsonUtil.parseErrorCode(jsonStr);
+        if(errorCode.equals(Constant.MESSAGE_ERRORCODE_2000)) {
+
+            try {
+                JSONObject root = new JSONObject(jsonStr);
+
+                LectureCourseAbstractInfo lectureAVAbstractInfo = new LectureCourseAbstractInfo();
+
+                lectureAVAbstractInfo.setClientId(root.getString(Constant.WEBSOCKET_MESSAGE_ACCOUNT));
+                lectureAVAbstractInfo.setBusinessType(root.getString(Constant.WEBSOCKET_MESSAGE_CODE));
+                lectureAVAbstractInfo.setClientType(root.getString(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE));
+                lectureAVAbstractInfo.setUuid(root.getString(Constant.WEBSOCKET_MESSAGE_UUID));
+
+                //具体的课程摘要
+                String dataStr = root.getString(Constant.WEBSOCKET_MESSAGE_DATA);
+                JSONObject data = new JSONObject(dataStr);
+                JSONArray jsonArray = data.getJSONArray(Constant.WEBSOCKET_MESSAGE_ITEMS);
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    LectureCourse lectureCourse = new LectureCourse();
+                    JSONObject lectureCourseJson = jsonArray.getJSONObject(i);
+
+                    //  在json里获取某一讲座课程的摘要信息
+                    lectureCourse.setLectureID(lectureCourseJson.getString(Constant.WEBSOCKET_MESSAGE_LECTUREID));
+                    lectureCourse.setName(lectureCourseJson.getString(Constant.WEBSOCKET_LECTURE_COURSE_NAME));
+                    lectureCourse.setUpdateTime(lectureCourseJson.getString(Constant.WEBSOCKET_LECTURE_COURSE_UPDATETIME));
+                    lectureCourse.setDescription(lectureCourseJson.getString(Constant.WEBSOCKET_LECTURE_COURSE_DESCRIPTION));
+                    lectureCourse.setCover(ImageUtil.getBitmap(lectureCourseJson.getString(Constant.WEBSOCKET_LECTURE_COURSE_COVER)));
+                    lectureCourse.setDuration(lectureCourseJson.getString(Constant.WEBSOCKET_LECTURE_COURSE_DURATION));
+
+                    lectureAVAbstractInfo.getLectureCourseAbstracts().add( lectureCourse);
+                }
+                return lectureAVAbstractInfo;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.d("TAG",Constant.JSON_PARSE_EXCEPTION);
+                throw new JsonException(Constant.JSON_PARSE_EXCEPTION, e);
+            }
+        }else {
+            return null;
+        }
+    }
+
+    //解析json 获取讲座  文章的摘要信息
+    public static LectureCourseAbstractInfo parseLectureArticleAbstractInfo(String jsonStr){
+        String errorCode = JsonUtil.parseErrorCode(jsonStr);
+        if(errorCode.equals(Constant.MESSAGE_ERRORCODE_2000)) {
+
+            try {
+                JSONObject root = new JSONObject(jsonStr);
+
+                LectureCourseAbstractInfo lectureArticleAbstractInfo = new LectureCourseAbstractInfo();
+
+                lectureArticleAbstractInfo.setClientId(root.getString(Constant.WEBSOCKET_MESSAGE_ACCOUNT));
+                lectureArticleAbstractInfo.setBusinessType(root.getString(Constant.WEBSOCKET_MESSAGE_CODE));
+                lectureArticleAbstractInfo.setClientType(root.getString(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE));
+                lectureArticleAbstractInfo.setUuid(root.getString(Constant.WEBSOCKET_MESSAGE_UUID));
+
+                //具体的课程摘要
+                String dataStr = root.getString(Constant.WEBSOCKET_MESSAGE_DATA);
+                JSONObject data = new JSONObject(dataStr);
+                JSONArray jsonArray = data.getJSONArray(Constant.WEBSOCKET_MESSAGE_ITEMS);
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    LectureCourse lectureCourse = new LectureCourse();
+                    JSONObject lectureCourseJson = jsonArray.getJSONObject(i);
+
+                    //  在json里获取某一讲座课程的摘要信息
+                    lectureCourse.setLectureID(lectureCourseJson.getString(Constant.WEBSOCKET_MESSAGE_LECTUREID));
+                    lectureCourse.setName(lectureCourseJson.getString(Constant.WEBSOCKET_LECTURE_COURSE_NAME));
+                    lectureCourse.setUpdateTime(lectureCourseJson.getString(Constant.WEBSOCKET_LECTURE_COURSE_UPDATETIME));
+
+                    lectureArticleAbstractInfo.getLectureCourseAbstracts().add( lectureCourse);
+                }
+                return lectureArticleAbstractInfo;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.d("TAG",Constant.JSON_PARSE_EXCEPTION);
+                throw new JsonException(Constant.JSON_PARSE_EXCEPTION, e);
+            }
+        }else {
+            return null;
+        }
+    }
+
+
+    //解析json 获取讲座  视音频的详细信息
+    public static LectureAVDetail parseLectureAVDetailInfo(String jsonStr){
+        String errorCode = JsonUtil.parseErrorCode(jsonStr);
+        if(errorCode.equals(Constant.MESSAGE_ERRORCODE_2000)) {
+
+            try {
+                JSONObject root = new JSONObject(jsonStr);
+
+                LectureAVDetail  lectureAVDetail = new  LectureAVDetail();
+
+                lectureAVDetail.setLectureID(root.getString(Constant.WEBSOCKET_MESSAGE_ACCOUNT));
+                lectureAVDetail.setBusinessType(root.getString(Constant.WEBSOCKET_MESSAGE_CODE));
+                lectureAVDetail.setClientType(root.getString(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE));
+                lectureAVDetail.setUniqueID(root.getString(Constant.WEBSOCKET_MESSAGE_UUID));
+
+                lectureAVDetail.setLink(root.getString(Constant.WEBSOCKET_MESSAGE_LECTURE_AV_LINK));
+
+                return lectureAVDetail;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.d("TAG",Constant.JSON_PARSE_EXCEPTION);
+                throw new JsonException(Constant.JSON_PARSE_EXCEPTION, e);
+            }
+        }else {
+            return null;
+        }
+    }
+
+
+
+    //解析json 获取讲座  文章的详细信息
+    public static LectureArticleDetail parseLectureArticleDetailInfo(String jsonStr){
+        String errorCode = JsonUtil.parseErrorCode(jsonStr);
+        if(errorCode.equals(Constant.MESSAGE_ERRORCODE_2000)) {
+
+            try {
+                JSONObject root = new JSONObject(jsonStr);
+
+                LectureArticleDetail  lectureArticleDetail = new LectureArticleDetail();
+
+                lectureArticleDetail.setLectureID(root.getString(Constant.WEBSOCKET_MESSAGE_ACCOUNT));
+                lectureArticleDetail.setBusinessType(root.getString(Constant.WEBSOCKET_MESSAGE_CODE));
+                lectureArticleDetail.setClientType(root.getString(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE));
+                lectureArticleDetail.setUniqueID(root.getString(Constant.WEBSOCKET_MESSAGE_UUID));
+
+                lectureArticleDetail.setLectureContext(root.getString(Constant.WEBSOCKET_MESSAGE_LECTURE_CONTEXT));
+
+                return lectureArticleDetail;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.d("TAG",Constant.JSON_PARSE_EXCEPTION);
+                throw new JsonException(Constant.JSON_PARSE_EXCEPTION, e);
+            }
+        }else {
+            return null;
+        }
+    }
+
+
+
+    //生成查询讲座音频摘要的json
+    public static String lectureAudioAbstract2Json( ){
+        JSONObject root = new JSONObject();
+        try{
+            User user = new User();
+            root.put(Constant.WEBSOCKET_MESSAGE_ACCOUNT, user.clientId);
+            root.put(Constant.WEBSOCKET_MESSAGE_CODE, WEBSOCKET_LECTURE_AUDIO_ABSTRACT_TYPE_CODE);
+            root.put(Constant.WEBSOCKET_MESSAGE_UUID, UUID.randomUUID().toString());
+            root.put(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE, WEBSOCKET_MESSAGE_SYSYTEM_CLIENTTYPE);
+            root.put(Constant.WEBSOCKET_MESSAGE_TIME,System.currentTimeMillis() + "");
+            Log.d("make",root.toString());
+            LogUtil.d( Constant.JSON_GENERATE_SUCCESS + root.toString());
+            return root.toString();
+        }catch (Exception e){
+            e.printStackTrace();
+            LogUtil.d( Constant.JSON_GENERATE_EXCEPTION);
+            throw new JsonException(Constant.JSON_GENERATE_EXCEPTION, e);
+        }
+    }
+
+
+    //生成查询讲座视频摘要的json
+    public static String lectureVideoAbstract2Json(){
+        JSONObject root = new JSONObject();
+        try{
+            User user = new User();
+            root.put(Constant.WEBSOCKET_MESSAGE_ACCOUNT, user.clientId);
+            root.put(Constant.WEBSOCKET_MESSAGE_CODE, WEBSOCKET_LECTURE_VIDEO_ABSTRACT_TYPE_CODE);
+            root.put(Constant.WEBSOCKET_MESSAGE_UUID, UUID.randomUUID().toString());
+            root.put(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE, WEBSOCKET_MESSAGE_SYSYTEM_CLIENTTYPE);
+            root.put(Constant.WEBSOCKET_MESSAGE_TIME,System.currentTimeMillis() + "");
+            Log.d("make",root.toString());
+            LogUtil.d( Constant.JSON_GENERATE_SUCCESS + root.toString());
+            return root.toString();
+        }catch (Exception e){
+            e.printStackTrace();
+            LogUtil.d( Constant.JSON_GENERATE_EXCEPTION);
+            throw new JsonException(Constant.JSON_GENERATE_EXCEPTION, e);
+        }
+    }
+    //生成查询讲座音视频详情的json
+    public static String lectureAVDetail2Json(String lectureID ){
+        JSONObject root = new JSONObject();
+        try{
+            User user = new User();
+            root.put(Constant.WEBSOCKET_MESSAGE_ACCOUNT, user.clientId);
+            root.put(Constant.WEBSOCKET_MESSAGE_CODE, WEBSOCKET_LECTURE_AV_DETAIL_TYPE_CODE);
+            root.put(Constant.WEBSOCKET_MESSAGE_UUID, UUID.randomUUID().toString());
+            root.put(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE, WEBSOCKET_MESSAGE_SYSYTEM_CLIENTTYPE);
+            root.put(Constant.WEBSOCKET_MESSAGE_TIME,System.currentTimeMillis() + "");
+            root.put(Constant.WEBSOCKET_MESSAGE_LECTUREID, lectureID);
+            Log.d("make",root.toString());
+            LogUtil.d( Constant.JSON_GENERATE_SUCCESS + root.toString());
+            return root.toString();
+        }catch (Exception e){
+            e.printStackTrace();
+            LogUtil.d( Constant.JSON_GENERATE_EXCEPTION);
+            throw new JsonException(Constant.JSON_GENERATE_EXCEPTION, e);
+        }
+    }
+
+    //生成查询讲座文章摘要的json
+    public static String lectureArticleAbstract2Json( ){
+        JSONObject root = new JSONObject();
+        try{
+            User user = new User();
+            root.put(Constant.WEBSOCKET_MESSAGE_ACCOUNT, user.clientId);
+            root.put(Constant.WEBSOCKET_MESSAGE_CODE, WEBSOCKET_LECTURE_ARTICLE_ABSTRACT_TYPE_CODE);
+            root.put(Constant.WEBSOCKET_MESSAGE_UUID, UUID.randomUUID().toString());
+            root.put(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE, WEBSOCKET_MESSAGE_SYSYTEM_CLIENTTYPE);
+            root.put(Constant.WEBSOCKET_MESSAGE_TIME,System.currentTimeMillis() + "");
+            Log.d("make",root.toString());
+            LogUtil.d( Constant.JSON_GENERATE_SUCCESS + root.toString());
+            return root.toString();
+        }catch (Exception e){
+            e.printStackTrace();
+            LogUtil.d( Constant.JSON_GENERATE_EXCEPTION);
+            throw new JsonException(Constant.JSON_GENERATE_EXCEPTION, e);
+        }
+    }
+
+    //生成查询讲座文章详情的json
+    public static String lectureArticleDetail2Json(String lectureID){
+        JSONObject root = new JSONObject();
+        try{
+            User user = new User();
+            root.put(Constant.WEBSOCKET_MESSAGE_ACCOUNT, user.clientId);
+            root.put(Constant.WEBSOCKET_MESSAGE_CODE, WEBSOCKET_LECTURE_ARTICLE_DETAIL_TYPE_CODE);
+            root.put(Constant.WEBSOCKET_MESSAGE_UUID, UUID.randomUUID().toString());
+            root.put(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE, WEBSOCKET_MESSAGE_SYSYTEM_CLIENTTYPE);
+            root.put(Constant.WEBSOCKET_MESSAGE_TIME,System.currentTimeMillis() + "");
+            root.put(Constant.WEBSOCKET_MESSAGE_LECTUREID, lectureID);
+            Log.d("make",root.toString());
+            LogUtil.d( Constant.JSON_GENERATE_SUCCESS + root.toString());
+            return root.toString();
+        }catch (Exception e){
+            e.printStackTrace();
+            LogUtil.d( Constant.JSON_GENERATE_EXCEPTION);
+            throw new JsonException(Constant.JSON_GENERATE_EXCEPTION, e);
+        }
+    }
+
+
+
+
+
 
 }

@@ -1,1 +1,1 @@
-include ':app', ':ZBLibrary', ':core', ':uiasr'
+include ':app', ':ZBLibrary', ':core', ':uiasr', ':vitamio'

@@ -63,10 +63,31 @@
         <activity android:name=".activity.medicalexam.MedicalExamDetailActivity" />
         <activity android:name=".activity.medicalexam.MedicalExamMenuActivity" />
         <activity android:name=".activity.notification.NotificationActivity"></activity>
+
+
+        <!--lecture-->
+        <activity android:name=".activity.lecture.LectureAudioDetailActivity"
+            android:screenOrientation="landscape"></activity>
+        <activity android:name=".activity.lecture.LectureArticleDetailActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".activity.lecture.LectureVideoDetailActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".activity.lecture.LectureActivtiy"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity android:name=".activity.lecture.LectureVideoPlayActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".activity.lecture.LectureAudioPlayActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="landscape"/>
+
+
         <service
             android:name=".service.SpeechRecogService"
             android:enabled="true"
             android:exported="true" />
+
     </application>
 
 </manifest>

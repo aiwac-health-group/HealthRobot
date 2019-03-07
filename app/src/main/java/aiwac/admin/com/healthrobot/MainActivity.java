@@ -32,6 +32,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import aiwac.admin.com.healthrobot.activity.lecture.LectureActivtiy;
 import aiwac.admin.com.healthrobot.activity.loginandregister.LoginActivity;
 import aiwac.admin.com.healthrobot.activity.medicalexam.MedicalExamRecommendActivity;
 import aiwac.admin.com.healthrobot.activity.notification.NotificationActivity;
@@ -55,7 +56,7 @@ import aiwac.admin.com.healthrobot.utils.StringUtil;
 
 public class MainActivity extends AppCompatActivity implements ViewSwitcher.ViewFactory {
 
-    private ImageButton btn_voicechat;
+    private ImageButton btn_voicechat, lectureButton;
     private ArrayList<ExamInfoForCarousel> examInfoForCarousels;
 
     //滚动动画用
@@ -82,6 +83,19 @@ public class MainActivity extends AppCompatActivity implements ViewSwitcher.View
         LoadThreeExamAsyc loadThreeExamAsyc = new LoadThreeExamAsyc();
         loadThreeExamAsyc.execute();
 
+
+
+        lectureButton = (ImageButton)findViewById(R.id.start_lecture);
+        lectureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("tag", "start lecture");
+                Intent intent = new Intent(MainActivity.this, LectureActivtiy.class);
+                startActivity(intent);
+                Toast.makeText(MainActivity.this, "按按钮",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //测肤功能测试
         ImageButton sendButton = (ImageButton) findViewById(R.id.skin);
