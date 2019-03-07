@@ -2,10 +2,14 @@ package aiwac.admin.com.healthrobot.utils;
 
 import android.graphics.Bitmap;
 
+import com.google.gson.JsonObject;
+
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import aiwac.admin.com.healthrobot.bean.BaseEntity;
@@ -16,7 +20,8 @@ import aiwac.admin.com.healthrobot.bean.User;
 import aiwac.admin.com.healthrobot.bean.WifiInfo;
 import aiwac.admin.com.healthrobot.common.Constant;
 import aiwac.admin.com.healthrobot.exception.JsonException;
-
+import aiwac.admin.com.healthrobot.medicalexam.model.MedicalExam;
+import aiwac.admin.com.healthrobot.notification.Notification;
 
 
 /**     对象和json直接的相互转换
@@ -541,5 +546,189 @@ public class JsonUtil {
             throw new JsonException(Constant.JSON_PARSE_EXCEPTION, e);
         }
     }
+    /**
+     * 向服务器请求--7.体检推荐摘要查询
+     */
+    public static String requestMedicalExamSummaryString(){
+        try {
+            BaseEntity baseEntity = new BaseEntity();
+            baseEntity.setBusinessType(Constant.WEBSOCKET_MEDICAL_EXAM_SUMMARY_BUSSINESSTYPE_CODE);
+            //WEBSOCKET_MEDICAL_EXAM_SUMMARY_BUSSINESSTYPE_CODE="0007";//体检推荐摘要查询
+            String stringJson = JsonUtil.baseEntity2Json(baseEntity);
+            return stringJson;
+        } catch (Exception e) {
+            LogUtil.d(e.getMessage());
+            //其他异常处理
+        }
+        return "";
+    }
 
+    /**
+     * 把json转化为medicalexam类型的list，供体检推荐摘要查询使用
+     * @param json
+     * @return
+     */
+    public static List<MedicalExam> jsonToMedicalExam(String json){
+        List<MedicalExam> list =new ArrayList<MedicalExam>();
+        try {
+            JSONObject root = new JSONObject(json);
+            JSONArray jsonArray = root.getJSONArray(Constant.WEBSOCKET_MESSAGE_ITEMS);
+            for(int i=0;i<jsonArray.length();i++){
+                JSONObject oneItem=jsonArray.getJSONObject(i);
+                MedicalExam medicalExam = new MedicalExam();
+                medicalExam.setExamID(oneItem.getInt(Constant.WEBSOCKET_EXAM_ID));
+                medicalExam.setName(oneItem.getString(Constant.WEBSOCKET_EXAM_NAME));
+                medicalExam.setDescription(oneItem.getString(Constant.WEBSOCKET_EXAM_DESCRIPTION));
+                medicalExam.setDate(oneItem.getString(Constant.WEBSOCKET_EXAM_UPDATETIME));
+                medicalExam.setCover(ImageUtil.getBitmap(oneItem.getString(Constant.WEBSOCKET_EXAM_COVER)));
+                list.add(medicalExam);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    /**
+     * 向服务器请求--8.体检推荐详细信息查询
+     */
+    public static String requestMedicalExamDetailString(final int examID){
+
+        JSONObject root = new JSONObject();
+        BaseEntity baseEntity = new BaseEntity();
+        try {
+            root.put(Constant.WEBSOCKET_MESSAGE_CLIENTID, baseEntity.getClientId());
+
+            // WEBSOCKET_MEDICAL_EXAM_DETAIL_BUSSINESSTYPE_CODE="0008";//体检推荐详细信息查询
+            root.put(Constant.WEBSOCKET_MESSAGE_BUSSINESSTYPE, Constant.WEBSOCKET_MEDICAL_EXAM_DETAIL_BUSSINESSTYPE_CODE);
+            root.put(Constant.WEBSOCKET_MESSAGE_UUID, UUID.randomUUID().toString());
+            root.put(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE, baseEntity.getClientType());
+            root.put(Constant.WEBSOCKET_MESSAGE_TIME, System.currentTimeMillis());
+
+            root.put(Constant.WEBSOCKET_EXAM_ID,examID);
+
+            LogUtil.d(Constant.JSON_GENERATE_SUCCESS + root.toString());
+
+            return root.toString();
+        } catch (Exception e) {
+            LogUtil.d(e.getMessage());
+            //其他异常处理
+            LogUtil.d(Constant.JSON_GENERATE_EXCEPTION);
+            throw new JsonException(Constant.JSON_GENERATE_EXCEPTION, e);
+        }
+    }
+
+    /**
+     * 从服务器端传来的json，从中获取examContext
+     * @param json
+     * @return
+     */
+    public static String getExamContextFromJson(String json){
+        try {
+            JSONObject root=new JSONObject(json);
+            return root.getString(Constant.WEBSOCKET_EXAM_CONTEXT);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "获取内容失败";
+    }
+
+
+    /**
+     * 向服务器请求--22.体检套餐查询
+     */
+    public static String requestMedicalExamMenuString(){
+        try {
+            BaseEntity baseEntity = new BaseEntity();
+            baseEntity.setBusinessType(Constant.WEBSOCKET_MEDICAL_EXAM_MENU_CODE);
+            //WEBSOCKET_MEDICAL_EXAM_MENU_CODE="0022";//体检套餐查询
+            String stringJson = JsonUtil.baseEntity2Json(baseEntity);
+            return stringJson;
+        } catch (Exception e) {
+            LogUtil.d(e.getMessage());
+            //其他异常处理
+        }
+        return "";
+    }
+
+    /**
+     * 从服务器获取 体检套餐的link
+     * @param json
+     * @return
+     */
+    public static String getMedicalExamMenuLinkFromJson(String json){
+        try {
+            JSONObject root=new JSONObject(json);
+            return root.getString(Constant.WEBSOCKET_EXAM_MENU_LINK);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    /**
+     * 解析消息通知
+     * @param json
+     * @return
+     */
+    public static Notification json2Notification(String json){
+        try {
+            JSONObject root=new JSONObject(json);
+            Notification notification = new Notification();
+            notification.setMessageID(root.getInt(Constant.WEBSOCKET_NOTIFICTION_MESSAGEID));
+            notification.setMessageType(root.getInt(Constant.WEBSOCKET_NOTIFICTION_MESSAGETYPE));
+            notification.setIsRead(0);//1已读 0未读
+            return notification;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 向服务器请求健康报告
+     * @param resultID
+     * @return
+     */
+    public static String ResultId2Json(int resultID){
+
+        JSONObject root = new JSONObject();
+        BaseEntity baseEntity = new BaseEntity();
+        try {
+            root.put(Constant.WEBSOCKET_MESSAGE_CLIENTID, baseEntity.getClientId());
+
+            // WEBSOCKET_HEALTH_WEEKLY_REPORT_CODE="0015";//健康周报，健康检查结果
+            root.put(Constant.WEBSOCKET_MESSAGE_BUSSINESSTYPE, Constant.WEBSOCKET_HEALTH_WEEKLY_REPORT_CODE);
+            root.put(Constant.WEBSOCKET_MESSAGE_UUID, UUID.randomUUID().toString());
+            root.put(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE, baseEntity.getClientType());
+            root.put(Constant.WEBSOCKET_MESSAGE_TIME, System.currentTimeMillis());
+
+            root.put(Constant.WEBSOCKET_RESULT_ID,resultID);
+
+            LogUtil.d(Constant.JSON_GENERATE_SUCCESS + root.toString());
+
+            return root.toString();
+        } catch (Exception e) {
+            LogUtil.d(e.getMessage());
+            //其他异常处理
+            LogUtil.d(Constant.JSON_GENERATE_EXCEPTION);
+            throw new JsonException(Constant.JSON_GENERATE_EXCEPTION, e);
+        }
+    }
+
+
+    /**
+     * 从服务器获取 体检套餐的link
+     * @param json
+     * @return
+     */
+    public static String getHealthWeeklyReportLinkFromJson(String json){
+        try {
+            JSONObject root=new JSONObject(json);
+            return root.getString(Constant.WEBSOCKET_HEALTH_WEEKLY_REPORT_RESULT_CONTEXT);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }

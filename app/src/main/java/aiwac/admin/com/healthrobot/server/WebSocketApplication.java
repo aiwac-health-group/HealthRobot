@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Queue;
 
 import aiwac.admin.com.healthrobot.HealthRobotApplication;
 import aiwac.admin.com.healthrobot.common.Constant;
@@ -143,6 +144,8 @@ public class WebSocketApplication {
         webSocketHelper.send(json);
 
     }
+
+
 
 
 }

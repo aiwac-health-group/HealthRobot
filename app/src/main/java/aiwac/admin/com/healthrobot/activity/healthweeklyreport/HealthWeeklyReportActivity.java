@@ -1,8 +1,9 @@
-package aiwac.admin.com.healthrobot.activity.medicalexam;
+package aiwac.admin.com.healthrobot.activity.healthweeklyreport;
 
-import android.os.Bundle;
+import android.content.Intent;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -12,8 +13,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import aiwac.admin.com.healthrobot.R;
-import aiwac.admin.com.healthrobot.bean.BaseEntity;
-import aiwac.admin.com.healthrobot.medicalexam.model.MedicalExam;
+import aiwac.admin.com.healthrobot.activity.medicalexam.MedicalExamMenuActivity;
+import aiwac.admin.com.healthrobot.common.Constant;
 import aiwac.admin.com.healthrobot.medicalexam.tool.LoadFileModel;
 import aiwac.admin.com.healthrobot.medicalexam.tool.Md5Tool;
 import aiwac.admin.com.healthrobot.medicalexam.tool.SuperFileView2;
@@ -25,8 +26,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MedicalExamMenuActivity extends AppCompatActivity {
-    private static final String TAG="ActivityMedicalExamMenu";
+public class HealthWeeklyReportActivity extends AppCompatActivity {
+
+    private static final String TAG="HealthWRepActivity";
     private SuperFileView2 mSuperFileView;
     private static String filePath;//保存文件路径，。可以是网络路径
     private boolean runExit=false;//退出询问线程的标志位
@@ -34,7 +36,7 @@ public class MedicalExamMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_medical_exam_menu);
+        setContentView(R.layout.activity_health_weekly_report);
         init();
     }
     public void init() {
@@ -59,7 +61,10 @@ public class MedicalExamMenuActivity extends AppCompatActivity {
      * 从服务器获取文件的网络地址
      */
     private void getFileUrlFromServer(){
-        String stringJson = JsonUtil.requestMedicalExamMenuString();
+        Intent intent = getIntent();
+        int resultID = intent.getIntExtra(Constant.WEBSOCKET_NOTIFICTION_MESSAGEID,0);
+
+        String stringJson = JsonUtil.ResultId2Json(resultID);
         WebSocketApplication.getWebSocketApplication().send(stringJson);
         filePath="";
 
@@ -249,6 +254,6 @@ public class MedicalExamMenuActivity extends AppCompatActivity {
     }
 
     public static void setFilePath(String filePath) {
-        MedicalExamMenuActivity.filePath = filePath;
+        HealthWeeklyReportActivity.filePath = filePath;
     }
 }

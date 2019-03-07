@@ -12,9 +12,12 @@ import android.widget.ListView;
 import java.util.List;
 
 import aiwac.admin.com.healthrobot.R;
+import aiwac.admin.com.healthrobot.common.Constant;
 import aiwac.admin.com.healthrobot.medicalexam.adapter.GetMedicalExamUtil;
 import aiwac.admin.com.healthrobot.medicalexam.adapter.MedicalExamAdapter;
 import aiwac.admin.com.healthrobot.medicalexam.model.MedicalExam;
+import aiwac.admin.com.healthrobot.server.WebSocketApplication;
+import aiwac.admin.com.healthrobot.utils.JsonUtil;
 import zuo.biao.library.base.BaseHttpListActivity;
 import zuo.biao.library.interfaces.AdapterCallBack;
 import zuo.biao.library.interfaces.OnBottomDragListener;
@@ -81,6 +84,11 @@ public class MedicalExamRecommendActivity extends BaseHttpListActivity<MedicalEx
     @Override
     public void initData() {//必须调用
         super.initData();
+        getMedicalExamRecommend();//获得体检推荐摘要
+    }
+    public void getMedicalExamRecommend(){
+        /*String string = JsonUtil.requestMedicalExamSummaryString();
+        WebSocketApplication.getWebSocketApplication().send(string);*/
     }
     @Override
     public void getListAsync(final int page) {
@@ -90,8 +98,15 @@ public class MedicalExamRecommendActivity extends BaseHttpListActivity<MedicalEx
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
-                onHttpResponse(-page, page >= 5 ? null : JSON.toJSONString(GetMedicalExamUtil.getUserList(page, 10)), null);
+                //onHttpResponse(-page, page >= 5 ? null : JSON.toJSONString(GetMedicalExamUtil.getUserList(page, 10)), null);
+                while (GetMedicalExamUtil.list.isEmpty()){
+                    try {
+                        Thread.sleep(700);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                onHttpResponse(-page, page >= 5 ? null : JSON.toJSONString(GetMedicalExamUtil.list), null);
             }
         }, 1000);
         //仅测试用>>>>>>>>>>>>
@@ -122,7 +137,7 @@ public class MedicalExamRecommendActivity extends BaseHttpListActivity<MedicalEx
         // toActivity(UserActivity.createIntent(context, id));
         Log.d(TAG, "在体检推荐的消息页：点击了一项："+position+"  id:"+id);
         Intent intent = new Intent(MedicalExamRecommendActivity.this,MedicalExamDetailActivity.class);
-        intent.putExtra("position",position);
+        intent.putExtra("position",GetMedicalExamUtil.list.get(position));
         startActivity(intent);
     }
 

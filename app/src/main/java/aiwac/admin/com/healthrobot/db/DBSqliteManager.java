@@ -90,6 +90,14 @@ public class DBSqliteManager extends SQLiteOpenHelper{
         timerMap.put("isOpen", "varchar(1)");
         timerMap.put("isCommit", "varchar(1) default('2')");
         createTable(db, Constant.DB_TIMER_TABLENAME, timerMap);
+
+        //创建消息数据库
+        HashMap<String,String> notificationMap=new HashMap<String,String >();
+        notificationMap.put("notificationid","integer PRIMARY KEY autoincrement");
+        notificationMap.put("messageid","integer");//表示体检推荐ID或者周报ID，挂号id
+        notificationMap.put("messagetype","integer");//0表示新的体检推荐，1表示健康检测周报,2表示挂号结果
+        notificationMap.put("isread","integer");//0未读，1已读
+        createTable(db,Constant.DB_Notification,notificationMap);
     }
 
     @Override

@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         LogUtil.d( Constant.USER_IS_LOGIN);
         if(!StringUtil.isValidate(UserData.getUserData().getNumber())){
             //用户没有登录, 跳转到登录界面
-            ActivityUtil.skipActivity(MainActivity.this, LoginActivity.class);
+            //ActivityUtil.skipActivity(MainActivity.this, LoginActivity.class);
         }
 
 

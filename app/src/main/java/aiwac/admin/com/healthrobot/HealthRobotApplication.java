@@ -1,6 +1,5 @@
 package aiwac.admin.com.healthrobot;
 
-import android.app.Application;
 import android.content.Context;
 
 import aiwac.admin.com.healthrobot.utils.LogUtil;

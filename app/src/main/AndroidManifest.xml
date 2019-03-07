@@ -27,7 +27,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".activity.loginandregister.LoginActivity" />
         <activity android:name=".activity.loginandregister.RegisterActivity" />
         <activity android:name=".activity.loginandregister.ConnectWifiActivity" />
@@ -59,11 +59,14 @@
         <activity android:name=".activity.medicalexam.MedicalExamRecommendActivity" />
         <activity android:name=".activity.medicalexam.MedicalExamDetailActivity" />
         <activity android:name=".activity.medicalexam.MedicalExamMenuActivity" />
-        <activity android:name=".activity.notification.NotificationActivity"></activity>
+        <activity android:name=".activity.notification.NotificationActivity" />
+
         <service
             android:name=".service.SpeechRecogService"
             android:enabled="true"
             android:exported="true" />
+
+        <activity android:name=".activity.healthweeklyreport.HealthWeeklyReportActivity"></activity>
     </application>
 
 </manifest>

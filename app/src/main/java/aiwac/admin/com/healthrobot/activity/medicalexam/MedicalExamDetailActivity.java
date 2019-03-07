@@ -13,27 +13,68 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import aiwac.admin.com.healthrobot.R;
+import aiwac.admin.com.healthrobot.common.Constant;
 import aiwac.admin.com.healthrobot.medicalexam.adapter.GetMedicalExamUtil;
 import aiwac.admin.com.healthrobot.medicalexam.model.MedicalExam;
+import aiwac.admin.com.healthrobot.server.WebSocketApplication;
+import aiwac.admin.com.healthrobot.utils.JsonUtil;
 
 public class MedicalExamDetailActivity extends AppCompatActivity {
-
+    private TextView tvTitle=findViewById(R.id.textview_rec_detail_title);
+    private TextView tvDate=findViewById(R.id.textview_rec_detail_date);
+    private TextView tvcontext=findViewById(R.id.textview_rec_detail_context);
+    private Thread thread;
+    private boolean runExit=false;//退出询问线程的标志位
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medical_exam_detail);
-        initView(getIntent().getExtras().getInt("position"));
+        initViewFromWeb(getIntent().getExtras().getInt("position"));
     }
 
-    private void initView(int position){
-        TextView tvTitle=findViewById(R.id.textview_rec_detail_title);
-        TextView tvDate=findViewById(R.id.textview_rec_detail_date);
-        TextView tvcontext=findViewById(R.id.textview_rec_detail_context);
-        //ImageView img=findViewById(R.id.imageview_rec_detail_image);
+    /**
+     * 这里是从服务器通过examid来查询体检推荐的具体信息
+     * @param position
+     */
+    private void initViewFromWeb(int position){
         MedicalExam medicalExam= GetMedicalExamUtil.getList().get(position);
-        tvTitle.setText(medicalExam.getTitle());
-        tvcontext.setText(medicalExam.getExamContext());
+        tvTitle.setText(medicalExam.getName());
         tvDate.setText(medicalExam.getDataToShowAsText());
+
+        //发送id给服务器 ，查询详细内容，内容会在WebSocketClientHelper的onMessage里赋值给MedicalExam里的examContext中
+        String string = JsonUtil.requestMedicalExamDetailString(medicalExam.getExamID());
+        WebSocketApplication.getWebSocketApplication().send(string);
+
+        //检查examContext有没有内容，直到有内容的时候就显示
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while((MedicalExam.getExamContext()==null||MedicalExam.getExamContext().equals(""))&&!runExit){
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                tvcontext.setText(MedicalExam.getExamContext());
+            }
+        });
+        thread.start();
+    }
+
+    /**
+     * 这里是本地显示体检推荐的测试函数
+     * @param position
+     */
+    private void initView(int position){
+
+        //ImageView img=findViewById(R.id.imageview_rec_detail_image);
+        final MedicalExam medicalExam= GetMedicalExamUtil.getList().get(position);
+        tvTitle.setText(medicalExam.getName());
+        tvcontext.setText(medicalExam.getDescription());
+        tvDate.setText(medicalExam.getDataToShowAsText());
+
+
 
     /*    img.setImageBitmap(
                 BitmapFactory.decodeResource(getResources(),R.drawable.test)
@@ -77,5 +118,14 @@ public class MedicalExamDetailActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //退出页面的时候要吧这个内容设置为空
+        runExit=true;
+        MedicalExam.setExamContext("");
+
     }
 }

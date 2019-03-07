@@ -2,13 +2,10 @@ package aiwac.admin.com.healthrobot.activity.skin;
 
 import android.content.Intent;
 import android.os.Bundle;
-<<<<<<< Updated upstream
 //import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
-=======
 import android.support.v7.app.AppCompatActivity;
->>>>>>> Stashed changes
 import android.widget.TextView;
 
 import java.util.UUID;
@@ -149,9 +146,6 @@ public class BeautyResultActivity extends AppCompatActivity {
                 break;
         }
 
-<<<<<<< Updated upstream
-
-=======
         //把结果上传到后台
         ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
             @Override
@@ -190,8 +184,6 @@ public class BeautyResultActivity extends AppCompatActivity {
                 }
             }
         } );
->>>>>>> Stashed changes
-
 
 
 
