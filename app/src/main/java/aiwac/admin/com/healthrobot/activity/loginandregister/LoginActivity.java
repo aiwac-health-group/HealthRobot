@@ -42,7 +42,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText checkcodeEidt;
 
     private String phoneNumber;
-    private String from;//从哪个界面跳转来的
 
     //处理获取验证码handler
     Handler handler = new Handler(){
@@ -232,7 +231,11 @@ public class LoginActivity extends AppCompatActivity {
                                 if(resultJson != null) {
                                     String errorCode = JsonUtil.parseErrorCode(resultJson);
                                     if(errorCode.equals(Constant.MESSAGE_ERRORCODE_2000)){
-
+                                        String token =JsonUtil.parseToken(resultJson);
+                                        SharedPreferences.Editor editor = getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE).edit();
+                                        editor.putString(Constant.USER_DATA_FIELD_TOKEN, token);
+                                        editor.putLong(Constant.USER_DATA_FIELD_TOKENTIME, System.currentTimeMillis());
+                                        editor.apply();
                                         UserData userData = UserData.getUserData();
                                         userData.setNumber(phoneNumber);
                                         message.what = Constant.USER_CHECKCODE_SUCCESS;

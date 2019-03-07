@@ -6,17 +6,15 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import aiwac.admin.com.healthrobot.bean.BaseEntity;
+import aiwac.admin.com.healthrobot.bean.ExamInfoForCarousel;
 import aiwac.admin.com.healthrobot.bean.RegisterInfo;
 import aiwac.admin.com.healthrobot.bean.SkinResult;
-import aiwac.admin.com.healthrobot.bean.TimerEntity;
 import aiwac.admin.com.healthrobot.bean.User;
 import aiwac.admin.com.healthrobot.bean.WifiInfo;
 import aiwac.admin.com.healthrobot.common.Constant;
-import aiwac.admin.com.healthrobot.db.UserData;
 import aiwac.admin.com.healthrobot.exception.JsonException;
 
 
@@ -76,6 +74,20 @@ public class JsonUtil {
             throw new JsonException(Constant.JSON_PARSE_EXCEPTION, e);
         }
     }
+
+    //解析errorCode 获取消息是否成功传递到后台
+    public static String parseToken(String jsonStr){
+        try{
+            JSONObject root = new JSONObject(jsonStr);
+            String result = root.getString(Constant.USER_DATA_FIELD_TOKEN);
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            LogUtil.d(Constant.JSON_PARSE_EXCEPTION);
+            throw new JsonException(Constant.JSON_PARSE_EXCEPTION, e);
+        }
+    }
+
 
     //解析ErrorDesc
     public static String parseErrorDesc(String jsonStr){
@@ -162,88 +174,6 @@ public class JsonUtil {
             e.printStackTrace();
             LogUtil.d(Constant.JSON_GENERATE_EXCEPTION);
             throw new JsonException(Constant.JSON_GENERATE_EXCEPTION, e);
-        }
-    }
-
-    //将timerEntity对象转换成json字符串
-    public static String timerEntity2Json(TimerEntity timerEntity){
-        JSONObject root = new JSONObject();
-        try{
-            root.put(Constant.WEBSOCKET_MESSAGE_CLIENTID, timerEntity.getClientId());
-            root.put(Constant.WEBSOCKET_MESSAGE_BUSSINESSTYPE, Constant.WEBSOCKET_TIMER_BUSSINESSTYPE_CODE);
-            root.put(Constant.WEBSOCKET_MESSAGE_UUID, timerEntity.getUuid());
-            root.put(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE, timerEntity.getClientType());
-            root.put(Constant.WEBSOCKET_TIMER_OPERATIONTYPE, timerEntity.getOperationType());
-            root.put(Constant.WEBSOCKET_TIMER_ATTENTIONTYPE, timerEntity.getAttentionType());
-            root.put(Constant.WEBSOCKET_TIMER_ATTENTIONCONTENT, timerEntity.getAttentionContent());
-            root.put(Constant.WEBSOCKET_TIMER_ACTIVATIONMODE, timerEntity.getActivationMode());
-            root.put(Constant.WEBSOCKET_TIMER_ACTIVATEDTIME, timerEntity.getActivatedTime());
-
-            LogUtil.d(Constant.JSON_GENERATE_SUCCESS + root.toString());
-            return root.toString();
-        }catch (Exception e){
-            e.printStackTrace();
-            LogUtil.d(Constant.JSON_GENERATE_EXCEPTION);
-            throw new JsonException(Constant.JSON_GENERATE_EXCEPTION, e);
-        }
-    }
-
-
-
-
-
-    //发送定时提醒同步请求
-    public static String timerSync2Json(){
-        try{
-            //基本信息
-            JSONObject root = new JSONObject();
-            root.put(Constant.WEBSOCKET_MESSAGE_CLIENTID, UserData.getUserData().getNumber());
-            root.put(Constant.WEBSOCKET_MESSAGE_BUSSINESSTYPE, Constant.WEBSOCKET_SYNC_REMINDER_BUSSINESSTYPE_CODE);
-            root.put(Constant.WEBSOCKET_MESSAGE_UUID, UUID.randomUUID().toString());
-            root.put(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE, Constant.WEBSOCKET_MESSAGE_CLIENTTYPE_NUMBER);
-
-            LogUtil.d( Constant.JSON_GENERATE_SUCCESS + root.toString());
-            return root.toString();
-        }catch (Exception e){
-            e.printStackTrace();
-            LogUtil.d( Constant.JSON_GENERATE_EXCEPTION);
-            throw new JsonException(Constant.JSON_GENERATE_EXCEPTION, e);
-        }
-    }
-
-    //解析同步定时提醒json
-    public static List<TimerEntity> parseTimerSync(String jsonStr){
-        try{
-            List<TimerEntity> timerEntities = new ArrayList<TimerEntity>();
-            JSONObject root = new JSONObject(jsonStr);
-
-            JSONArray jsonArray = root.getJSONArray(Constant.WEBSOCKET_BUSINESS_DATA);
-            for(int i=0; i<jsonArray.length(); i++) {
-                //共同设置
-                TimerEntity timerEntity = new TimerEntity();
-                timerEntity.setClientId(root.getString(Constant.WEBSOCKET_MESSAGE_CLIENTID));
-                timerEntity.setClientType(root.getString(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE));
-                timerEntity.setOperationType(Constant.TIMER_OPERATIONTYPE_ADD);
-                timerEntity.setBusinessType(Constant.WEBSOCKET_SYNC_REMINDER_BUSSINESSTYPE_CODE);
-                timerEntity.setCommit(true);
-                timerEntity.setOpen(true);
-
-                JSONObject timerJson = jsonArray.getJSONObject(i);
-                //不同的定时提醒
-                timerEntity.setUuid(timerJson.getString(Constant.WEBSOCKET_MESSAGE_UUID));
-                timerEntity.setActivatedTime(timerJson.getString(Constant.WEBSOCKET_TIMER_ACTIVATEDTIME));
-                timerEntity.setAttentionType(timerJson.getString(Constant.WEBSOCKET_TIMER_ATTENTIONTYPE));
-                timerEntity.setAttentionContent(timerJson.getString(Constant.WEBSOCKET_TIMER_ATTENTIONCONTENT));
-                timerEntity.setActivationMode(timerJson.getString(Constant.WEBSOCKET_TIMER_ACTIVATIONMODE));
-
-                timerEntities.add(timerEntity);
-            }
-
-            return timerEntities;
-        }catch (Exception e){
-            e.printStackTrace();
-            LogUtil.d( Constant.JSON_PARSE_EXCEPTION);
-            throw new JsonException(Constant.JSON_PARSE_EXCEPTION, e);
         }
     }
 
@@ -528,6 +458,7 @@ public class JsonUtil {
         }
     }
 
+
     public static RegisterInfo jsonToRegisterInfo(String json){
         RegisterInfo registerInfo = new RegisterInfo();
         try{
@@ -546,6 +477,69 @@ public class JsonUtil {
         }
     }
 
+    public static ArrayList<RegisterInfo> jsonToRegisterInfoList(String json){
+        ArrayList<RegisterInfo> list = new ArrayList<>();
 
+        try{
+            JSONObject object = new JSONObject(json);
+            JSONArray infos = object.getJSONArray(Constant.WEBSOCKET_MESSAGE_ITEMS);
+            for(int i=0; i<infos.length(); i++){
+                JSONObject root = infos.getJSONObject(i);
+                RegisterInfo registerInfo = new RegisterInfo();
+                registerInfo.setProvince(root.getString(Constant.WEBSOCKET_REGISTERINFO_PROVINCE));
+                registerInfo.setBusinessType(root.getString(Constant.WEBSOCKET_REGISTERINFO_CITY));
+                registerInfo.setHospital(root.getString(Constant.WEBSOCKET_REGISTERINFO_HOSPITAL));
+                registerInfo.setDepartment(root.getString(Constant.WEBSOCKET_REGISTERINFO_DEPARTMENT));
+                registerInfo.setRegisterStatus(root.getString(Constant.WEBSOCKET_REGISTERINFO_STATUS));
+                registerInfo.setDescription(root.getString(Constant.WEBSOCKET_REGISTERINFO_DESCRIPTION));
+                registerInfo.setCreateTime(root.getString(Constant.WEBSOCKET_REGISTERINFO_CREATETIME));
+                registerInfo.setUpdateTime(root.getString(Constant.WEBSOCKET_REGISTERINFO_UPDATETIME));
+                list.add(registerInfo);
+            }
+            return list;
+        }catch (Exception e){
+            e.printStackTrace();
+            LogUtil.d( Constant.JSON_PARSE_EXCEPTION);
+            throw new JsonException(Constant.JSON_PARSE_EXCEPTION, e);
+        }
+    }
+
+
+    //将json串转换成ExamInfoForCarousel对象
+    public static ArrayList<ExamInfoForCarousel> jsonToExamInfoForCarouselList(String json){
+        ArrayList<ExamInfoForCarousel> list = new ArrayList<>();
+        try{
+            JSONObject object = new JSONObject(json);
+            JSONArray infos = object.getJSONArray(Constant.WEBSOCKET_MESSAGE_ITEMS);
+            for(int i=0; i<infos.length(); i++){
+                JSONObject root = infos.getJSONObject(i);
+                ExamInfoForCarousel examInfoForCarousel = new ExamInfoForCarousel();
+                examInfoForCarousel.setExamID(root.getString(Constant.WEBSOCKET_EXAM_ID));
+                examInfoForCarousel.setCover(ImageUtil.getBitmap(root.getString(Constant.WEBSOCKET_EXAM_COVER)));
+                list.add(examInfoForCarousel);
+            }
+            return list;
+        }catch (Exception e){
+            e.printStackTrace();
+            LogUtil.d( Constant.JSON_PARSE_EXCEPTION);
+            throw new JsonException(Constant.JSON_PARSE_EXCEPTION, e);
+        }
+    }
+
+
+    public static ExamInfoForCarousel jsonToExamInfoForCarousel(String json){
+        try{
+            JSONObject root = new JSONObject(json);
+
+            ExamInfoForCarousel examInfoForCarousel = new ExamInfoForCarousel();
+            examInfoForCarousel.setExamID(root.getString(Constant.WEBSOCKET_MESSAGE_ID));
+            examInfoForCarousel.setCover(ImageUtil.getBitmap(root.getString(Constant.WEBSOCKET_EXAM_COVER)));
+            return examInfoForCarousel;
+        }catch (Exception e){
+            e.printStackTrace();
+            LogUtil.d( Constant.JSON_PARSE_EXCEPTION);
+            throw new JsonException(Constant.JSON_PARSE_EXCEPTION, e);
+        }
+    }
 
 }

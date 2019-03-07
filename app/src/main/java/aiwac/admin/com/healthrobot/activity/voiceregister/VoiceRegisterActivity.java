@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import aiwac.admin.com.healthrobot.BaiduSpeechSynthesizer.SpeechSyntherizer;
 import aiwac.admin.com.healthrobot.R;
+import aiwac.admin.com.healthrobot.bean.BaseEntity;
 import aiwac.admin.com.healthrobot.bean.ProvinceBean;
 import aiwac.admin.com.healthrobot.bean.RegisterInfo;
 import aiwac.admin.com.healthrobot.common.Constant;
@@ -71,7 +72,7 @@ public class VoiceRegisterActivity extends BaseActivity {
         btn_registerHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
+                ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
                     @Override
                     public void run() {
                         try{
@@ -84,8 +85,9 @@ public class VoiceRegisterActivity extends BaseActivity {
                             //其他异常处理
                         }
                     }
-                });*/
+                });
 
+                toActivity(RegisterHistoryActivity.createIntent(context));
 
             }
         });

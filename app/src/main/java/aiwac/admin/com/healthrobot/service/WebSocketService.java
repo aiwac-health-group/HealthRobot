@@ -37,10 +37,6 @@ public class WebSocketService extends Service{
         //获取WebSocketApplication对象，保存一些必要的变量
         webSocketApplication = WebSocketApplication.getWebSocketApplication();
 
-        //初始化对象
-        timerIntent = new Intent();
-        timerIntent.setClass(WebSocketService.this, TimerService.class);
-
         LogUtil.d( "WebSocketService" + Constant.SERVICE_CREATE);
     }
 

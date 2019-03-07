@@ -26,6 +26,7 @@ allprojects {
             name 'Google'
 
         }
+        maven { url 'https://www.jitpack.io' }
 
     }
 }

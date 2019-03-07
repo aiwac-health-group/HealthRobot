@@ -110,7 +110,7 @@ public class WaitChatActivity extends AppCompatActivity{
      * 接收websocketclientHelper发过来的json
      * @param messageEvent
      */
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void event(MessageEvent messageEvent){
 
         String roomID = JsonUtil.parseByKey(messageEvent.getMessage(),"roomID");

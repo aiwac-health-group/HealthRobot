@@ -1,12 +1,43 @@
 package aiwac.admin.com.healthrobot.bean;
 
+import com.bin.david.form.annotation.SmartColumn;
+import com.bin.david.form.annotation.SmartTable;
+
+@SmartTable(name="挂号信息列表")
 public class RegisterInfo extends BaseEntity {
+
+    @SmartColumn(id =1,name = "创建时间")
+    private String createTime;
+    @SmartColumn(id =2,name = "省份")
     private String province;
+    @SmartColumn(id =3,name = "城市")
     private String city;
+    @SmartColumn(id =4,name = "医院")
     private String hospital;
+    @SmartColumn(id =5,name = "科室")
     private String department;
+    @SmartColumn(id =6,name = "挂号状态")
     private String registerStatus;
+    @SmartColumn(id =7,name = "备注")
     private String description;
+    @SmartColumn(id =8,name = "更新时间")
+    private String updateTime;
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
 
     public String getRegisterStatus() {
         return registerStatus;

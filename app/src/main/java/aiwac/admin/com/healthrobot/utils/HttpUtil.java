@@ -1,5 +1,7 @@
 package aiwac.admin.com.healthrobot.utils;
 
+import android.content.SharedPreferences;
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
@@ -8,8 +10,11 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 
+import aiwac.admin.com.healthrobot.HealthRobotApplication;
 import aiwac.admin.com.healthrobot.common.Constant;
 import aiwac.admin.com.healthrobot.exception.HttpException;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**     封装访问服务器细节
  * Created by luwang on 2017/10/24.
@@ -220,7 +225,78 @@ public class HttpUtil {
         }
     }
 
+    public static String requestTokenString(String baseUrl, String jsonRequest) {
+        DataOutputStream dos = null;
+        HttpURLConnection urlConn = null;
+        try {
 
+            // 请求的参数转换为byte数组
+            byte[] postData = jsonRequest.toString().getBytes();
+
+            //连接网络
+            // 新建一个URL对象
+            URL url = new URL(baseUrl);
+            // 打开一个HttpURLConnection连接
+            urlConn = (HttpURLConnection) url.openConnection();
+            // 设置连接超时时间
+            urlConn.setConnectTimeout(5 * 1000);
+            //设置从主机读取数据超时
+            urlConn.setReadTimeout(5 * 1000);
+            // Post请求必须设置允许输出 默认false
+            urlConn.setDoOutput(true);
+            //设置请求允许输入 默认是true
+            urlConn.setDoInput(true);
+            // Post请求不能使用缓存
+            urlConn.setUseCaches(false);
+            SharedPreferences pref = HealthRobotApplication.getContext().getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE);
+            String token = pref.getString(Constant.USER_DATA_FIELD_TOKEN, "");
+            String tokenStr = "Bearer " + token;
+            urlConn.addRequestProperty("Authorization", tokenStr);
+
+            // 设置为Post请求
+            urlConn.setRequestMethod(Constant.HTTP_METHOD_POST);
+            //设置本次连接是否自动处理重定向
+            urlConn.setInstanceFollowRedirects(true);
+            // 配置请求Content-Type
+            urlConn.setRequestProperty("Content-Type", "application/json");
+            // 开始连接
+            urlConn.connect();
+            // 发送请求参数
+            dos = new DataOutputStream(urlConn.getOutputStream());
+            dos.write(postData);
+            dos.flush();
+
+            // 判断请求是否成功
+            if (urlConn.getResponseCode() == 200) {
+                // 获取返回的数据
+                /*String result = streamToString(urlConn.getInputStream());
+                LogUtil.d(Constant.HTTP_METHOD_POST_SUCCESS + result);
+                return result;*/
+                return  null;
+            } else {
+                LogUtil.d(Constant.HTTP_METHOD_POST_FAILURE);
+                return null;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            LogUtil.d(Constant.HTTP_METHOD_POST_EXCEPTION);
+            throw new HttpException(Constant.HTTP_METHOD_POST_EXCEPTION, e);
+        }finally {
+            if(dos != null){
+                try{
+                    dos.close();
+                }catch (Exception e){
+                    e.printStackTrace();
+                    LogUtil.d(Constant.HTTP_CLOSE_STREAM_EXCEPTION);
+                }
+            }
+            if(urlConn != null) {
+                // 关闭连接
+                urlConn.disconnect();
+            }
+        }
+    }
 
     /**
      * 将输入流转换成字符串

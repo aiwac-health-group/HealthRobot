@@ -60,15 +60,18 @@ public class Constant {
     //和WebSocket相关的
     public final static String WEBSOCKET_BASE_URL = "ws://" + TEST_IP;
     public final static String WEBSOCKET_USER_IDENTITY = "number";
-    public final static String WEBSOCKET_URL = WEBSOCKET_BASE_URL + "/web/websocket/socketServer";
+    public final static String WEBSOCKET_URL = WEBSOCKET_BASE_URL + "/ws?token=";
     public final static String WEBSOCKET_MESSAGE_BUSSINESSTYPE = "code";
     public final static String WEBSOCKET_MESSAGE_CLIENTID = "account";
     public final static String WEBSOCKET_MESSAGE_UUID = "uniqueID";
     public final static String WEBSOCKET_MESSAGE_CLIENTTYPE = "clientType";
     public final static String WEBSOCKET_MESSAGE_COMMANDPRIORITY = "commandPriority";
     public final static String WEBSOCKET_MESSAGE_PERSONALITYTYPE = "personalityType";
-    public final static String WEBSOCKET_MESSAGE_ERRORDESC = "errorDesc";
+    public final static String WEBSOCKET_MESSAGE_ERRORDESC = "message";
     public final static String WEBSOCKET_MESSAGE_DESCRIPTION = "description";
+    public final static String WEBSOCKET_MESSAGE_ITEMS = "items";;
+
+
 
     public final static String MESSAGE_ERRORCODE_2000 = "2000";
     public final static String MESSAGE_ERRORCODE_2001 = "2001";
@@ -88,6 +91,7 @@ public class Constant {
     public final static String WEBSOCKET_USER_BIRTHDAY = "birthday";
     public final static String WEBSOCKET_USER_ADDRESS = "address";
     public final static String WEBSOCKET_USER_WECHAT = "wechat";
+    public final static String WEBSOCKET_USERDATA_TOKEN = "token";
 
 
     public final static String WEBSOCKET_REGISTERINFO_PROVINCE = "province";
@@ -96,6 +100,8 @@ public class Constant {
     public final static String WEBSOCKET_REGISTERINFO_DEPARTMENT = "department";
     public final static String WEBSOCKET_REGISTERINFO_STATUS = "registerStatus";
     public final static String WEBSOCKET_REGISTERINFO_DESCRIPTION = "description";
+    public final static String WEBSOCKET_REGISTERINFO_CREATETIME = "createTime";
+    public final static String WEBSOCKET_REGISTERINFO_UPDATETIME = "updateTime";
 
     //测肤结果
     public final static String WEBSOCKET_SKINRESULT_FACE = "face";
@@ -109,10 +115,14 @@ public class Constant {
     public final static String WEBSOCKET_SKINRESULT_DIET = "diet";
     public final static String WEBSOCKET_SKINRESULT_MEDICINE = "medicine";
     public final static String WEBSOCKET_SKINRESULT_DRUG = "drug";
-
     public final static String WEBSOCKET_SKINRESULT_RESULT = "result";
 
 
+    public final static String WEBSOCKET_EXAM_ID = "examID";//体检推荐
+    public final static String WEBSOCKET_EXAM_COVER = "cover";
+
+
+    public final static String WEBSOCKET_MESSAGE_ID = "messageID";//新消息通知
 
     public final static String WEBSOCKET_MESSAGE_CLIENTTYPE_NUMBER = "2";
     public final static String WEBSOCKET_QUERYPERSONINFO_BUSSINESSTYPE_CODE = "0005";
@@ -123,8 +133,11 @@ public class Constant {
     public final static String WEBSOCKET_VOICEREGISTER_BUSSINESSTYPE_CODE = "0019";//挂号医院信息
     public final static String WEBSOCKET_REGISTERHISTORY_BUSSINESSTYPE_CODE = "0020";//挂号历史纪录
     public final static String WEBSOCKET_REGISTERRESULT_BUSSINESSTYPE_CODE = "0021";//挂号结果
-    public final static String WEBSOCKET_SYNC_REMINDER_BUSSINESSTYPE_CODE = "0018";
+    public final static String WEBSOCKET_NEW_MESSAGE_BUSSINESSTYPE_CODE = "0018";//新消息通知
     public final static String WEBSOCKET_HANGUPCHAT_BUSSINESSTYPE_CODE = "0017"; //挂断在线问诊
+    public final static String WEBSOCKET_THREE_EXAM_BUSSINESSTYPE_CODE = "0023"; //挂断在线问诊
+
+
 
 
     public final static String WEBSOCKET_USER_IDENTITY_EXCEPTION = "没有用户异常";
@@ -135,7 +148,7 @@ public class Constant {
     public final static String WEBSOCKET_URI_EXCEPTION = "WebSocket构造URI异常或者创建WebSocketClient异常";
     public final static String WEBSOCKET_MESSAGE_FROM_SERVER = "有来自服务器的消息";
     public final static String WEBSOCKET_BUSINESS_DOWNLOAD_PICVOICE = "正在加载图片和声音...";
-    public final static String WEBSOCKET_BUSINESS_DOWNLOAD_EDUCATIONINFO = "正在加载早教资料...";
+    public final static String WEBSOCKET_BUSINESS_DOWNLOAD_INFO = "正在加载...";
     public final static String WEBSOCKET_SERVER_TIMER_WEBSOCKET = "开启一分钟的定时任务检测Websocket连接";
 
     //应用程序相关
@@ -313,13 +326,11 @@ public class Constant {
     public final static String USER_DATA_FIELD_REGISTER = "register";
     public final static String USER_DATA_FIELD_PASSWORD = "password";
     public final static String USER_DATA_FIELD_NUMBER = "number";
-    public final static String USER_DATA_FIELD_TIMER_SYNC = "timer_sync";
-    public final static String USER_DATA_FIELD_TIMER_SYNC_VALUE = "timer_sync";
-    public final static String USER_DATA_PERSISTENCE_TIMER_SYNC = "利用SharedPreferences持久化定时提醒同步标志";
-    public final static String USER_DATA_PERSISTENCE_EDUCATION_SYNC = "利用SharedPreferences持久化早教";
+    public final static String USER_DATA_FIELD_TOKEN = "token";
+    public final static String USER_DATA_FIELD_TOKENTIME = "time";//获取token的时间
     public final static String USER_DATA_PERSISTENCE = "利用SharedPreferences持久化用户数据";
     public final static String USER_DATA_PERSISTENCE_CLEAN = "清空SharedPreferences用户数据";
-    public final static String USER_INPUT_SIGNATURE = "请输入个性签名";
+
 
 
 }

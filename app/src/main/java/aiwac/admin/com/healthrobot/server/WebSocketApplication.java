@@ -1,17 +1,21 @@
 package aiwac.admin.com.healthrobot.server;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
+import aiwac.admin.com.healthrobot.HealthRobotApplication;
 import aiwac.admin.com.healthrobot.common.Constant;
 import aiwac.admin.com.healthrobot.db.UserData;
 import aiwac.admin.com.healthrobot.exception.WebSocketException;
 import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
 import aiwac.admin.com.healthrobot.utils.LogUtil;
 import aiwac.admin.com.healthrobot.utils.StringUtil;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**     用于WebSocket建立唯一的连接等操作
  * Created by luwang on 2017/10/31.
@@ -29,7 +33,9 @@ public class WebSocketApplication {
 
     private void init(Context context){
         try{
-            URI uri = new URI(Constant.WEBSOCKET_URL);
+            SharedPreferences pref = HealthRobotApplication.getContext().getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE);
+            String token = pref.getString(Constant.USER_DATA_FIELD_TOKEN, "");
+            URI uri = new URI(Constant.WEBSOCKET_URL+token);
             //这里会进行和服务端的握手操作
             webSocketHelper = new WebSocketClientHelper(uri, getDefaultMap(),context);
         }catch (Exception e){

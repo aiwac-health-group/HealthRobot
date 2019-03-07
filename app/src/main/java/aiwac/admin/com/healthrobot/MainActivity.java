@@ -1,48 +1,62 @@
 package aiwac.admin.com.healthrobot;
 
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import aiwac.admin.com.healthrobot.activity.loginandregister.LoginActivity;
 import aiwac.admin.com.healthrobot.activity.medicalexam.MedicalExamRecommendActivity;
 import aiwac.admin.com.healthrobot.activity.notification.NotificationActivity;
 import aiwac.admin.com.healthrobot.activity.skin.AlarmActivity;
 import aiwac.admin.com.healthrobot.activity.skin.SkinMainActivity;
-
-import java.util.Calendar;
-
 import aiwac.admin.com.healthrobot.activity.speechrecog.SpeechRecogActivity;
 import aiwac.admin.com.healthrobot.activity.voicechat.WaitChatActivity;
 import aiwac.admin.com.healthrobot.bean.BaseEntity;
+import aiwac.admin.com.healthrobot.bean.ExamInfoForCarousel;
+import aiwac.admin.com.healthrobot.bean.MessageEvent;
 import aiwac.admin.com.healthrobot.common.Constant;
+import aiwac.admin.com.healthrobot.db.UserData;
 import aiwac.admin.com.healthrobot.server.WebSocketApplication;
+import aiwac.admin.com.healthrobot.service.WebSocketService;
 import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
 import aiwac.admin.com.healthrobot.utils.ActivityUtil;
 import aiwac.admin.com.healthrobot.utils.JsonUtil;
 import aiwac.admin.com.healthrobot.utils.LogUtil;
+import aiwac.admin.com.healthrobot.utils.StringUtil;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private Button btn_voicechat;
+    private ArrayList<ExamInfoForCarousel> examInfoForCarousels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         alarm(MainActivity.this);
+        //异步加载，查询体检推荐消息
+        LoadThreeExamAsyc loadThreeExamAsyc = new LoadThreeExamAsyc();
+        loadThreeExamAsyc.execute();
 
 
         //测肤功能测试
@@ -131,25 +145,44 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//    //判断用户是否登录，如果没有登录，则跳转到登录界面
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//
-//        LogUtil.d( Constant.USER_IS_LOGIN);
-//        if(!StringUtil.isValidate(UserData.getUserData().getNumber())){
-//            //用户没有登录, 跳转到登录界面
-//            ActivityUtil.skipActivity(MainActivity.this, LoginActivity.class);
-//        }
-//
-//
-//        //开启服务，创建websocket连接
-//        Intent intent = new Intent(this, WebSocketService.class);
-//        intent.putExtra(Constant.SERVICE_TIMER_TYPE, Constant.SERVICE_TIMER_TYPE_WEBSOCKET);
-//        startService(intent);
-//
-//    }
+    //判断用户是否登录，如果没有登录，则跳转到登录界面
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        LogUtil.d( Constant.USER_IS_LOGIN);
+        if(!StringUtil.isValidate(UserData.getUserData().getNumber())){
+            //用户没有登录, 跳转到登录界面
+            ActivityUtil.skipActivity(MainActivity.this, LoginActivity.class);
+        }
+
+
+        //开启服务，创建websocket连接
+        Intent intent = new Intent(this, WebSocketService.class);
+        intent.putExtra(Constant.SERVICE_TIMER_TYPE, Constant.SERVICE_TIMER_TYPE_WEBSOCKET);
+        startService(intent);
+
+        EventBus.getDefault().register(this);
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(MessageEvent messageEvent) {
+        if(messageEvent.getTo().equals("MainActivity")){
+            //更新体检推荐
+            ExamInfoForCarousel examInfoForCarousel = JsonUtil.jsonToExamInfoForCarousel(messageEvent.getMessage());
+            examInfoForCarousels.remove(0);
+            examInfoForCarousels.add(examInfoForCarousel);
+            //通知界面更改
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
     public void sendJson(final String json) {
         ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
@@ -264,5 +297,62 @@ public class MainActivity extends AppCompatActivity {
 //        });
 //
 //        dialog.show();
+    }
+
+
+
+
+
+    class LoadThreeExamAsyc extends AsyncTask<Void, Void, Boolean> {
+        private AlertDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            View view = View.inflate(MainActivity.this, R.layout.activity_progress, null);
+            builder.setIcon(R.drawable.aiwac);
+            builder.setTitle(Constant.WEBSOCKET_BUSINESS_DOWNLOAD_INFO);
+            builder.setView(view);  //必须使用view加载，如果使用R.layout设置则无法改变bar的进度
+
+            dialog = builder.create();
+            dialog.setCancelable(false);
+
+            dialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            try {
+                BaseEntity baseEntity = new BaseEntity();
+                baseEntity.setBusinessType(Constant.WEBSOCKET_THREE_EXAM_BUSSINESSTYPE_CODE);
+                WebSocketApplication.getWebSocketApplication().getWebSocketHelper().send(JsonUtil.baseEntity2Json(baseEntity));
+                for (int i = 0; i < 10; i++) {
+                    Thread.sleep(500);
+                    examInfoForCarousels = WebSocketApplication.getWebSocketApplication().getWebSocketHelper().getExamInfoForCarousels();
+                    if (examInfoForCarousels!=null) {
+                        return true;
+                    }
+                }
+            } catch (Exception e) {
+                LogUtil.d( e.getMessage());
+                e.printStackTrace();
+            }
+
+            return false;
+        }
+
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            dialog.cancel();
+
+            if (aBoolean) {   //加载轮播
+                //获取控件，添加图片，监听图片点击事件
+
+
+            } else { // 失败， 返回主界面
+                Toast.makeText(MainActivity.this, "当前网络不可用，请检查你的网络设置", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

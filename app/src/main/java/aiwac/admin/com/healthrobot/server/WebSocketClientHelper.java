@@ -2,7 +2,6 @@ package aiwac.admin.com.healthrobot.server;
 
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import org.greenrobot.eventbus.EventBus;
 import org.java_websocket.client.WebSocketClient;
@@ -11,14 +10,15 @@ import org.java_websocket.drafts.Draft_6455;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Map;
 
+import aiwac.admin.com.healthrobot.bean.ExamInfoForCarousel;
+import aiwac.admin.com.healthrobot.bean.MessageEvent;
 import aiwac.admin.com.healthrobot.bean.User;
 import aiwac.admin.com.healthrobot.common.Constant;
-import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
 import aiwac.admin.com.healthrobot.utils.JsonUtil;
 import aiwac.admin.com.healthrobot.utils.LogUtil;
-import aiwac.admin.com.healthrobot.utils.StringUtil;
 
 /**     用于WebSocket客户端通信
  * Created by luwang on 2017/10/31.
@@ -28,6 +28,16 @@ public class WebSocketClientHelper extends WebSocketClient {
 
     private Context context;
     private User user;
+
+    public ArrayList<ExamInfoForCarousel> getExamInfoForCarousels() {
+        return examInfoForCarousels;
+    }
+
+    public void setExamInfoForCarousels(ArrayList<ExamInfoForCarousel> examInfoForCarousels) {
+        this.examInfoForCarousels = examInfoForCarousels;
+    }
+
+    private ArrayList<ExamInfoForCarousel> examInfoForCarousels;
 
     public User getUser(){
         return user;
@@ -94,16 +104,23 @@ public class WebSocketClientHelper extends WebSocketClient {
         try{
             String businessType = JsonUtil.parseBusinessType(json);
             if(businessType.equals(Constant.WEBSOCKET_VOICECHAT_BUSSINESSTYPE_CODE)){  //在线问诊房间号
-                EventBus.getDefault().post(json);
+                EventBus.getDefault().postSticky(new MessageEvent(json));//eventbus黏性事件
             }else if(businessType.equals(Constant.WEBSOCKET_REGISTERRESULT_BUSSINESSTYPE_CODE)) { //语音挂号结果
 
             }else if(businessType.equals(Constant.WEBSOCKET_REGISTERHISTORY_BUSSINESSTYPE_CODE)){ //挂号历史纪录
 
-                EventBus.getDefault().post(json);
-               // re = JsonUtil.jsonToRegisterInfo(json);
+                EventBus.getDefault().postSticky(new MessageEvent(json));
             }else if(businessType.equals(Constant.WEBSOCKET_QUERYPERSONINFO_BUSSINESSTYPE_CODE)){ //个人信息查询
 
                 user = JsonUtil.jsonToPersonInfo(json);
+            }else if(businessType.equals(Constant.WEBSOCKET_NEW_MESSAGE_BUSSINESSTYPE_CODE)){  //新消息通知
+                //如果messageType=0，为体检推荐新消息
+                MessageEvent messageEvent = new MessageEvent("MainActivity", json);
+                EventBus.getDefault().post(messageEvent);
+
+
+            }else if(businessType.equals(Constant.WEBSOCKET_THREE_EXAM_BUSSINESSTYPE_CODE)){
+                examInfoForCarousels = JsonUtil.jsonToExamInfoForCarouselList(json);
             }
 
         }catch (Exception e){
@@ -116,7 +133,7 @@ public class WebSocketClientHelper extends WebSocketClient {
 
     //判断是否重新安装，是否需要同步
     private void checkSyncTimer(){
-        SharedPreferences pref = context.getSharedPreferences(Constant.DB_USER_TABLENAME, Context.MODE_PRIVATE);
+        /*SharedPreferences pref = context.getSharedPreferences(Constant.DB_USER_TABLENAME, Context.MODE_PRIVATE);
         String timerSync = pref.getString(Constant.USER_DATA_FIELD_TIMER_SYNC, "");
         if(!StringUtil.isValidate(timerSync)) { // 新的线程中发送同步请求
             ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
@@ -131,7 +148,7 @@ public class WebSocketClientHelper extends WebSocketClient {
                     }
                 }
             });
-        }
+        }*/
     }
 
 

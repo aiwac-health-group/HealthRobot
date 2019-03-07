@@ -1,8 +1,8 @@
 package aiwac.admin.com.healthrobot.activity.medicalexam;
 
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -114,13 +114,15 @@ public class MedicalExamMenuActivity extends AppCompatActivity {
                     TLog.d(TAG, "文件下载异常 = " + e.toString());
                 } finally {
                     try {
-                        if (is != null)
+                        if (is != null) {
                             is.close();
+                        }
                     } catch (IOException e) {
                     }
                     try {
-                        if (fos != null)
+                        if (fos != null) {
                             fos.close();
+                        }
                     } catch (IOException e) {
                     }
                 }
