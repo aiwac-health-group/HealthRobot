@@ -8,6 +8,31 @@ public class Constant {
 
     public final static String TEST_IP = "101.132.192.66:80";
 
+    //WebSocket 和讲座 健康检测结果  相关的
+
+    public final static String WEBSOCKET_MESSAGE_ACCOUNT = "account";
+    public final static String WEBSOCKET_MESSAGE_CODE = "code";
+    public final static String WEBSOCKET_MESSAGE_LECTUREID = "lectureID";
+    public final static String WEBSOCKET_MESSAGE_HEALTH_TEST_RESULT = "resultID";
+
+    public final static String WEBSOCKET_MESSAGE_DATA  = "data";
+
+
+    public final static String WEBSOCKET_LECTURE_ABSTRACT  = "lectureAbstract";
+    public final static String WEBSOCKET_LECTURE_COURSE_UPDATETIME  = "updateTime";
+    public final static String WEBSOCKET_LECTURE_COURSE_DESCRIPTION = "description";
+    public final static String WEBSOCKET_LECTURE_COURSE_COVER  = "cover";
+    public final static String WEBSOCKET_LECTURE_COURSE_DURATION = "duration";
+    public final static String WEBSOCKET_LECTURE_COURSE_NAME = "name";
+    public final static String WEBSOCKET_MESSAGE_LECTURE_AV_LINK = "link";
+    public final static String WEBSOCKET_MESSAGE_LECTURE_CONTEXT = "lectureContext";
+    public final static String WEBSOCKET_MESSAGE_RESULTID = "resultID";
+    public final static String WEBSOCKET_MESSAGE_UPDATETIME = "updateTime";
+    public final static String WEBSOCKET_MESSAGE_RESULT_CONTEXT = "resultContext";
+    public final static String WEBSOCKET_MESSAGE_SYSYTEM_CLIENTTYPE = "robot";
+    public final static String WEBSOCKET_TIMER_STATUS = "status";
+    public final static String WEBSOCKET_BUSINESS_DOWNLOAD_LECTURE = "正在加载讲座资源，稍等...";
+
 
     //和安全相关的
     public final static String SECURITY_MD5 = "MD5";
@@ -69,7 +94,7 @@ public class Constant {
     public final static String WEBSOCKET_MESSAGE_PERSONALITYTYPE = "personalityType";
     public final static String WEBSOCKET_MESSAGE_ERRORDESC = "message";
     public final static String WEBSOCKET_MESSAGE_DESCRIPTION = "description";
-    public final static String WEBSOCKET_MESSAGE_ITEMS = "items";;
+    public final static String WEBSOCKET_MESSAGE_ITEMS = "items";
 
 
 
@@ -140,6 +165,11 @@ public class Constant {
     public final static String WEBSOCKET_MESSAGE_CLIENTTYPE_NUMBER = "2";
     public final static String WEBSOCKET_QUERYPERSONINFO_BUSSINESSTYPE_CODE = "0005";
     public final static String WEBSOCKET_PERSONAL_INFOMATION_BUSSINESSTYPE_CODE = "0006";
+    public final static String WEBSOCKET_LECTURE_AUDIO_ABSTRACT_TYPE_CODE = "0009";   //类型查询 讲座音频摘要
+    public final static String WEBSOCKET_LECTURE_VIDEO_ABSTRACT_TYPE_CODE = "0010";   //类型查询 讲座视频摘要
+    public final static String WEBSOCKET_LECTURE_AV_DETAIL_TYPE_CODE = "0011";   //类型查询 讲座视频和音频 详情
+    public final static String WEBSOCKET_LECTURE_ARTICLE_ABSTRACT_TYPE_CODE = "0012";   //类型查询 讲座文章摘要
+    public final static String WEBSOCKET_LECTURE_ARTICLE_DETAIL_TYPE_CODE = "0013";   //类型查询 讲座文章 详情
     public final static String WEBSOCKET_SKIN_RESULT_CODE = "0016";
     public final static String WEBSOCKET_VOICECHAT_BUSSINESSTYPE_CODE = "0017";
     public final static String WEBSOCKET_VOICEREGISTER_BUSSINESSTYPE_CODE = "0019";//挂号医院信息

@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.Queue;
 
 import aiwac.admin.com.healthrobot.HealthRobotApplication;
+import aiwac.admin.com.healthrobot.bean.LectureAVDetail;
+import aiwac.admin.com.healthrobot.bean.LectureArticleDetail;
+import aiwac.admin.com.healthrobot.bean.LectureCourseAbstractInfo;
 import aiwac.admin.com.healthrobot.common.Constant;
 import aiwac.admin.com.healthrobot.db.UserData;
 import aiwac.admin.com.healthrobot.exception.WebSocketException;
@@ -92,6 +95,33 @@ public class WebSocketApplication {
 
     public WebSocketClientHelper getWebSocketHelper(){
         return webSocketHelper;
+    }
+
+
+
+    //  健康讲座  、健康检测结果查询等相关操作
+    public LectureCourseAbstractInfo getWebSocketHelperLectureVideoAllInfo(){
+        return webSocketHelper.getLectureVideoAllInfo();
+    }
+
+    public LectureCourseAbstractInfo getWebSocketHelperLectureAudioAllInfo(){
+        return   webSocketHelper.getLectureAudioAllInfo();
+    }
+
+    public LectureCourseAbstractInfo getWebSocketHelperLectureArticleAllInfo(){
+        return  webSocketHelper.getLectureArticleAllInfo();
+    }
+
+    public LectureAVDetail getWebSocketHelperLectureAudioDetail(){
+        return webSocketHelper.getLectureAudioDetail();
+    }
+
+    public LectureAVDetail getWebSocketHelperLectureVideoDetail(){
+        return webSocketHelper.getLectureVideoDetail();
+    }
+
+    public LectureArticleDetail getWebSocketHelperLectureArticleDetail(){
+        return webSocketHelper.getLectureArticleDetail();
     }
 
 
