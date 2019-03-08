@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 
 //import android.text.Html;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 
 import android.support.v7.app.AppCompatActivity;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.UUID;
 
@@ -23,7 +26,8 @@ import aiwac.admin.com.healthrobot.utils.LogUtil;
 
 //import android.text.Html;
 
-public class BeautyResultActivity extends AppCompatActivity {
+public class BeautyResultActivity extends BaseActivity {
+    private static final String TAG = "BeautyResultActivity";
 
     private float[] heitouResults;
     private float[] douResults;
@@ -46,19 +50,28 @@ public class BeautyResultActivity extends AppCompatActivity {
     TextView BanDegree; //斑
     TextView FuseDesprt; //肤色描述
 
+    MyActivity instance;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beauty_result);
 
+        //调用存放activity类
+        instance = MyActivity.getInstance();
+        //判断存放activity类是否存放该activity，不存在加入类
+        if (!instance.isexitlist(this)){
+            instance.addActivity(this);
+        }
 
         //点击标题栏的后退按钮，返回SkinMainActivity
         Back =(ImageView)findViewById(R.id.tv_back) ;
         Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BeautyResultActivity.this,SkinMainActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(BeautyResultActivity.this,SkinMainActivity.class);
+//                startActivity(intent);
+                Log.d(TAG, "onClick: click back button");
+                instance.exit();
             }
         });
 
@@ -188,6 +201,17 @@ public class BeautyResultActivity extends AppCompatActivity {
             }
         } );
 
+    }
+
+    //点击返回键，销毁多个activity，直接回到SkinMainActivity
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            Log.d(TAG, "onClick: click back button");
+            instance.exit();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

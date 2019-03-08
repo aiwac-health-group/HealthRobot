@@ -90,8 +90,8 @@ public class MainActivity extends AppCompatActivity implements ViewSwitcher.View
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SkinMainActivity.class);
                 startActivity(intent);
-                Toast.makeText(MainActivity.this, "按按钮",
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, "按按钮",
+//                        Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -102,8 +102,8 @@ public class MainActivity extends AppCompatActivity implements ViewSwitcher.View
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AlarmActivity.class);
                 startActivity(intent);
-                Toast.makeText(MainActivity.this, "按按钮",
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, "按按钮",
+//                        Toast.LENGTH_SHORT).show();
             }
         });
 

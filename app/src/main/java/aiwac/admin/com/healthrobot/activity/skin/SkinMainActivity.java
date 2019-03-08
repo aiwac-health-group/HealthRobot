@@ -70,20 +70,21 @@ public class SkinMainActivity extends BaseActivity implements HomeFragment.Callb
         MfragmentTransactions.commit();
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK){
-            // 与上次点击返回时刻作差
-            if ((System.currentTimeMillis() - mExitTime) > 2000){
-                Toast.makeText(this, "click again to go back", Toast.LENGTH_SHORT).show();
-                mExitTime = System.currentTimeMillis();
-            }else{
-                System.exit(0);
-            }
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
+//    //点击两次back键才能退出
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK){
+//            // 与上次点击返回时刻作差
+//            if ((System.currentTimeMillis() - mExitTime) > 2000){
+//                Toast.makeText(this, "click again to go back", Toast.LENGTH_SHORT).show();
+//                mExitTime = System.currentTimeMillis();
+//            }else{
+//                System.exit(0);
+//            }
+//            return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 
     @Override
     public void onClick(int which) {

@@ -135,6 +135,14 @@ public class CameraActivity extends FragmentActivity implements CameraHintDialog
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
+        //调用存放activity类
+        MyActivity instance = MyActivity.getInstance();
+        //判断存放activity类是否存放该activity，不存在加入类
+        if (!instance.isexitlist(this)){
+            instance.addActivity(this);
+        }
+
+
         mSurfaceView=findViewById(R.id.camera_surface);
         mSwitch=findViewById(R.id.myswitch);
         mTextView=findViewById(R.id.switchtv);
