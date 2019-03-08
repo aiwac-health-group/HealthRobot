@@ -2,23 +2,18 @@ package aiwac.admin.com.healthrobot.activity.notification;
 
 import android.content.Intent;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.List;
 
+import aiwac.admin.com.healthrobot.HealthRobotApplication;
 import aiwac.admin.com.healthrobot.R;
-import aiwac.admin.com.healthrobot.activity.medicalexam.MedicalExamDetailActivity;
-import aiwac.admin.com.healthrobot.activity.medicalexam.MedicalExamMenuActivity;
-import aiwac.admin.com.healthrobot.activity.medicalexam.MedicalExamRecommendActivity;
-import aiwac.admin.com.healthrobot.medicalexam.adapter.GetMedicalExamUtil;
-import aiwac.admin.com.healthrobot.medicalexam.adapter.MedicalExamAdapter;
-import aiwac.admin.com.healthrobot.medicalexam.model.MedicalExam;
+import aiwac.admin.com.healthrobot.activity.healthweeklyreport.HealthWeeklyReportActivity;
+import aiwac.admin.com.healthrobot.common.Constant;
 import aiwac.admin.com.healthrobot.notification.GetNotificationUtil;
 import aiwac.admin.com.healthrobot.notification.Notification;
 import aiwac.admin.com.healthrobot.notification.NotificationAdapter;
@@ -51,8 +46,8 @@ public class NotificationActivity extends BaseHttpListActivity<Notification,List
     @Override
     public void initView() {//必须调用
         super.initView();
-
     }
+
 
     @Override
     public void setList(final List<Notification> list) {
@@ -76,7 +71,14 @@ public class NotificationActivity extends BaseHttpListActivity<Notification,List
     @Override
     public void initData() {//必须调用
         super.initData();
+        getNotification();
     }
+
+    private void getNotification(){
+        GetNotificationUtil getNotificationUtil = new GetNotificationUtil(HealthRobotApplication.getContext());
+    }
+
+
     @Override
     public void getListAsync(final int page) {
         //实际使用时用这个，需要配置服务器地址		HttpRequest.getUserList(range, page, -page, this);
@@ -86,8 +88,16 @@ public class NotificationActivity extends BaseHttpListActivity<Notification,List
             @Override
             public void run() {
 
-                onHttpResponse(-page, page >= 5 ? null : JSON.toJSONString(GetNotificationUtil.getUserList(page, 10)), null);
-                Log.d(TAG, "run: "+JSON.toJSONString(GetNotificationUtil.getUserList(page, 5)));
+              //  onHttpResponse(-page, page >= 5 ? null : JSON.toJSONString(GetNotificationUtil.getUserList(page, 10)), null);
+
+                while (GetNotificationUtil.list.isEmpty()){
+                    try {
+                        Thread.sleep(700);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                onHttpResponse(-page, page >= 5 ? null : JSON.toJSONString(GetNotificationUtil.list), null);
             }
         }, 1000);
         //仅测试用>>>>>>>>>>>>
@@ -116,7 +126,15 @@ public class NotificationActivity extends BaseHttpListActivity<Notification,List
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // toActivity(UserActivity.createIntent(context, id));
-        Log.d(TAG, "在体检推荐的消息页：点击了一项："+position+"  id:"+id);
+        Log.d(TAG, "在消息通知的消息页：点击了一项："+position+"  id:"+id);
+        Notification notification = GetNotificationUtil.list.get(position);
+        if(notification.getMessageType()==1){//如果messageType=1，为健康周报新消息
+            Intent intent = new Intent(NotificationActivity.this,HealthWeeklyReportActivity.class);
+            intent.putExtra(Constant.WEBSOCKET_NOTIFICTION_MESSAGEID,notification.getMessageID());
+            startActivity(intent);
+        }else if(notification.getMessageType()==2){//如果messageType=2，为挂号信息新消息
+
+        }
         /*Intent intent = new Intent(NotificationActivity.this,MedicalExamDetailActivity.class);
         intent.putExtra("position",position);
         startActivity(intent);*/

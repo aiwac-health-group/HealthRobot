@@ -12,10 +12,14 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import aiwac.admin.com.healthrobot.R;
+import aiwac.admin.com.healthrobot.bean.BaseEntity;
+import aiwac.admin.com.healthrobot.medicalexam.model.MedicalExam;
 import aiwac.admin.com.healthrobot.medicalexam.tool.LoadFileModel;
 import aiwac.admin.com.healthrobot.medicalexam.tool.Md5Tool;
 import aiwac.admin.com.healthrobot.medicalexam.tool.SuperFileView2;
 import aiwac.admin.com.healthrobot.medicalexam.tool.TLog;
+import aiwac.admin.com.healthrobot.server.WebSocketApplication;
+import aiwac.admin.com.healthrobot.utils.JsonUtil;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,7 +28,9 @@ import retrofit2.Response;
 public class MedicalExamMenuActivity extends AppCompatActivity {
     private static final String TAG="ActivityMedicalExamMenu";
     private SuperFileView2 mSuperFileView;
-    private String filePath;
+    private static String filePath;//保存文件路径，。可以是网络路径
+    private boolean runExit=false;//退出询问线程的标志位
+    private Thread thread;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,13 +48,49 @@ public class MedicalExamMenuActivity extends AppCompatActivity {
             }
         });
         Log.d("111", "init: "+getFilesDir().getAbsolutePath());
+
+        //getFileUrlFromServer();
+
+        getFileFromLocal();
+
+    }
+
+    /**
+     * 从服务器获取文件的网络地址
+     */
+    private void getFileUrlFromServer(){
+        String stringJson = JsonUtil.requestMedicalExamMenuString();
+        WebSocketApplication.getWebSocketApplication().send(stringJson);
+        filePath="";
+
+        //检查filePath有没有内容，直到有内容的时候就结束
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(filePath.equals("")&&!runExit){
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                //获得了，开始显示
+                mSuperFileView.show();
+            }
+        });
+        thread.start();
+    }
+
+    /**
+     * 从本地获取文件
+     */
+    private void getFileFromLocal(){
         //filePath="/data/user/0/com.aiwac.helloworld.test.speechhelloworld/activity/menu.docx";
         //filePath="menu.docx";
         filePath="/storage/emulated/0/menu.docx";
         //filePath="http://www.hrssgz.gov.cn/bgxz/sydwrybgxz/201101/P020110110748901718161.doc";
         mSuperFileView.show();
     }
-
     private void getFilePathAndShowFile(SuperFileView2 mSuperFileView2) {
         if (filePath.contains("http")) {//网络地址要先下载
             downLoadFromNet(filePath,mSuperFileView2);
@@ -200,5 +242,13 @@ public class MedicalExamMenuActivity extends AppCompatActivity {
         return str;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        runExit=true;
+    }
 
+    public static void setFilePath(String filePath) {
+        MedicalExamMenuActivity.filePath = filePath;
+    }
 }

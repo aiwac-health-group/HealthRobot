@@ -1,5 +1,9 @@
 package aiwac.admin.com.healthrobot.medicalexam.model;
 
+import android.graphics.Bitmap;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import zuo.biao.library.base.BaseModel;
@@ -8,10 +12,16 @@ public class MedicalExam extends BaseModel {
 
 
     private int examID;//体检id
-    private String title;//体检的标题
-    private String description;//体检的简要描述
+
+
+    private String name;//体检的标题
+    private String description;//体检的描述
     private Date date;//体检的日期
-    private String examContext;//体检的具体内容
+    private Bitmap cover;//体检的图片
+
+
+
+    private static String examContext;//体检的具体内容 ，用来在体检的具体内容页面显示，因为只有一个页面，只需要一个，所以作为static
 
     public String getDataToShowAsText(){
         if(date!=null){
@@ -39,13 +49,6 @@ public class MedicalExam extends BaseModel {
         this.examID = examID;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public String getDescription() {
         return description;
@@ -62,12 +65,35 @@ public class MedicalExam extends BaseModel {
     public void setDate(Date date) {
         this.date = date;
     }
+    public void setDate(String dateString){
+        try {
+            this.date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+    public String getName() {
+        return name;
+    }
 
-    public String getExamContext() {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Bitmap getCover() {
+        return cover;
+    }
+
+    public void setCover(Bitmap cover) {
+        this.cover = cover;
+    }
+
+    public static String getExamContext() {
         return examContext;
     }
 
-    public void setExamContext(String examContext) {
-        this.examContext = examContext;
+    public static void setExamContext(String examContext) {
+        MedicalExam.examContext = examContext;
     }
+
 }

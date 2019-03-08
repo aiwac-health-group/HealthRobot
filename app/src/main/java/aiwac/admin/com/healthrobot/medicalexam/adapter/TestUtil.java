@@ -61,7 +61,7 @@ public class TestUtil {
 
 			medicalExam = new MedicalExam();
 			medicalExam.setId(userId);
-			medicalExam.setTitle("体检的标题");
+			medicalExam.setName("体检的标题");
 			medicalExam.setDescription("体检描述 " + userId);
 			try {
 				medicalExam.setDate(new SimpleDateFormat("YYYYMMDD").parse("20191212"));

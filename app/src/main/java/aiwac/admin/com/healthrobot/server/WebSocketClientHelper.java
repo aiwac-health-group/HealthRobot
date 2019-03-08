@@ -13,10 +13,20 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Map;
 
+import aiwac.admin.com.healthrobot.HealthRobotApplication;
+import aiwac.admin.com.healthrobot.activity.healthweeklyreport.HealthWeeklyReportActivity;
+import aiwac.admin.com.healthrobot.activity.medicalexam.MedicalExamMenuActivity;
 import aiwac.admin.com.healthrobot.bean.ExamInfoForCarousel;
+import aiwac.admin.com.healthrobot.bean.LectureAVDetail;
+import aiwac.admin.com.healthrobot.bean.LectureArticleDetail;
+import aiwac.admin.com.healthrobot.bean.LectureCourseAbstractInfo;
 import aiwac.admin.com.healthrobot.bean.MessageEvent;
 import aiwac.admin.com.healthrobot.bean.User;
 import aiwac.admin.com.healthrobot.common.Constant;
+import aiwac.admin.com.healthrobot.db.NotificationSqliteHelper;
+import aiwac.admin.com.healthrobot.medicalexam.adapter.GetMedicalExamUtil;
+import aiwac.admin.com.healthrobot.medicalexam.model.MedicalExam;
+import aiwac.admin.com.healthrobot.notification.Notification;
 import aiwac.admin.com.healthrobot.utils.JsonUtil;
 import aiwac.admin.com.healthrobot.utils.LogUtil;
 
@@ -54,8 +64,55 @@ public class WebSocketClientHelper extends WebSocketClient {
     public void setContext(Context context) {
         this.context = context;
     }
-    
-    
+
+
+
+
+
+
+
+    // 讲座   视频 音频  文章  和 健康检测结果摘要信息，每次获取到一次摘要json 更新一次
+    protected LectureCourseAbstractInfo lectureVideoAllInfo;
+    protected LectureCourseAbstractInfo lectureAudioAllInfo;
+    protected LectureCourseAbstractInfo lectureArticleAllInfo;
+
+
+    // 讲座   视频 音频  文章  和 健康检测结果详细信息，每次获取到一次摘要json 更新一次
+//    private LectureAVDetail lectureAudioDetail;
+//    private LectureAVDetail lectureVideoDetail;
+    protected LectureAVDetail lectureAVDetail;
+    protected LectureArticleDetail lectureArticleDetail;
+
+
+    public LectureCourseAbstractInfo getLectureVideoAllInfo(){
+        return lectureVideoAllInfo;
+    }
+
+    public LectureCourseAbstractInfo getLectureAudioAllInfo(){
+        return  lectureAudioAllInfo;
+    }
+
+    public LectureCourseAbstractInfo getLectureArticleAllInfo(){
+        return  lectureArticleAllInfo;
+    }
+
+    public LectureAVDetail getLectureAudioDetail(){
+        return lectureAVDetail;
+    }
+
+    public LectureAVDetail getLectureVideoDetail(){
+        return lectureAVDetail;
+    }
+
+    public LectureArticleDetail getLectureArticleDetail(){
+        return lectureArticleDetail;
+    }
+
+
+
+
+
+
 
     public WebSocketClientHelper(URI serverUri, Map<String, String> httpHeaders, Context context) {
         this(serverUri, new Draft_6455(), httpHeaders, 0, context);
@@ -108,20 +165,53 @@ public class WebSocketClientHelper extends WebSocketClient {
             }else if(businessType.equals(Constant.WEBSOCKET_REGISTERRESULT_BUSSINESSTYPE_CODE)) { //语音挂号结果
 
             }else if(businessType.equals(Constant.WEBSOCKET_REGISTERHISTORY_BUSSINESSTYPE_CODE)){ //挂号历史纪录
-
                 EventBus.getDefault().postSticky(new MessageEvent(json));
             }else if(businessType.equals(Constant.WEBSOCKET_QUERYPERSONINFO_BUSSINESSTYPE_CODE)){ //个人信息查询
 
                 user = JsonUtil.jsonToPersonInfo(json);
             }else if(businessType.equals(Constant.WEBSOCKET_NEW_MESSAGE_BUSSINESSTYPE_CODE)){  //新消息通知
-                //如果messageType=0，为体检推荐新消息
-                MessageEvent messageEvent = new MessageEvent("MainActivity", json);
-                EventBus.getDefault().post(messageEvent);
+                Notification notification = JsonUtil.json2Notification(json);
+                if(notification.getMessageType()==0){
+                    //如果messageType=0，为体检推荐新消息
+                    MessageEvent messageEvent = new MessageEvent("MainActivity", json);
+                    EventBus.getDefault().post(messageEvent);
+                }else if(notification.getMessageType()==1){
+                    //如果messageType=1，为健康周报新消息
 
+                }else if(notification.getMessageType()==2){
+                    //如果messageType=2，为挂号信息新消息
+
+                }
+                NotificationSqliteHelper notificationSqliteHelper = new NotificationSqliteHelper(HealthRobotApplication.getContext());
+                notificationSqliteHelper.insert(notification);
 
             }else if(businessType.equals(Constant.WEBSOCKET_THREE_EXAM_BUSSINESSTYPE_CODE)){
                 examInfoForCarousels = JsonUtil.jsonToExamInfoForCarouselList(json);
+            }else if(businessType.equals(Constant.WEBSOCKET_MEDICAL_EXAM_SUMMARY_BUSSINESSTYPE_CODE)){//体检推荐摘要查询
+                 new GetMedicalExamUtil().initList(JsonUtil.jsonToMedicalExam(json));
+            }else if(businessType.equals(Constant.WEBSOCKET_MEDICAL_EXAM_DETAIL_BUSSINESSTYPE_CODE)){//体检推荐详情查询
+                MedicalExam.setExamContext(JsonUtil.getExamContextFromJson(json));
+            }else if(businessType.equals(Constant.WEBSOCKET_MEDICAL_EXAM_MENU_CODE)){//体检套餐查询
+                MedicalExamMenuActivity.setFilePath(JsonUtil.getMedicalExamMenuLinkFromJson(json));
+            }else if(businessType.equals(Constant.WEBSOCKET_HEALTH_WEEKLY_REPORT_CODE)){//健康周报查询
+                HealthWeeklyReportActivity.setFilePath(JsonUtil.getHealthWeeklyReportLinkFromJson(json));
+            }else   if (businessType.equals(Constant.WEBSOCKET_LECTURE_AUDIO_ABSTRACT_TYPE_CODE)) //讲座音频摘要信息到达
+            {
+                lectureAudioAllInfo = JsonUtil.parseLectureAVAbstractInfo(json);
+            }else if (businessType.equals(Constant.WEBSOCKET_LECTURE_VIDEO_ABSTRACT_TYPE_CODE)) //讲座视频摘要信息到达
+            {
+                lectureVideoAllInfo = JsonUtil.parseLectureAVAbstractInfo(json);
+            }else if ((businessType.equals(Constant.WEBSOCKET_LECTURE_ARTICLE_ABSTRACT_TYPE_CODE))) //讲座文章摘要信息到达
+            {
+                lectureArticleAllInfo = JsonUtil.parseLectureArticleAbstractInfo(json);
+            }else if ((businessType.equals(Constant.WEBSOCKET_LECTURE_AV_DETAIL_TYPE_CODE))) //讲座音视频详细信息到达
+            {
+                lectureAVDetail = JsonUtil.parseLectureAVDetailInfo(json);
+            }else if  ((businessType.equals(Constant.WEBSOCKET_LECTURE_ARTICLE_DETAIL_TYPE_CODE))) //讲座文章详细信息到达
+            {
+                lectureArticleDetail = JsonUtil.parseLectureArticleDetailInfo(json);
             }
+
 
         }catch (Exception e){
             e.printStackTrace();

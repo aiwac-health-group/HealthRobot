@@ -3,12 +3,14 @@ package aiwac.admin.com.healthrobot.activity.skin;
 import android.content.Intent;
 import android.os.Bundle;
 
+
 //import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
+
+
 import android.view.View;
 import android.widget.ImageView;
-
 import android.support.v7.app.AppCompatActivity;
 
 import android.widget.TextView;
