@@ -19,9 +19,9 @@ android {
         ndk {
             abiFilters 'armeabi-v7a'
         }
-        ndk {
+/*        ndk {
             abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
-        }
+        }*/
 //        jackOptions {
 //            enabled true
 //        }

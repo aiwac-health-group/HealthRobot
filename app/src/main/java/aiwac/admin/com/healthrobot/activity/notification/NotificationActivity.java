@@ -13,10 +13,16 @@ import java.util.List;
 import aiwac.admin.com.healthrobot.HealthRobotApplication;
 import aiwac.admin.com.healthrobot.R;
 import aiwac.admin.com.healthrobot.activity.healthweeklyreport.HealthWeeklyReportActivity;
+import aiwac.admin.com.healthrobot.activity.voiceregister.RegisterHistoryActivity;
+import aiwac.admin.com.healthrobot.bean.BaseEntity;
 import aiwac.admin.com.healthrobot.common.Constant;
 import aiwac.admin.com.healthrobot.notification.GetNotificationUtil;
 import aiwac.admin.com.healthrobot.notification.Notification;
 import aiwac.admin.com.healthrobot.notification.NotificationAdapter;
+import aiwac.admin.com.healthrobot.server.WebSocketApplication;
+import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
+import aiwac.admin.com.healthrobot.utils.JsonUtil;
+import aiwac.admin.com.healthrobot.utils.LogUtil;
 import zuo.biao.library.base.BaseHttpListActivity;
 import zuo.biao.library.interfaces.AdapterCallBack;
 import zuo.biao.library.interfaces.OnBottomDragListener;
@@ -133,7 +139,23 @@ public class NotificationActivity extends BaseHttpListActivity<Notification,List
             intent.putExtra(Constant.WEBSOCKET_NOTIFICTION_MESSAGEID,notification.getMessageID());
             startActivity(intent);
         }else if(notification.getMessageType()==2){//如果messageType=2，为挂号信息新消息
+            ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        BaseEntity baseEntity = new BaseEntity();
+                        baseEntity.setBusinessType(Constant.WEBSOCKET_REGISTERRESULT_BUSSINESSTYPE_CODE);
+                        WebSocketApplication.getWebSocketApplication().send(JsonUtil.baseEntity2Json(baseEntity));
+                    } catch (Exception e) {
+                        LogUtil.d(e.getMessage());
+                        //其他异常处理
+                    }
+                }
+            });
 
+            Intent intent = new Intent(NotificationActivity.this,RegisterHistoryActivity.class);
+            intent.putExtra(Constant.WEBSOCKET_NOTIFICTION_MESSAGEID,notification.getMessageID());
+            startActivity(intent);
         }
         /*Intent intent = new Intent(NotificationActivity.this,MedicalExamDetailActivity.class);
         intent.putExtra("position",position);

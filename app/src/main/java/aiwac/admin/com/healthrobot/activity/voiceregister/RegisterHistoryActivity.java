@@ -53,24 +53,42 @@ public class RegisterHistoryActivity extends BaseActivity {
             }
         });
 
-        EventBus.getDefault().register(this);
+
 
 
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void Event(MessageEvent messageEvent) {
-        List<RegisterInfo> registerInfoList = JsonUtil.jsonToRegisterInfoList(messageEvent.getMessage());
-        table.setData(registerInfoList);
+        if(messageEvent.getTo().equals("RegisterHistory")){
+            List<RegisterInfo> registerInfoList = JsonUtil.jsonToRegisterInfoList(messageEvent.getMessage());
+            table.setData(registerInfoList);
+        }else if(messageEvent.getTo().equals("RegisterResult")){
+            RegisterInfo registerInfo = JsonUtil.jsonToRegisterInfo(messageEvent.getMessage());
+            List<RegisterInfo> registerInfoList = new ArrayList<>();
+            registerInfoList.add(registerInfo);
+            table.setData(registerInfoList);
+        }
+
     }
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+
     }
 
     @Override
@@ -82,7 +100,7 @@ public class RegisterHistoryActivity extends BaseActivity {
     public void initData() {
 
         //测试
-        RegisterInfo registerInfo = new RegisterInfo();
+       /* RegisterInfo registerInfo = new RegisterInfo();
         registerInfo.setProvince("北京市");
         registerInfo.setBusinessType("北京市");
         registerInfo.setHospital("北京市");
@@ -94,7 +112,7 @@ public class RegisterHistoryActivity extends BaseActivity {
         List<RegisterInfo> registerInfoList = new ArrayList<>();
         registerInfoList.add(registerInfo);
         registerInfoList.add(registerInfo);
-        table.setData(registerInfoList);
+        table.setData(registerInfoList);*/
     }
 
     @Override

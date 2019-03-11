@@ -34,7 +34,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.loginandregister.LoginActivity" />
+        <activity android:name=".activity.loginandregister.LoginActivity">
+
+        </activity>
         <activity android:name=".activity.loginandregister.RegisterActivity" />
         <activity android:name=".activity.loginandregister.ConnectWifiActivity" />
         <activity android:name=".activity.voicechat.VoiceChatActivity" />

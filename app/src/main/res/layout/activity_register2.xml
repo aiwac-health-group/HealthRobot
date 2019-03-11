@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_register2"
+    style="@style/activity_page" >
+
+    <RelativeLayout style="@style/topbar_bg" >
+
+        <ImageButton style="@style/topbar_return_img" />
+
+        <TextView
+            style="@style/topbar_title"
+            android:layout_centerHorizontal="true"
+            android:text="填写个人信息" />
+        <Button
+            style="@style/topbar_right_btn"
+            android:id="@+id/btn_register_history"
+            android:text="保存" />
+    </RelativeLayout>
+
+    <ScrollView
+        style="@style/ll_vertical_match_match"
+        android:layout_weight="1" >
+
+        <LinearLayout style="@style/ll_vertical_match_match" >
+
+
+            <View
+                style="@style/divider_horizontal_1px" />
+
+            <LinearLayout
+                android:id="@+id/llSettingSetting"
+                style="@style/content_item_white" >
+
+                <EditText
+                    android:id="@+id/tv_name"
+                    style="@style/content_item_lf_tv"
+                    android:layout_weight="1"
+                    android:hint="姓名"
+                    android:background="@color/white"/>
+
+
+            </LinearLayout>
+
+            <View style="@style/divider_horizontal_1px" />
+
+            <LinearLayout
+                android:id="@+id/llSettingAbout"
+                style="@style/content_item_white" >
+
+                <TextView
+                    android:id="@+id/tv_sex"
+                    style="@style/content_item_lf_tv"
+                    android:layout_weight="1"
+                    android:hint="性别" />
+
+
+            </LinearLayout>
+
+            <View style="@style/divider_horizontal_1px" />
+
+            <LinearLayout
+
+                style="@style/content_item_white" >
+
+                <TextView
+                    android:id="@+id/tv_birthday"
+                    style="@style/content_item_lf_tv"
+                    android:layout_weight="1"
+                    android:hint="出生日期" />
+
+                <ImageView style="@style/content_item_rt_img" />
+            </LinearLayout>
+
+            <View style="@style/divider_horizontal_1px" />
+            <LinearLayout
+                style="@style/content_item_white" >
+
+                <EditText
+                    android:id="@+id/tv_wechat"
+                    style="@style/content_item_lf_tv"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:hint="微信号" />
+
+
+            </LinearLayout>
+
+            <View style="@style/divider_horizontal_1px" />
+            <LinearLayout
+                style="@style/content_item_white" >
+
+                <TextView
+                    android:id="@+id/tv_area"
+                    style="@style/content_item_lf_tv"
+                    android:layout_weight="1"
+                    android:hint="所在地区" />
+                <ImageView style="@style/content_item_rt_img" />
+
+
+            </LinearLayout>
+
+            <View style="@style/divider_horizontal_1px" />
+            <LinearLayout
+                android:id="@+id/llSettingLogout"
+                style="@style/content_item_white" >
+
+                <EditText
+                    android:id="@+id/tv_address"
+                    style="@style/content_item_lf_tv"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:hint="@string/infom_address" />
+
+
+            </LinearLayout>
+
+            <View style="@style/divider_horizontal_1px" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

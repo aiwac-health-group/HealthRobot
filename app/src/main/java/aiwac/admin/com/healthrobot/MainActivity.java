@@ -71,12 +71,6 @@ public class MainActivity extends AppCompatActivity implements ViewSwitcher.View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //开启服务，创建websocket连接
-        Intent intent = new Intent(this, WebSocketService.class);
-        intent.putExtra(Constant.SERVICE_TIMER_TYPE, Constant.SERVICE_TIMER_TYPE_WEBSOCKET);
-        startService(intent);
-
-
         //隐藏标题栏
         ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
@@ -191,29 +185,30 @@ public class MainActivity extends AppCompatActivity implements ViewSwitcher.View
         });
 
 
+
         //更新首页体检推荐图片
         EventBus.getDefault().register(this);
+
     }
 
-//    //判断用户是否登录，如果没有登录，则跳转到登录界面
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//
-//        LogUtil.d( Constant.USER_IS_LOGIN);
-//        if(!StringUtil.isValidate(UserData.getUserData().getNumber())){
-//            //用户没有登录, 跳转到登录界面
-//            //ActivityUtil.skipActivity(MainActivity.this, LoginActivity.class);
-//        }
-//
-//
-//        //开启服务，创建websocket连接
-//        Intent intent = new Intent(this, WebSocketService.class);
-//        intent.putExtra(Constant.SERVICE_TIMER_TYPE, Constant.SERVICE_TIMER_TYPE_WEBSOCKET);
-//        startService(intent);
-//
-//        EventBus.getDefault().register(this);
-//    }
+    //判断用户是否登录，如果没有登录，则跳转到登录界面
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        LogUtil.d( Constant.USER_IS_LOGIN);
+        if(!StringUtil.isValidate(UserData.getUserData().getNumber())){
+            //用户没有登录, 跳转到登录界面
+            //ActivityUtil.skipActivity(MainActivity.this, LoginActivity.class);
+            LogUtil.d("用户还没有登录");
+        }
+
+
+        //开启服务，创建websocket连接
+        Intent intent = new Intent(this, WebSocketService.class);
+        intent.putExtra(Constant.SERVICE_TIMER_TYPE, Constant.SERVICE_TIMER_TYPE_WEBSOCKET);
+        startService(intent);
+    }
 
 
 

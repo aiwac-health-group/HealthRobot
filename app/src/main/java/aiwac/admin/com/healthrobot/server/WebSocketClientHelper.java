@@ -163,8 +163,10 @@ public class WebSocketClientHelper extends WebSocketClient {
             if(businessType.equals(Constant.WEBSOCKET_VOICECHAT_BUSSINESSTYPE_CODE)){  //在线问诊房间号
                 EventBus.getDefault().postSticky(new MessageEvent(json));//eventbus黏性事件
             }else if(businessType.equals(Constant.WEBSOCKET_REGISTERRESULT_BUSSINESSTYPE_CODE)) { //语音挂号结果
-
+                MessageEvent messageEvent = new MessageEvent("RegisterResult", json);
+                EventBus.getDefault().postSticky(messageEvent);
             }else if(businessType.equals(Constant.WEBSOCKET_REGISTERHISTORY_BUSSINESSTYPE_CODE)){ //挂号历史纪录
+                MessageEvent messageEvent = new MessageEvent("RegisterHistory", json);
                 EventBus.getDefault().postSticky(new MessageEvent(json));
             }else if(businessType.equals(Constant.WEBSOCKET_QUERYPERSONINFO_BUSSINESSTYPE_CODE)){ //个人信息查询
 
