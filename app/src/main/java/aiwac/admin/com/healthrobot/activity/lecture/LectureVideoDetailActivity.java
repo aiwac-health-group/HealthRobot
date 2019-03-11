@@ -22,6 +22,8 @@ import aiwac.admin.com.healthrobot.common.Constant;
 import aiwac.admin.com.healthrobot.server.WebSocketApplication;
 import io.vov.vitamio.Vitamio;
 
+import static com.baidu.tts.loopj.AsyncHttpClient.log;
+
 public class LectureVideoDetailActivity extends AppCompatActivity {
 
     protected LectureCourse lectureCourseNow;
@@ -79,10 +81,10 @@ public class LectureVideoDetailActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(LectureVideoDetailActivity.this, LectureVideoPlayActivity.class);
 
-                    //测试
-                    link  = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
-                    //测试
-
+//                    //测试
+//                    link  = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
+//                    //测试
+                    log.d("lecture test",link);
                     intent.putExtra("Link",link);
                     startActivity(intent);
                     buttonplay_pause.setSelected(false);
@@ -101,7 +103,7 @@ public class LectureVideoDetailActivity extends AppCompatActivity {
                 });
 
 
-//        lectureCover.setImageBitmap(lectureCourseNow.getCover());
+        lectureCover.setImageBitmap(lectureCourseNow.getCover());
         lectureName.setText(lectureCourseNow.getName());
         lectureDuration.setText(lectureCourseNow.getDuration());
         lectureUpdateTime.setText(lectureCourseNow.getUpdateTime());

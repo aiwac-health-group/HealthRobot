@@ -66,21 +66,21 @@ public class fragment_lecture_audio extends Fragment {
         lectureGridView = view.findViewById(R.id.lecture_video_music_Gridview);
 
 
-        // 测试开始
-        LectureCourse L1 = new LectureCourse();
-        LectureCourse L2 = new LectureCourse();
-
-        L1.setName("简单爱");
-        L1.setDuration("2分20秒");
-        L1.setUpdateTime("2001年9月18日");
-        L1.setDescription("该歌曲由周杰伦作曲，徐若瑄填词，原唱者为周杰伦。Ella版本的《简单爱》被收录于S.H.E的演唱会专辑《爱而为一》中。");
-        L1.setLectureID("6666");
-        data.add(L1);
-        data.add(L1);
-        for (int a =0; a<200; a++) {
-            data.add(L1);
-        }
-        // 测试完毕
+//        // 测试开始
+//        LectureCourse L1 = new LectureCourse();
+//        LectureCourse L2 = new LectureCourse();
+//
+//        L1.setName("简单爱");
+//        L1.setDuration("2分20秒");
+//        L1.setUpdateTime("2001年9月18日");
+//        L1.setDescription("该歌曲由周杰伦作曲，徐若瑄填词，原唱者为周杰伦。Ella版本的《简单爱》被收录于S.H.E的演唱会专辑《爱而为一》中。");
+//        L1.setLectureID("6666");
+//        data.add(L1);
+//        data.add(L1);
+//        for (int a =0; a<200; a++) {
+//            data.add(L1);
+//        }
+//        // 测试完毕
 
         lectureAdapter = new LectureAdapter(getActivity(), data);
         lectureGridView.setAdapter(lectureAdapter);
@@ -177,7 +177,7 @@ public class fragment_lecture_audio extends Fragment {
             lecture_name.setText(lectureCourse.getName());
 
             //集成需要加入
-            // cover_image.setImageBitmap(lectureCourse.getCover());
+             cover_image.setImageBitmap(lectureCourse.getCover());
 
             return view;
         }

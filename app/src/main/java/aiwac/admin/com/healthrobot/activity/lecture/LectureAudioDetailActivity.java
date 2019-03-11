@@ -21,6 +21,8 @@ import aiwac.admin.com.healthrobot.bean.LectureCourse;
 import aiwac.admin.com.healthrobot.common.Constant;
 import aiwac.admin.com.healthrobot.server.WebSocketApplication;
 
+import static com.baidu.tts.loopj.AsyncHttpClient.log;
+
 public class LectureAudioDetailActivity extends AppCompatActivity {
 
     protected LectureCourse lectureCourseNow;
@@ -64,7 +66,7 @@ public class LectureAudioDetailActivity extends AppCompatActivity {
         lectureDescription = (TextView)findViewById(R.id.lecture_description);
 
         //集成需要加入
-//        lectureCover.setImageBitmap(lectureCourseNow.getCover());
+        lectureCover.setImageBitmap(lectureCourseNow.getCover());
         lectureName.setText(lectureCourseNow.getName());
         lectureDuration.setText(lectureCourseNow.getDuration());
         lectureUpdateTime.setText(lectureCourseNow.getUpdateTime());
@@ -94,10 +96,10 @@ public class LectureAudioDetailActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(LectureAudioDetailActivity.this, LectureAudioPlayActivity.class);
 
-                    //测试
-                    link  = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
-                    //测试
-
+//                    //测试
+//                    link  = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
+//                    //测试
+                    log.d("lecture test",link);
                     intent.putExtra("Link",link);
                     startActivity(intent);
                 }

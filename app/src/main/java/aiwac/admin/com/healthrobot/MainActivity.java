@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         mImageSwitcher = findViewById(R.id.imageSwitcher1);
         linearLayout = findViewById(R.id.viewGroup);
+
         //隐藏标题栏
         ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
@@ -226,6 +227,8 @@ public class MainActivity extends AppCompatActivity {
 //
 //
 //    }
+
+
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
