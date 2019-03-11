@@ -187,6 +187,8 @@ public class MainActivity extends AppCompatActivity implements ViewSwitcher.View
         });
 
 
+
+        EventBus.getDefault().register(this);
     }
 
     //判断用户是否登录，如果没有登录，则跳转到登录界面
@@ -206,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements ViewSwitcher.View
         intent.putExtra(Constant.SERVICE_TIMER_TYPE, Constant.SERVICE_TIMER_TYPE_WEBSOCKET);
         startService(intent);
 
-        EventBus.getDefault().register(this);
+
     }
 
 
