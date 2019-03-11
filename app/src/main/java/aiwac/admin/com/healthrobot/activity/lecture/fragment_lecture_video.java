@@ -65,25 +65,25 @@ public class fragment_lecture_video extends Fragment {
 
         lectureGridView = view.findViewById(R.id.lecture_video_music_Gridview);
 
-        // 测试开始
-        LectureCourse L1 = new LectureCourse();
-        LectureCourse L2 = new LectureCourse();
-
-        L1.setName("迦百农是圣经中的地名，系加利利海附近一域，据称耶稣开始传道时，即迁居");
-        L1.setUpdateTime("2019-03-02");
-        L1.setDescription("迦百农是圣经中的地名，系加利利海附近一域，据称耶稣开始传道时，即迁居此地，有不少神迹和重要的事情在这地方发生。拉巴基本片介于纪录片和小说之间，通过该片，她继续探索黎巴嫩社会，对这个不和谐社会系统的缺陷进行具有国际影响力的反思。 \n" +
-                "\n" +
-                "　　影片讲述了一个12岁男孩Zain的艰难历程 ，他状告父母让其来到这个世界，却没有能够好好的抚养他。故事就此展开，并对他存在的合法性产生质疑：除了被虐待之外，这个幼小的儿童生来就没有任何身份。通过Zain的奋争，迦百农希望成为所有没有获得基本权利保障、缺乏教育、健康和爱的人们的代言人。 \n" +
-                "\n" +
-                "　　为了让人们意识到这个残酷的现实和所讲故事的真实性，拉巴基选择一批真实生活于迦百农类似的人们出演本片。这位女影人在影片中展现他们曾经看到的情况或经历过的生活，她说：“演员必须曾经经历过这样的生活，没有那些将这部电影作为维护他们的奋斗目标的旗帜的人们，就没有这部电影”。 ");
-
-        L1.setDuration("2小时30分");
-        L1.setLectureID("6666");
-        data.add(L1);
-        data.add(L1);
-        for (int a =0; a<200; a++) {
-            data.add(L1);
-        }
+//        // 测试开始
+//        LectureCourse L1 = new LectureCourse();
+//        LectureCourse L2 = new LectureCourse();
+//
+//        L1.setName("迦百农是圣经中的地名，系加利利海附近一域，据称耶稣开始传道时，即迁居");
+//        L1.setUpdateTime("2019-03-02");
+//        L1.setDescription("迦百农是圣经中的地名，系加利利海附近一域，据称耶稣开始传道时，即迁居此地，有不少神迹和重要的事情在这地方发生。拉巴基本片介于纪录片和小说之间，通过该片，她继续探索黎巴嫩社会，对这个不和谐社会系统的缺陷进行具有国际影响力的反思。 \n" +
+//                "\n" +
+//                "　　影片讲述了一个12岁男孩Zain的艰难历程 ，他状告父母让其来到这个世界，却没有能够好好的抚养他。故事就此展开，并对他存在的合法性产生质疑：除了被虐待之外，这个幼小的儿童生来就没有任何身份。通过Zain的奋争，迦百农希望成为所有没有获得基本权利保障、缺乏教育、健康和爱的人们的代言人。 \n" +
+//                "\n" +
+//                "　　为了让人们意识到这个残酷的现实和所讲故事的真实性，拉巴基选择一批真实生活于迦百农类似的人们出演本片。这位女影人在影片中展现他们曾经看到的情况或经历过的生活，她说：“演员必须曾经经历过这样的生活，没有那些将这部电影作为维护他们的奋斗目标的旗帜的人们，就没有这部电影”。 ");
+//
+//        L1.setDuration("2小时30分");
+//        L1.setLectureID("6666");
+//        data.add(L1);
+//        data.add(L1);
+//        for (int a =0; a<200; a++) {
+//            data.add(L1);
+//        }
         // 测试开始
 
 
@@ -181,7 +181,7 @@ public class fragment_lecture_video extends Fragment {
 
             lecture_name.setText(lectureCourse.getName());
             //集成需要加入
-            //cover_image.setImageBitmap(lectureCourse.getCover());
+            cover_image.setImageBitmap(lectureCourse.getCover());
 
             return view;
         }

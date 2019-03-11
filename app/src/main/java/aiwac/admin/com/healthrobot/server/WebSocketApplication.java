@@ -39,7 +39,7 @@ public class WebSocketApplication {
     private void init(Context context){
         try{
             SharedPreferences pref = HealthRobotApplication.getContext().getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE);
-            String token = pref.getString(Constant.USER_DATA_FIELD_TOKEN, "");
+            String token = pref.getString(Constant.USER_DATA_FIELD_TOKEN, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBY2NvdW50IjoiMjIyMjIyMjIyMjIiLCJDbGllbnRUeXBlIjoicm9ib3QiLCJFeHByZXNzSW4iOjE1NTIzNTc4MTh9.xmrF3IcT-PeGSvkSaHiG7t7M7TZA52THjGuV9rpNnnc");
             URI uri = new URI(Constant.WEBSOCKET_URL+token);
             //URI uri = new URI(Constant.WEBSOCKET_URL);
             //这里会进行和服务端的握手操作

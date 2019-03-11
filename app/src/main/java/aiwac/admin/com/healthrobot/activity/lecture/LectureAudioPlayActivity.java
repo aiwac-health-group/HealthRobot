@@ -78,7 +78,7 @@ public class LectureAudioPlayActivity extends AppCompatActivity implements View.
     private int mShowVolume;//声音
     private int mShowLightness;//亮度
 
-    private String mPlayUrl = "http://other.web.ri01.sycdn.kuwo.cn/resource/n2/96/19/2142954236.mp3";
+    private String mPlayUrl;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -125,6 +125,7 @@ public class LectureAudioPlayActivity extends AppCompatActivity implements View.
         Vitamio.isInitialized(this);
         setContentView(R.layout.activity_audio_play);
 
+        mPlayUrl= getIntent().getStringExtra("Link");
 
         //隐藏标题栏
         ActionBar actionbar = getSupportActionBar();

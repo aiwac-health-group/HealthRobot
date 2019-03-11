@@ -64,11 +64,10 @@ public class LectureArticleDetailActivity extends AppCompatActivity {
 
         articleName.setText(lectureCourseNow.getName());
         articleTime.setText(lectureCourseNow.getUpdateTime());
-        //
 
-        // 测试开始
-        articleContent.setText(lectureCourseNow.getDescription());
-        // 测试完毕
+
+        articleContent.setText(content);
+
 
         //articleContent.setText("正在加载...");
 

@@ -5,7 +5,6 @@ package aiwac.admin.com.healthrobot.bean;
  */
 
 public class BaseEntity {
-    public String clientId = "15844096407";    //客户端id
     public String businessType;    //事物类型，如：数据采集，数据查询等
     public String uuid;    //一次事务
     public String clientType = "robot";  // 客户端类型 1表示手机  2 表示后台
@@ -27,6 +26,7 @@ public class BaseEntity {
         this.businessType = businessType;
     }
 
+    public String clientId = "22222222222";    //客户端id
     public String getUuid() {
         return uuid;
     }
