@@ -19,7 +19,9 @@ import aiwac.admin.com.healthrobot.medicalexam.tool.Md5Tool;
 import aiwac.admin.com.healthrobot.medicalexam.tool.SuperFileView2;
 import aiwac.admin.com.healthrobot.medicalexam.tool.TLog;
 import aiwac.admin.com.healthrobot.server.WebSocketApplication;
+import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
 import aiwac.admin.com.healthrobot.utils.JsonUtil;
+import aiwac.admin.com.healthrobot.utils.LogUtil;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -59,8 +61,18 @@ public class MedicalExamMenuActivity extends AppCompatActivity {
      * 从服务器获取文件的网络地址
      */
     private void getFileUrlFromServer(){
-        String stringJson = JsonUtil.requestMedicalExamMenuString();
-        WebSocketApplication.getWebSocketApplication().send(stringJson);
+        ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    String stringJson = JsonUtil.requestMedicalExamMenuString();
+                    WebSocketApplication.getWebSocketApplication().send(stringJson);
+                }catch (Exception e){
+                    LogUtil.d(e.getMessage());
+                    //其他异常处理
+                }
+            }
+        });
         filePath="";
 
         //检查filePath有没有内容，直到有内容的时候就结束

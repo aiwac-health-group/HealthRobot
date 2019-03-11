@@ -17,13 +17,16 @@ import aiwac.admin.com.healthrobot.common.Constant;
 import aiwac.admin.com.healthrobot.medicalexam.adapter.GetMedicalExamUtil;
 import aiwac.admin.com.healthrobot.medicalexam.model.MedicalExam;
 import aiwac.admin.com.healthrobot.server.WebSocketApplication;
+import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
 import aiwac.admin.com.healthrobot.utils.JsonUtil;
+import aiwac.admin.com.healthrobot.utils.LogUtil;
 
 public class MedicalExamDetailActivity extends AppCompatActivity {
     private TextView tvTitle=findViewById(R.id.textview_rec_detail_title);
     private TextView tvDate=findViewById(R.id.textview_rec_detail_date);
     private TextView tvcontext=findViewById(R.id.textview_rec_detail_context);
     private Thread thread;
+    private MedicalExam medicalExam;
     private boolean runExit=false;//退出询问线程的标志位
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,19 +34,28 @@ public class MedicalExamDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_medical_exam_detail);
         initViewFromWeb(getIntent().getExtras().getInt("position"));
     }
-
     /**
      * 这里是从服务器通过examid来查询体检推荐的具体信息
      * @param position
      */
     private void initViewFromWeb(int position){
-        MedicalExam medicalExam= GetMedicalExamUtil.getList().get(position);
+        medicalExam= GetMedicalExamUtil.getList().get(position);
         tvTitle.setText(medicalExam.getName());
         tvDate.setText(medicalExam.getDataToShowAsText());
 
         //发送id给服务器 ，查询详细内容，内容会在WebSocketClientHelper的onMessage里赋值给MedicalExam里的examContext中
-        String string = JsonUtil.requestMedicalExamDetailString(medicalExam.getExamID());
-        WebSocketApplication.getWebSocketApplication().send(string);
+        ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    String string = JsonUtil.requestMedicalExamDetailString(medicalExam.getExamID());
+                    WebSocketApplication.getWebSocketApplication().send(string);
+                }catch (Exception e){
+                    LogUtil.d(e.getMessage());
+                    //其他异常处理
+                }
+            }
+        });
 
         //检查examContext有没有内容，直到有内容的时候就显示
         thread = new Thread(new Runnable() {

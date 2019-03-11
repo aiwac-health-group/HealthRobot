@@ -2,6 +2,7 @@ package aiwac.admin.com.healthrobot.server;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.net.URI;
 import java.util.HashMap;
@@ -40,8 +41,10 @@ public class WebSocketApplication {
             SharedPreferences pref = HealthRobotApplication.getContext().getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE);
             String token = pref.getString(Constant.USER_DATA_FIELD_TOKEN, "");
             URI uri = new URI(Constant.WEBSOCKET_URL+token);
+            //URI uri = new URI(Constant.WEBSOCKET_URL);
             //这里会进行和服务端的握手操作
             webSocketHelper = new WebSocketClientHelper(uri, getDefaultMap(),context);
+            Log.d("11", "init: "+webSocketHelper);
         }catch (Exception e){
             e.printStackTrace();
             LogUtil.d( Constant.WEBSOCKET_URI_EXCEPTION);

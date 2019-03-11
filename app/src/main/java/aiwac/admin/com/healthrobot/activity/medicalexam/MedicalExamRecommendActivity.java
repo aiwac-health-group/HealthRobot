@@ -17,7 +17,9 @@ import aiwac.admin.com.healthrobot.medicalexam.adapter.GetMedicalExamUtil;
 import aiwac.admin.com.healthrobot.medicalexam.adapter.MedicalExamAdapter;
 import aiwac.admin.com.healthrobot.medicalexam.model.MedicalExam;
 import aiwac.admin.com.healthrobot.server.WebSocketApplication;
+import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
 import aiwac.admin.com.healthrobot.utils.JsonUtil;
+import aiwac.admin.com.healthrobot.utils.LogUtil;
 import zuo.biao.library.base.BaseHttpListActivity;
 import zuo.biao.library.interfaces.AdapterCallBack;
 import zuo.biao.library.interfaces.OnBottomDragListener;
@@ -87,8 +89,19 @@ public class MedicalExamRecommendActivity extends BaseHttpListActivity<MedicalEx
         getMedicalExamRecommend();//获得体检推荐摘要
     }
     public void getMedicalExamRecommend(){
-        /*String string = JsonUtil.requestMedicalExamSummaryString();
-        WebSocketApplication.getWebSocketApplication().send(string);*/
+        ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    String string = JsonUtil.requestMedicalExamSummaryString();
+                    WebSocketApplication.getWebSocketApplication().send(string);
+                }catch (Exception e){
+                    LogUtil.d(e.getMessage());
+                    //其他异常处理
+                }
+            }
+        });
+
     }
     @Override
     public void getListAsync(final int page) {

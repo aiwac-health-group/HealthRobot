@@ -70,6 +70,13 @@ public class MainActivity extends AppCompatActivity implements ViewSwitcher.View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //开启服务，创建websocket连接
+        Intent intent = new Intent(this, WebSocketService.class);
+        intent.putExtra(Constant.SERVICE_TIMER_TYPE, Constant.SERVICE_TIMER_TYPE_WEBSOCKET);
+        startService(intent);
+
+
         //隐藏标题栏
         ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
@@ -85,7 +92,8 @@ public class MainActivity extends AppCompatActivity implements ViewSwitcher.View
 
 
 
-        lectureButton = (ImageButton)findViewById(R.id.start_lecture);
+
+        lectureButton = (ImageButton) findViewById(R.id.start_lecture);
         lectureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,37 +158,41 @@ public class MainActivity extends AppCompatActivity implements ViewSwitcher.View
 
 
         //离线语音识别测试--需要在AndroidManifest.xml添加权限
-        Button btnSpeechRecog=findViewById(R.id.btn_speech_rec);
+        Button btnSpeechRecog = findViewById(R.id.btn_speech_rec);
         btnSpeechRecog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this,SpeechRecogActivity.class);
+                intent.setClass(MainActivity.this, SpeechRecogActivity.class);
                 startActivity(intent);
             }
         });
 
         //体检推荐测试
-        ImageButton btnMedicalExamRecommand=findViewById(R.id.btn_medical_exam_recommand);
+        ImageButton btnMedicalExamRecommand = findViewById(R.id.btn_medical_exam_recommand);
         btnMedicalExamRecommand.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this,MedicalExamRecommendActivity.class);
+                intent.setClass(MainActivity.this, MedicalExamRecommendActivity.class);
                 startActivity(intent);
             }
         });
 
         //消息通知测试
-        ImageView btnNotification=findViewById(R.id.btn_notification);
+        ImageView btnNotification = findViewById(R.id.btn_notification);
         btnNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this,NotificationActivity.class);
+                intent.setClass(MainActivity.this, NotificationActivity.class);
                 startActivity(intent);
             }
         });
+
+
+        //更新首页体检推荐图片
+        EventBus.getDefault().register(this);
     }
 
 //    //判断用户是否登录，如果没有登录，则跳转到登录界面

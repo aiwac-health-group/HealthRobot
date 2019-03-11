@@ -6,7 +6,10 @@ package aiwac.admin.com.healthrobot.common;
 
 public class Constant {
 
-    public final static String TEST_IP = "101.132.192.66:80";
+    public final static String TEST_IP = "192.168.3.218:8082";
+    //public final static String IP="192.168.3.218";
+    //public final static String HTTP_PORT="8080";
+   // public final static String WEBSOCKET_PORT="8082";
 
     //WebSocket 和讲座 健康检测结果  相关的
 
@@ -85,7 +88,7 @@ public class Constant {
     //和WebSocket相关的
     public final static String WEBSOCKET_BASE_URL = "ws://" + TEST_IP;
     public final static String WEBSOCKET_USER_IDENTITY = "number";
-    public final static String WEBSOCKET_URL = WEBSOCKET_BASE_URL + "/ws?token=";
+    public final static String WEBSOCKET_URL = WEBSOCKET_BASE_URL ;
     public final static String WEBSOCKET_MESSAGE_BUSSINESSTYPE = "code";
     public final static String WEBSOCKET_MESSAGE_CLIENTID = "account";
     public final static String WEBSOCKET_MESSAGE_UUID = "uniqueID";

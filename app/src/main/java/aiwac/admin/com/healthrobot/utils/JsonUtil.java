@@ -567,6 +567,8 @@ public class JsonUtil {
             baseEntity.setBusinessType(Constant.WEBSOCKET_MEDICAL_EXAM_SUMMARY_BUSSINESSTYPE_CODE);
             //WEBSOCKET_MEDICAL_EXAM_SUMMARY_BUSSINESSTYPE_CODE="0007";//体检推荐摘要查询
             String stringJson = JsonUtil.baseEntity2Json(baseEntity);
+
+            LogUtil.d( Constant.JSON_GENERATE_SUCCESS + stringJson);
             return stringJson;
         } catch (Exception e) {
             LogUtil.d(e.getMessage());
@@ -655,6 +657,8 @@ public class JsonUtil {
             baseEntity.setBusinessType(Constant.WEBSOCKET_MEDICAL_EXAM_MENU_CODE);
             //WEBSOCKET_MEDICAL_EXAM_MENU_CODE="0022";//体检套餐查询
             String stringJson = JsonUtil.baseEntity2Json(baseEntity);
+
+            LogUtil.d( Constant.JSON_GENERATE_SUCCESS + stringJson);
             return stringJson;
         } catch (Exception e) {
             LogUtil.d(e.getMessage());
