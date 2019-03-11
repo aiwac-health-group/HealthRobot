@@ -5,12 +5,17 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
+import android.util.Log;
+
+import com.baidu.tts.tools.SharedPreferencesUtils;
 
 import aiwac.admin.com.healthrobot.common.Constant;
+import aiwac.admin.com.healthrobot.db.UserData;
 import aiwac.admin.com.healthrobot.server.WebSocketApplication;
 import aiwac.admin.com.healthrobot.utils.LogUtil;
 import aiwac.admin.com.healthrobot.utils.StringUtil;
@@ -21,12 +26,12 @@ import aiwac.admin.com.healthrobot.utils.StringUtil;
 
 public class WebSocketService extends Service{
 
+    private final static String LOG_TAG = "WebSocketService";
     //绑定service留给后续功能使用
     private PicVoiceBinder picVoiceBinder = new PicVoiceBinder();
 
     private WebSocketApplication webSocketApplication;
 
-    private Intent timerIntent;
 
 
 
@@ -36,23 +41,28 @@ public class WebSocketService extends Service{
 
         //获取WebSocketApplication对象，保存一些必要的变量
         webSocketApplication = WebSocketApplication.getWebSocketApplication();
+        Log.d(LOG_TAG, "WebSocketService" );
 
-        LogUtil.d( "WebSocketService" + Constant.SERVICE_CREATE);
+
+        Log.d(LOG_TAG, "WebSocketService" + Constant.SERVICE_CREATE);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         //如果用户清理了应用，就没有intent了，当时我们有一个定时的任务，会重新启动该服务，此时会有空指针异常需要处理
-        //LogUtil.d( "intent : " + intent);
+        Log.d(LOG_TAG, "intent : " + intent);
         if(intent == null) {
-            LogUtil.d( Constant.APLLICATION_CLEAN);
+            Log.d(LOG_TAG, Constant.APLLICATION_CLEAN);
             LogUtil.d( Constant.SERVICE_STOP_SELF);
             stopSelf();
             return super.onStartCommand(intent, flags, startId);
         }
 
         //如果没有用户登录，停止该任务，如果有继续执行
-        if(!StringUtil.isValidate(webSocketApplication.getUserNumber()) || !webSocketApplication.isNetwork()) {
+        //String phoneNumber = SharedPreferencesUtils.getString(Constant.USER_DATA_FIELD_NUMBER, this);
+        /*SharedPreferences pref = getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE);
+        String number = pref.getString(Constant.USER_DATA_FIELD_NUMBER, "");*/
+        if(!StringUtil.isValidate(UserData.getUserData().getNumber())) {
             LogUtil.d( Constant.SERVICE_STOP_SELF);
             stopSelf();
             return super.onStartCommand(intent, flags, startId);
@@ -79,10 +89,7 @@ public class WebSocketService extends Service{
 
                 //开启一分钟检测一次的定时任务
                 alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAtTime, pendingIntent);
-                LogUtil.d( Constant.WEBSOCKET_SERVER_TIMER_WEBSOCKET);
-
-                //开启定时任务服务，保证定时任务的可靠性
-                startService(timerIntent);
+                Log.d(LOG_TAG, Constant.WEBSOCKET_SERVER_TIMER_WEBSOCKET);
 
                 break;
             default:
@@ -95,7 +102,7 @@ public class WebSocketService extends Service{
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        LogUtil.d( "WebSocketService" + Constant.SERVICE_BINDER);
+        Log.d(LOG_TAG, "WebSocketService" + Constant.SERVICE_BINDER);
 
         return picVoiceBinder;
     }
@@ -103,13 +110,10 @@ public class WebSocketService extends Service{
     @Override
     public void onDestroy() {
         super.onDestroy();
-        LogUtil.d( "WebSocketService" + Constant.SERVICE_DESTROY);
+        Log.d(LOG_TAG, "WebSocketService" + Constant.SERVICE_DESTROY);
 
         //关闭连接资源
         WebSocketApplication.getWebSocketApplication().setNull();
-
-        //销毁时关闭timerService
-        stopService(timerIntent);
 
     }
 
@@ -119,7 +123,4 @@ public class WebSocketService extends Service{
 
 
     }
-
-
-
 }

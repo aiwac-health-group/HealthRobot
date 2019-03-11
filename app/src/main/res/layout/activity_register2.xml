@@ -13,7 +13,7 @@
             android:text="填写个人信息" />
         <Button
             style="@style/topbar_right_btn"
-            android:id="@+id/btn_register_history"
+            android:id="@+id/send_button"
             android:text="保存" />
     </RelativeLayout>
 
@@ -28,7 +28,6 @@
                 style="@style/divider_horizontal_1px" />
 
             <LinearLayout
-                android:id="@+id/llSettingSetting"
                 style="@style/content_item_white" >
 
                 <EditText
@@ -44,7 +43,7 @@
             <View style="@style/divider_horizontal_1px" />
 
             <LinearLayout
-                android:id="@+id/llSettingAbout"
+                android:id="@+id/layout_sex"
                 style="@style/content_item_white" >
 
                 <TextView
@@ -59,7 +58,7 @@
             <View style="@style/divider_horizontal_1px" />
 
             <LinearLayout
-
+                android:id="@+id/layout_birthday"
                 style="@style/content_item_white" >
 
                 <TextView
@@ -87,6 +86,7 @@
 
             <View style="@style/divider_horizontal_1px" />
             <LinearLayout
+                android:id="@+id/layout_area"
                 style="@style/content_item_white" >
 
                 <TextView

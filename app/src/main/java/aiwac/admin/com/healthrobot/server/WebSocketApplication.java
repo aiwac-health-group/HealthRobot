@@ -5,14 +5,17 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
 
 import aiwac.admin.com.healthrobot.HealthRobotApplication;
+import aiwac.admin.com.healthrobot.bean.ExamInfoForCarousel;
 import aiwac.admin.com.healthrobot.bean.LectureAVDetail;
 import aiwac.admin.com.healthrobot.bean.LectureArticleDetail;
 import aiwac.admin.com.healthrobot.bean.LectureCourseAbstractInfo;
+import aiwac.admin.com.healthrobot.bean.User;
 import aiwac.admin.com.healthrobot.common.Constant;
 import aiwac.admin.com.healthrobot.db.UserData;
 import aiwac.admin.com.healthrobot.exception.WebSocketException;
@@ -100,8 +103,16 @@ public class WebSocketApplication {
         return webSocketHelper;
     }
 
+    public User getUser(){
+        return webSocketHelper.getUser();
+    }
 
-
+    public void setUser(User user){
+        webSocketHelper.setUser(user);
+    }
+    public ArrayList<ExamInfoForCarousel> getExamInfoForCarousels() {
+        return webSocketHelper.getExamInfoForCarousels();
+    }
     //  健康讲座  、健康检测结果查询等相关操作
     public LectureCourseAbstractInfo getWebSocketHelperLectureVideoAllInfo(){
         return webSocketHelper.getLectureVideoAllInfo();

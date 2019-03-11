@@ -193,13 +193,19 @@ public class HttpUtil {
             dos.write(postData);
             dos.flush();
 
+            LogUtil.d(urlConn.getResponseCode()+"@@@@");
             // 判断请求是否成功
             if (urlConn.getResponseCode() == 200) {
                 // 获取返回的数据
-                /*String result = streamToString(urlConn.getInputStream());
+                LogUtil.d(Constant.HTTP_METHOD_POST_SUCCESS );
+                String result = streamToString(urlConn.getInputStream());
                 LogUtil.d(Constant.HTTP_METHOD_POST_SUCCESS + result);
-                return result;*/
-                return  null;
+                if(result == null || result.equals("")){
+                    return "200";
+                }else{
+                    return result;
+                }
+
             } else {
                 LogUtil.d(Constant.HTTP_METHOD_POST_FAILURE);
                 return null;

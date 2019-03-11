@@ -42,7 +42,7 @@ public class RegisterActivity extends BaseActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_register2);
 
         initView();
 
@@ -164,6 +164,7 @@ public class RegisterActivity extends BaseActivity  {
                     SharedPreferences.Editor editor = getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE).edit();
                     editor.putBoolean(Constant.USER_DATA_FIELD_REGISTER, true);
                     editor.apply();
+                    LogUtil.d("注册成功");
                     //向后台发送信息
                     ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
                         @Override
@@ -179,7 +180,6 @@ public class RegisterActivity extends BaseActivity  {
                                 user.setBusinessType(Constant.WEBSOCKET_PERSONAL_INFOMATION_BUSSINESSTYPE_CODE);
                                 user.setUuid(UUID.randomUUID().toString());
                                 String json = JsonUtil.userToJson(user);
-
                                 WebSocketApplication.getWebSocketApplication().send(json);
 
                             }catch (Exception e){
@@ -278,12 +278,12 @@ public class RegisterActivity extends BaseActivity  {
                 BaseEntity baseEntity = new BaseEntity();
                 baseEntity.setBusinessType(Constant.WEBSOCKET_QUERYPERSONINFO_BUSSINESSTYPE_CODE);
                 String jsonStr = JsonUtil.queryPersonInfo(baseEntity);
-                WebSocketApplication.getWebSocketApplication().getWebSocketHelper().send(jsonStr);
+                WebSocketApplication.getWebSocketApplication().send(jsonStr);
                 for(int i=0; i<10; i++) {
                     Thread.sleep(500);
-                    User user = WebSocketApplication.getWebSocketApplication().getWebSocketHelper().getUser();
+                    User user = WebSocketApplication.getWebSocketApplication().getUser();
                     if(user != null) {
-                        WebSocketApplication.getWebSocketApplication().getWebSocketHelper().setUser(null);
+                        WebSocketApplication.getWebSocketApplication().setUser(null);
                         return user;
                     }
                 }
@@ -310,7 +310,7 @@ public class RegisterActivity extends BaseActivity  {
 
             }else{ // 失败， 返回主界面
                 Toast.makeText(RegisterActivity.this, "网络信号不好", Toast.LENGTH_LONG).show();
-                ActivityUtil.skipActivity(RegisterActivity.this, SettingActivity.class);
+                finish();
             }
         }
     }

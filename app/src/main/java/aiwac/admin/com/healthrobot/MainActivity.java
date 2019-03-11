@@ -6,9 +6,13 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -32,31 +36,29 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import aiwac.admin.com.healthrobot.activity.lecture.LectureActivtiy;
-import aiwac.admin.com.healthrobot.activity.loginandregister.LoginActivity;
+import aiwac.admin.com.healthrobot.activity.medicalexam.MedicalExamMenuActivity;
 import aiwac.admin.com.healthrobot.activity.medicalexam.MedicalExamRecommendActivity;
 import aiwac.admin.com.healthrobot.activity.notification.NotificationActivity;
+import aiwac.admin.com.healthrobot.activity.setting.SettingActivity;
 import aiwac.admin.com.healthrobot.activity.skin.AlarmActivity;
 import aiwac.admin.com.healthrobot.activity.skin.SkinMainActivity;
 import aiwac.admin.com.healthrobot.activity.speechrecog.SpeechRecogActivity;
 import aiwac.admin.com.healthrobot.activity.voicechat.WaitChatActivity;
+import aiwac.admin.com.healthrobot.activity.voiceregister.VoiceRegisterActivity;
 import aiwac.admin.com.healthrobot.bean.BaseEntity;
 import aiwac.admin.com.healthrobot.bean.ExamInfoForCarousel;
 import aiwac.admin.com.healthrobot.bean.MessageEvent;
 import aiwac.admin.com.healthrobot.common.Constant;
-import aiwac.admin.com.healthrobot.db.UserData;
 import aiwac.admin.com.healthrobot.server.WebSocketApplication;
-import aiwac.admin.com.healthrobot.service.WebSocketService;
 import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
 import aiwac.admin.com.healthrobot.utils.ActivityUtil;
 import aiwac.admin.com.healthrobot.utils.JsonUtil;
 import aiwac.admin.com.healthrobot.utils.LogUtil;
-import aiwac.admin.com.healthrobot.utils.StringUtil;
 
 
-public class MainActivity extends AppCompatActivity implements ViewSwitcher.ViewFactory {
+public class MainActivity extends AppCompatActivity {
 
-    private ImageButton btn_voicechat, lectureButton;
+    private ImageButton btn_voicechat;
     private ArrayList<ExamInfoForCarousel> examInfoForCarousels;
 
     //滚动动画用
@@ -71,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements ViewSwitcher.View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mImageSwitcher = findViewById(R.id.imageSwitcher1);
+        linearLayout = findViewById(R.id.viewGroup);
         //隐藏标题栏
         ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
@@ -78,26 +82,13 @@ public class MainActivity extends AppCompatActivity implements ViewSwitcher.View
         }
         //每天中午十二点提醒用户拍照测肤
         alarm(MainActivity.this);
-        //设置滚动动画
+
         initView();
-        //异步加载，查询体检推荐消息
-        LoadThreeExamAsyc loadThreeExamAsyc = new LoadThreeExamAsyc();
-        loadThreeExamAsyc.execute();
 
+        //异步加载，查询三条体检推荐消息
+        /*LoadThreeExamAsyc loadThreeExamAsyc = new LoadThreeExamAsyc();
+        loadThreeExamAsyc.execute();*/
 
-
-
-        lectureButton = (ImageButton) findViewById(R.id.start_lecture);
-        lectureButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("tag", "start lecture");
-                Intent intent = new Intent(MainActivity.this, LectureActivtiy.class);
-                startActivity(intent);
-                Toast.makeText(MainActivity.this, "按按钮",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
 
         //测肤功能测试
         ImageButton sendButton = (ImageButton) findViewById(R.id.skin);
@@ -106,8 +97,8 @@ public class MainActivity extends AppCompatActivity implements ViewSwitcher.View
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SkinMainActivity.class);
                 startActivity(intent);
-//                Toast.makeText(MainActivity.this, "按按钮",
-//                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "按按钮",
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -118,11 +109,39 @@ public class MainActivity extends AppCompatActivity implements ViewSwitcher.View
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AlarmActivity.class);
                 startActivity(intent);
-//                Toast.makeText(MainActivity.this, "按按钮",
-//                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "按按钮",
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
+        //个人中心
+        findViewById(R.id.setting).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //语音挂号
+        findViewById(R.id.voice_register).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, VoiceRegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //健康讲座
+        findViewById(R.id.start_lecture).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MedicalExamMenuActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //在线问诊
         btn_voicechat = findViewById(R.id.btn_voicechat);
         btn_voicechat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,32 +203,29 @@ public class MainActivity extends AppCompatActivity implements ViewSwitcher.View
             }
         });
 
-
-
-        //更新首页体检推荐图片
         EventBus.getDefault().register(this);
 
     }
-
-    //判断用户是否登录，如果没有登录，则跳转到登录界面
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        LogUtil.d( Constant.USER_IS_LOGIN);
-        if(!StringUtil.isValidate(UserData.getUserData().getNumber())){
-            //用户没有登录, 跳转到登录界面
-            //ActivityUtil.skipActivity(MainActivity.this, LoginActivity.class);
-            LogUtil.d("用户还没有登录");
-        }
-
-
-        //开启服务，创建websocket连接
-        Intent intent = new Intent(this, WebSocketService.class);
-        intent.putExtra(Constant.SERVICE_TIMER_TYPE, Constant.SERVICE_TIMER_TYPE_WEBSOCKET);
-        startService(intent);
-    }
-
+//
+//    //判断用户是否登录，如果没有登录，则跳转到登录界面
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//        LogUtil.d( Constant.USER_IS_LOGIN);
+//        if(!StringUtil.isValidate(UserData.getUserData().getNumber())){
+//            //用户没有登录, 跳转到登录界面
+//            ActivityUtil.skipActivity(MainActivity.this, LoginActivity.class);
+//        }
+//
+//
+//        //开启服务，创建websocket连接
+//        Intent intent = new Intent(this, WebSocketService.class);
+//        intent.putExtra(Constant.SERVICE_TIMER_TYPE, Constant.SERVICE_TIMER_TYPE_WEBSOCKET);
+//        startService(intent);
+//
+//
+//    }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -220,6 +236,7 @@ public class MainActivity extends AppCompatActivity implements ViewSwitcher.View
             examInfoForCarousels.remove(0);
             examInfoForCarousels.add(examInfoForCarousel);
             //通知界面更改
+            setImageSwitcherByNetwork();
         }
 
     }
@@ -252,19 +269,15 @@ public class MainActivity extends AppCompatActivity implements ViewSwitcher.View
     private void initView(){
 
         imgIds = new int[]{R.drawable.fig1, R.drawable.fig2, R.drawable.fig3};
-        mImageSwitcher = findViewById(R.id.imageSwitcher1);
-        mImageSwitcher.setFactory(this);
-        linearLayout = findViewById(R.id.viewGroup);
-
-        //设置banner
-        setImageSwitcher();
-
-    }
-    /**
-     * 设置切换动画
-     */
-    private void setImageSwitcher(){
-        // 图片 index 布局的生成
+        mImageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
+            @Override
+            public View makeView() {
+                final ImageView i = new ImageView(MainActivity.this);
+                i.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                i.setLayoutParams(new ImageSwitcher.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
+                return i;
+            }
+        });
         tips = new ImageView[imgIds.length];
         for (int i=0; i<imgIds.length; i++){
             ImageView mImageView = new ImageView(MainActivity.this);
@@ -278,10 +291,57 @@ public class MainActivity extends AppCompatActivity implements ViewSwitcher.View
             mImageView.setBackgroundResource(R.drawable.dot_unfocus);
             linearLayout.addView(mImageView, layoutParams);
         }
-
         // 设置动画
         mImageSwitcher.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left));
         mImageSwitcher.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right));
+
+    }
+
+    /**
+     * 从网络获取图片
+     */
+    public void setImageSwitcherByNetwork(){
+        curPos=0;
+        Drawable drawable = new BitmapDrawable(examInfoForCarousels.get(curPos).getCover());
+        mImageSwitcher.setImageDrawable(drawable);
+        setImageBackground(curPos);
+        //
+        // 按时切换图片
+        mImageSwitcher.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(curPos==imgIds.length-1){
+                    curPos=0;
+                }else{
+                    curPos++;
+                }
+                Drawable drawable = new BitmapDrawable(examInfoForCarousels.get(curPos).getCover());
+                mImageSwitcher.setImageDrawable(drawable);
+                setImageBackground(curPos);
+                mImageSwitcher.postDelayed(this, 1500);
+            }
+        }, 1500);
+        mImageSwitcher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //向后台查询体检推荐具体信息
+                String examId = examInfoForCarousels.get(curPos).getExamID();
+                BaseEntity baseEntity = new BaseEntity();
+                baseEntity.setBusinessType("0008");
+                sendJson(JsonUtil.baseEntity2Json(baseEntity));
+                //跳转到体检推荐详情界面****************************************************************
+
+            }
+        });
+    }
+
+
+    /**
+     * 设置默认切换动画
+     */
+    public void setDefaultImageSwitcher(){
+        // 图片 index 布局的生成
+
         curPos=0;
         mImageSwitcher.setImageResource(imgIds[curPos]);
         setImageBackground(curPos);
@@ -299,8 +359,9 @@ public class MainActivity extends AppCompatActivity implements ViewSwitcher.View
                 mImageSwitcher.postDelayed(this, 1500);
             }
         }, 1500);
-
     }
+
+
     private void setImageBackground(int selectItems) {
         for (int i=0; i<tips.length; i++){
             if(i==selectItems){
@@ -309,13 +370,6 @@ public class MainActivity extends AppCompatActivity implements ViewSwitcher.View
                 tips[i].setBackgroundResource(R.drawable.dot_unfocus);
             }
         }
-    }
-    @Override
-    public View makeView() {
-        final ImageView i = new ImageView(this);
-        i.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        i.setLayoutParams(new ImageSwitcher.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
-        return i;
     }
 
     /**
@@ -420,6 +474,23 @@ public class MainActivity extends AppCompatActivity implements ViewSwitcher.View
 
 
 
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if((boolean)msg.obj){
+                //图片获取成功
+                setImageSwitcherByNetwork();
+            }else{
+
+                //图片获取失败，显示默认图片
+                setDefaultImageSwitcher();
+            }
+
+        }
+    };
+
+
 
 
     class LoadThreeExamAsyc extends AsyncTask<Void, Void, Boolean> {
@@ -444,10 +515,10 @@ public class MainActivity extends AppCompatActivity implements ViewSwitcher.View
             try {
                 BaseEntity baseEntity = new BaseEntity();
                 baseEntity.setBusinessType(Constant.WEBSOCKET_THREE_EXAM_BUSSINESSTYPE_CODE);
-                WebSocketApplication.getWebSocketApplication().getWebSocketHelper().send(JsonUtil.baseEntity2Json(baseEntity));
+                WebSocketApplication.getWebSocketApplication().send(JsonUtil.baseEntity2Json(baseEntity));
                 for (int i = 0; i < 10; i++) {
                     Thread.sleep(500);
-                    examInfoForCarousels = WebSocketApplication.getWebSocketApplication().getWebSocketHelper().getExamInfoForCarousels();
+                    examInfoForCarousels = WebSocketApplication.getWebSocketApplication().getExamInfoForCarousels();
                     if (examInfoForCarousels!=null) {
                         return true;
                     }
@@ -467,9 +538,14 @@ public class MainActivity extends AppCompatActivity implements ViewSwitcher.View
 
             if (aBoolean) {   //加载轮播
                 //获取控件，添加图片，监听图片点击事件
-
-
+                //设置滚动动画
+                Message message = new Message();
+                message.obj = true;
+                handler.sendMessage(message);
             } else { // 失败， 返回主界面
+                Message message = new Message();
+                message.obj = false;
+                handler.sendMessage(message);
                 Toast.makeText(MainActivity.this, "当前网络不可用，请检查你的网络设置", Toast.LENGTH_LONG).show();
             }
         }

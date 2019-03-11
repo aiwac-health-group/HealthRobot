@@ -1,5 +1,6 @@
 package aiwac.admin.com.healthrobot.activity.loginandregister;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -24,10 +25,12 @@ import aiwac.admin.com.healthrobot.db.UserData;
 import aiwac.admin.com.healthrobot.db.UserSqliteHelper;
 import aiwac.admin.com.healthrobot.exception.HttpException;
 import aiwac.admin.com.healthrobot.exception.JsonException;
+import aiwac.admin.com.healthrobot.service.WebSocketService;
 import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
 import aiwac.admin.com.healthrobot.utils.ActivityUtil;
 import aiwac.admin.com.healthrobot.utils.HttpUtil;
 import aiwac.admin.com.healthrobot.utils.JsonUtil;
+import aiwac.admin.com.healthrobot.utils.LogUtil;
 import aiwac.admin.com.healthrobot.utils.StringUtil;
 
 import static aiwac.admin.com.healthrobot.common.Constant.USER_CHECKCODE_ERROR_EXCEPTION;
@@ -80,7 +83,10 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, Constant.USER_CHECKCODE_ERROR_EXCEPTION_MESSAGE, Toast.LENGTH_LONG).show();
                     break;
                 case Constant.USER_CHECKCODE_SUCCESS:
-
+                    //开启服务，创建websocket连接
+                    Intent intent = new Intent(LoginActivity.this, WebSocketService.class);
+                    intent.putExtra(Constant.SERVICE_TIMER_TYPE, Constant.SERVICE_TIMER_TYPE_WEBSOCKET);
+                    startService(intent);
                     ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
                         @Override
                         public void run() {
@@ -129,19 +135,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //检查用户是否已经持久化
-        SharedPreferences pref = getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE);
-        String number = pref.getString(Constant.USER_DATA_FIELD_NUMBER, "");
-        Boolean isRegister = pref.getBoolean(Constant.USER_DATA_FIELD_REGISTER, false);
-        if(number != null){
-            UserData.getUserData().setNumber(number);
-            if(isRegister){
-                ActivityUtil.skipActivity(LoginActivity.this, MainActivity.class,true);
-            }
-            ActivityUtil.skipActivity(LoginActivity.this, RegisterActivity.class,true);
-        }
-
-
         numberEdit = (AutoCompleteTextView) findViewById(R.id.register_number_edit);
         checkcodeEidt = (EditText) findViewById(R.id.register_checkcode_edit);
         checkcodeBtn = (Button) findViewById(R.id.register_check_code_button);
@@ -174,8 +167,14 @@ public class LoginActivity extends AppCompatActivity {
                                 JSONObject root = new JSONObject();
                                 root.put(Constant.USER_REGISTER_NUMBER, phoneNumber);
                                 Log.d(LOG_TAG, Constant.JSON_GENERATE_SUCCESS + root.toString());
-                                HttpUtil.requestPostJson(Constant.HTTP_CHECKCODE_URL, root.toString());
-                                message.what = Constant.USER_GET_CHECKCODE;
+                                String resultJson = HttpUtil.requestPostJson(Constant.HTTP_CHECKCODE_URL, root.toString());
+                                Log.d(LOG_TAG, "resultJson : " + resultJson);
+                                if(resultJson .equals("200")) {
+                                    message.what = Constant.USER_GET_CHECKCODE;
+                                }else{
+                                    message.what = Constant.USER_GET_CHECKCODE_EXCEPTION;
+                                    Log.d(LOG_TAG, Constant.USER_GET_CHECKCODE_EXCEPTION_MESSAGE);
+                                }
 
                             }catch (Exception e){
                                 e.printStackTrace();
@@ -294,6 +293,41 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //测试用，去掉获取验证码这一步
+        SharedPreferences.Editor editor = getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE).edit();
+        editor.putString(Constant.USER_DATA_FIELD_NUMBER, "15844096407");
+        editor.putBoolean(Constant.USER_DATA_FIELD_REGISTER, true);
+        editor.apply();
+        //检查用户是否已经持久化
+        SharedPreferences pref = getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE);
+        String number = pref.getString(Constant.USER_DATA_FIELD_NUMBER, "");
+        Boolean isRegister = pref.getBoolean(Constant.USER_DATA_FIELD_REGISTER, false);
+        Boolean isConnectWifi = pref.getBoolean(Constant.USER_DATA_ISCONNECTWIFI, false);
+        LogUtil.d("number:"+number+"isRegister:"+isRegister);
+        if(!number.equals("")){
+            UserData.getUserData().setNumber(number);
+            if(true){
+                //开启服务，创建websocket连接
+                Intent intent = new Intent(this, WebSocketService.class);
+                intent.putExtra(Constant.SERVICE_TIMER_TYPE, Constant.SERVICE_TIMER_TYPE_WEBSOCKET);
+                startService(intent);
+            }else{
+                ActivityUtil.skipActivity(LoginActivity.this, ConnectWifiActivity.class,true);
+                finish();
+            }
+
+            if(isRegister){
+                ActivityUtil.skipActivity(LoginActivity.this, MainActivity.class,true);
+            }else{
+                ActivityUtil.skipActivity(LoginActivity.this, RegisterActivity.class,true);
+            }
+
+        }
     }
 
     //判断用户以前有没有登录并填写信息了，如果登录则直接进入

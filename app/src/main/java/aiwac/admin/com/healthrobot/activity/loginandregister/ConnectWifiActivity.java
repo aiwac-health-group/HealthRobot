@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -45,12 +46,14 @@ public class ConnectWifiActivity extends AppCompatActivity {
     private AlertDialog dialog;
 
     private List<String> permissionList = new ArrayList<>();
-
+    private String from;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connect_wifi);
+
+        from = getIntent().getStringExtra("from");
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
@@ -165,18 +168,20 @@ public class ConnectWifiActivity extends AppCompatActivity {
             super.handleMessage(msg);
             //dialog.dismiss();
             if((boolean)msg.obj){
-
-            /*    SharedPreferences mSharedPreferences = getSharedPreferences(Constant.AIWAC_CONFIG_ROBOT, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = mSharedPreferences.edit();
-                editor.putBoolean(Constant.AIWAC_IS_CONFIG, true);
-                editor.commit();*/
+                SharedPreferences.Editor editor = getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE).edit();
+                editor.putBoolean(Constant.USER_DATA_ISCONNECTWIFI, true);
+                editor.apply();
                 Toast.makeText(ConnectWifiActivity.this,"配置机器人成功",Toast.LENGTH_SHORT).show();
-                //showNormalDialog("","配置机器人成功");
-                ActivityUtil.skipActivity(ConnectWifiActivity.this,MainActivity.class,true);
+                if(from!= null && from.equals("setting")){
+                    finish();
+                }else{
+                    ActivityUtil.skipActivity(ConnectWifiActivity.this,LoginActivity.class,true);
+                }
+
             }else{
                 showNormalDialog("","wifi密码错误，配置机器人失败");
-               /* configButton.setEnabled(true);
-                wifiChooseBtn.setEnabled(true);*/
+                connectButton.setEnabled(true);
+                wifiChooseBtn.setEnabled(true);
             }
         }
     };

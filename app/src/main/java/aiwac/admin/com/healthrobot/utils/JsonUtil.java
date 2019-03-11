@@ -184,7 +184,7 @@ public class JsonUtil {
             root.put(Constant.WEBSOCKET_MESSAGE_BUSSINESSTYPE, baseEntity.getBusinessType());
             root.put(Constant.WEBSOCKET_MESSAGE_UUID, UUID.randomUUID().toString());
             root.put(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE, baseEntity.getClientType());
-            root.put(Constant.WEBSOCKET_MESSAGE_TIME, System.currentTimeMillis());
+            root.put(Constant.WEBSOCKET_MESSAGE_TIME, System.currentTimeMillis()+"");
             LogUtil.d(Constant.JSON_GENERATE_SUCCESS + root.toString());
             return root.toString();
         }catch (Exception e){
@@ -340,7 +340,7 @@ public class JsonUtil {
             root.put(Constant.WEBSOCKET_MESSAGE_BUSSINESSTYPE, user.getBusinessType());
             root.put(Constant.WEBSOCKET_MESSAGE_UUID, user.getUuid());
             root.put(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE, user.getClientType());
-            root.put(Constant.WEBSOCKET_MESSAGE_TIME, System.currentTimeMillis());
+            root.put(Constant.WEBSOCKET_MESSAGE_TIME, System.currentTimeMillis()+"");
             root.put(Constant.WEBSOCKET_USER_NAME, user.getName());
             root.put(Constant.WEBSOCKET_USER_SEX, user.getSex());
             root.put(Constant.WEBSOCKET_USER_BIRTHDAY, user.getBirthday());
@@ -364,7 +364,7 @@ public class JsonUtil {
             root.put(Constant.WEBSOCKET_MESSAGE_BUSSINESSTYPE, registerInfo.getBusinessType());
             root.put(Constant.WEBSOCKET_MESSAGE_UUID, UUID.randomUUID());
             root.put(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE, registerInfo.getClientType());
-            root.put(Constant.WEBSOCKET_MESSAGE_TIME, System.currentTimeMillis());
+            root.put(Constant.WEBSOCKET_MESSAGE_TIME, System.currentTimeMillis()+"");
             root.put(Constant.WEBSOCKET_REGISTERINFO_PROVINCE, registerInfo.getProvince());
             root.put(Constant.WEBSOCKET_REGISTERINFO_CITY, registerInfo.getCity());
             root.put(Constant.WEBSOCKET_REGISTERINFO_HOSPITAL, registerInfo.getHospital());
@@ -385,7 +385,7 @@ public class JsonUtil {
             root.put(Constant.WEBSOCKET_MESSAGE_BUSSINESSTYPE, skinResult.getBusinessType());
             root.put(Constant.WEBSOCKET_MESSAGE_UUID, skinResult.getUuid());
             root.put(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE, skinResult.getClientType());
-            root.put(Constant.WEBSOCKET_MESSAGE_TIME, System.currentTimeMillis());
+            root.put(Constant.WEBSOCKET_MESSAGE_TIME, System.currentTimeMillis()+"");
 
 
 
@@ -443,7 +443,7 @@ public class JsonUtil {
             root.put(Constant.WEBSOCKET_MESSAGE_BUSSINESSTYPE, baseEntity.getBusinessType());
             root.put(Constant.WEBSOCKET_MESSAGE_UUID, UUID.randomUUID());
             root.put(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE, baseEntity.getClientType());
-            root.put(Constant.WEBSOCKET_MESSAGE_TIME, System.currentTimeMillis());
+            root.put(Constant.WEBSOCKET_MESSAGE_TIME, System.currentTimeMillis()+"");
 
             LogUtil.d(Constant.JSON_GENERATE_SUCCESS + root.toString());
             return root.toString();
@@ -617,7 +617,7 @@ public class JsonUtil {
             root.put(Constant.WEBSOCKET_MESSAGE_BUSSINESSTYPE, Constant.WEBSOCKET_MEDICAL_EXAM_DETAIL_BUSSINESSTYPE_CODE);
             root.put(Constant.WEBSOCKET_MESSAGE_UUID, UUID.randomUUID().toString());
             root.put(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE, baseEntity.getClientType());
-            root.put(Constant.WEBSOCKET_MESSAGE_TIME, System.currentTimeMillis());
+            root.put(Constant.WEBSOCKET_MESSAGE_TIME, System.currentTimeMillis()+"");
 
             root.put(Constant.WEBSOCKET_EXAM_ID,examID);
 
@@ -717,7 +717,7 @@ public class JsonUtil {
             root.put(Constant.WEBSOCKET_MESSAGE_BUSSINESSTYPE, Constant.WEBSOCKET_HEALTH_WEEKLY_REPORT_CODE);
             root.put(Constant.WEBSOCKET_MESSAGE_UUID, UUID.randomUUID().toString());
             root.put(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE, baseEntity.getClientType());
-            root.put(Constant.WEBSOCKET_MESSAGE_TIME, System.currentTimeMillis());
+            root.put(Constant.WEBSOCKET_MESSAGE_TIME, System.currentTimeMillis()+"");
 
             root.put(Constant.WEBSOCKET_RESULT_ID, resultID);
 

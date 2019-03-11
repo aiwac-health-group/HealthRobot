@@ -6,9 +6,9 @@ package aiwac.admin.com.healthrobot.common;
 
 public class Constant {
 
-    public final static String HTTP_IP = "192.168.3.218:8080";
-    public final static String WEBSOCKET_IP = "192.168.3.218:8082";
-    //public final static String IP="192.168.3.218";
+    public final static String IP="192.168.1.113";
+    public final static String HTTP_IP = IP+":8080";
+    public final static String WEBSOCKET_IP = IP+":8082";
     //public final static String HTTP_PORT="8080";
    // public final static String WEBSOCKET_PORT="8082";
 
@@ -89,7 +89,7 @@ public class Constant {
     //和WebSocket相关的
     public final static String WEBSOCKET_BASE_URL = "ws://" + WEBSOCKET_IP;
     public final static String WEBSOCKET_USER_IDENTITY = "number";
-    public final static String WEBSOCKET_URL = WEBSOCKET_BASE_URL ;
+    public final static String WEBSOCKET_URL = WEBSOCKET_BASE_URL +"/ws?token=";
     public final static String WEBSOCKET_MESSAGE_BUSSINESSTYPE = "code";
     public final static String WEBSOCKET_MESSAGE_CLIENTID = "account";
     public final static String WEBSOCKET_MESSAGE_UUID = "uniqueID";
@@ -110,12 +110,12 @@ public class Constant {
     public final static String WEBSOCKET_TIMER_ATTENTIONCONTENT = "attentionContent";
     public final static String WEBSOCKET_TIMER_ACTIVATIONMODE = "activationMode";
     public final static String WEBSOCKET_TIMER_ACTIVATEDTIME = "activatedTime";
-    public final static String WEBSOCKET_TIMER_ERRORCODE = "errorCode";
+    public final static String WEBSOCKET_TIMER_ERRORCODE = "status";
     public final static String WEBSOCKET_BUSINESS_DATA = "data";
     public final static String WEBSOCKET_MESSAGE_TIME = "time";
 
 
-    public final static String WEBSOCKET_USER_NAME = "userName";
+    public final static String WEBSOCKET_USER_NAME = "name";
     public final static String WEBSOCKET_USER_SEX = "sex";
     public final static String WEBSOCKET_USER_BIRTHDAY = "birthday";
     public final static String WEBSOCKET_USER_ADDRESS = "address";
@@ -180,7 +180,7 @@ public class Constant {
     public final static String WEBSOCKET_REGISTERHISTORY_BUSSINESSTYPE_CODE = "0020";//挂号历史纪录
     public final static String WEBSOCKET_REGISTERRESULT_BUSSINESSTYPE_CODE = "0021";//挂号结果
     public final static String WEBSOCKET_NEW_MESSAGE_BUSSINESSTYPE_CODE = "0018";//新消息通知
-    public final static String WEBSOCKET_HANGUPCHAT_BUSSINESSTYPE_CODE = "0017"; //挂断在线问诊
+    public final static String WEBSOCKET_HANGUPCHAT_BUSSINESSTYPE_CODE = "0024"; //挂断在线问诊
     public final static String WEBSOCKET_THREE_EXAM_BUSSINESSTYPE_CODE = "0023"; //挂断在线问诊
     public final static String WEBSOCKET_MEDICAL_EXAM_DETAIL_BUSSINESSTYPE_CODE="0008";//体检推荐详细信息查询
     public final static String WEBSOCKET_MEDICAL_EXAM_SUMMARY_BUSSINESSTYPE_CODE="0007";//体检推荐摘要查询
@@ -360,11 +360,9 @@ public class Constant {
 
     public final static String HTTP_BASE_URL = "http://" + HTTP_IP;
 
-    public final static String HTTP_CHECKCODE_URL = HTTP_BASE_URL + "/web/login/getIdentifyCode";
-    public final static String HTTP_USER_REGISTER_BASEURL = HTTP_BASE_URL + "/web/register/registerWithPasswd";
-    public final static String HTTP_USER_MODIFY_PASSWORD_BASEURL = HTTP_BASE_URL + "/web/register/modifyPasswd";
+    public final static String HTTP_CHECKCODE_URL = HTTP_BASE_URL + "/login/getIdentifyCode";
     public final static String HTTP_USER_LOGIN_PASSWORD_BASEURL = HTTP_BASE_URL + "/web/login/" + USER_LOGIN_PASSWORD_OPT;
-    public final static String HTTP_USER_LOGIN_IDENTIFYCODE_BASEURL = HTTP_BASE_URL + "/web/login/loginWithIdentifyCode";
+    public final static String HTTP_USER_LOGIN_IDENTIFYCODE_BASEURL = HTTP_BASE_URL + "/login/loginWithIdentifyCode";
 
     public final static String USER_REGISTER_NUMBER ="account";
     public final static String USER_REGISTER_CHECKCODE ="identifyCode";
@@ -379,6 +377,7 @@ public class Constant {
     public final static String USER_DATA_FIELD_TOKENTIME = "time";//获取token的时间
     public final static String USER_DATA_PERSISTENCE = "利用SharedPreferences持久化用户数据";
     public final static String USER_DATA_PERSISTENCE_CLEAN = "清空SharedPreferences用户数据";
+    public final static String USER_DATA_ISCONNECTWIFI = "isConnectWifi";
 
 
 

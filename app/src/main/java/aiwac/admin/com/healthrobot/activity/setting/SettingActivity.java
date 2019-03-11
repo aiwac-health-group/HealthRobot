@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 
 import aiwac.admin.com.healthrobot.R;
+import aiwac.admin.com.healthrobot.activity.loginandregister.ConnectWifiActivity;
 import aiwac.admin.com.healthrobot.activity.loginandregister.RegisterActivity;
 import aiwac.admin.com.healthrobot.common.Constant;
+import aiwac.admin.com.healthrobot.utils.LogUtil;
 import zuo.biao.library.base.BaseActivity;
 import zuo.biao.library.ui.AlertDialog;
 
@@ -19,6 +21,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         setContentView(R.layout.activity_setting);
 
 
+        initEvent();
     }
 
 
@@ -56,9 +59,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void initEvent() {//必须调用
 
-        findView(R.id.llSettingSetting).setOnClickListener(this);
-        findView(R.id.llSettingAbout).setOnClickListener(this);
-        findView(R.id.llSettingLogout).setOnClickListener(this);
+        findViewById(R.id.llSettingSetting).setOnClickListener(this);
+        findViewById(R.id.llSettingAbout).setOnClickListener(this);
+        findViewById(R.id.llSettingLogout).setOnClickListener(this);
+        findViewById(R.id.llChangeWifi).setOnClickListener(this);
     }
 
 
@@ -95,6 +99,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.llSettingLogout:
                 new AlertDialog(context, "退出登录", "确定退出登录？", true, 0, this).show();
+                break;
+            case R.id.llChangeWifi:
+                Intent wifiIntent = new Intent(SettingActivity.this, ConnectWifiActivity.class);
+                wifiIntent.putExtra("from", "setting");
+                startActivity(wifiIntent);
                 break;
             default:
                 break;

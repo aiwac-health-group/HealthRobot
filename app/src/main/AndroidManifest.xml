@@ -28,13 +28,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+        </activity>
+        <activity android:name=".activity.loginandregister.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".activity.loginandregister.LoginActivity">
 
         </activity>
         <activity android:name=".activity.loginandregister.RegisterActivity" />
@@ -86,6 +86,11 @@
 
         <service
             android:name=".service.SpeechRecogService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".service.WebSocketService"
             android:enabled="true"
             android:exported="true" />
 

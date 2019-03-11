@@ -114,6 +114,7 @@ public class VoiceRegisterActivity extends BaseActivity {
                                 String json = JsonUtil.registerInfoToJson(registerInfo);
                                 WebSocketApplication.getWebSocketApplication().send(json);
                             }catch (Exception e){
+                                showShortToast("网络信号不好");
                                 LogUtil.d( e.getMessage());
                                 //其他异常处理
                             }

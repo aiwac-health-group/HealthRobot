@@ -66,14 +66,13 @@ public class WaitChatActivity extends AppCompatActivity{
                             public void onClick(DialogInterface arg0, int arg1) {
                                 timer.stop();
                                 //挂断
-                                BaseEntity baseEntity = new BaseEntity();
-                                baseEntity.setBusinessType(Constant.WEBSOCKET_VOICECHAT_BUSSINESSTYPE_CODE);
-                                final String json = JsonUtil.baseEntity2Json(baseEntity);
                                 ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
                                     @Override
                                     public void run() {
                                         try{
-
+                                            BaseEntity baseEntity = new BaseEntity();
+                                            baseEntity.setBusinessType(Constant.WEBSOCKET_HANGUPCHAT_BUSSINESSTYPE_CODE);
+                                            String json = JsonUtil.baseEntity2Json(baseEntity);
                                             WebSocketApplication.getWebSocketApplication().send(json);
                                         }catch (Exception e){
                                             LogUtil.d( e.getMessage());
@@ -135,14 +134,13 @@ public class WaitChatActivity extends AppCompatActivity{
                     public void onClick(DialogInterface arg0, int arg1) {
                         timer.stop();
                         //挂断
-                        BaseEntity baseEntity = new BaseEntity();
-                        baseEntity.setBusinessType(Constant.WEBSOCKET_VOICECHAT_BUSSINESSTYPE_CODE);
-                        final String json = JsonUtil.baseEntity2Json(baseEntity);
                         ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
                             @Override
                             public void run() {
                                 try{
-
+                                    BaseEntity baseEntity = new BaseEntity();
+                                    baseEntity.setBusinessType(Constant.WEBSOCKET_HANGUPCHAT_BUSSINESSTYPE_CODE);
+                                    String json = JsonUtil.baseEntity2Json(baseEntity);
                                     WebSocketApplication.getWebSocketApplication().send(json);
                                 }catch (Exception e){
                                     LogUtil.d( e.getMessage());
