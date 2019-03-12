@@ -36,6 +36,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import aiwac.admin.com.healthrobot.activity.lecture.LectureActivtiy;
 import aiwac.admin.com.healthrobot.activity.medicalexam.MedicalExamMenuActivity;
 import aiwac.admin.com.healthrobot.activity.medicalexam.MedicalExamRecommendActivity;
 import aiwac.admin.com.healthrobot.activity.notification.NotificationActivity;
@@ -137,10 +138,11 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.start_lecture).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MedicalExamMenuActivity.class);
+                Intent intent = new Intent(MainActivity.this, LectureActivtiy.class);
                 startActivity(intent);
             }
         });
+
 
         //在线问诊
         btn_voicechat = findViewById(R.id.btn_voicechat);

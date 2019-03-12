@@ -3,6 +3,7 @@ package aiwac.admin.com.healthrobot.activity.lecture;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,7 @@ import aiwac.admin.com.healthrobot.bean.LectureCourseAbstractInfo;
 import aiwac.admin.com.healthrobot.common.Constant;
 import aiwac.admin.com.healthrobot.server.WebSocketApplication;
 import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
+import aiwac.admin.com.healthrobot.utils.ImageUtil;
 import aiwac.admin.com.healthrobot.utils.JsonUtil;
 
 public class fragment_lecture_video extends Fragment {
@@ -99,25 +101,35 @@ public class fragment_lecture_video extends Fragment {
 
                 final LectureCourse lectureCourseClicked = data.get(i);
 
-                //向后台请求讲座音视频的详细内容
-                    ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
-                        @Override
-                        public void run() {
-                            try{
-                                WebSocketApplication.getWebSocketApplication().send(JsonUtil.lectureAVDetail2Json( lectureCourseClicked.getLectureID()));
-                            }catch (Exception e){
-                                e.printStackTrace();
-                                Log.d("tag", "LoadEducationInfoAsync onPostExecute setOnItemClickListener exception");
-                            }
+//                向后台请求讲座音视频的详细内容
+                ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            Log.d("lecture", " LectureID："+lectureCourseClicked.getLectureID());
+                            WebSocketApplication.getWebSocketApplication().send(JsonUtil.lectureAVDetail2Json( lectureCourseClicked.getLectureID()));
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            Log.d("lecture", "异常：向后台请求讲座音视频的详细内容 ");
                         }
-                    });
-
-                    Intent intent = new Intent(getContext(), LectureVideoDetailActivity.class);
-                    intent.putExtra("LectureCourse",lectureCourseClicked);
-                    startActivity(intent);
+                    }
+                });
 
 
-                    try {
+
+                Intent intent = new Intent(getContext(), LectureVideoDetailActivity.class);
+
+                //图片单独发
+                Bitmap receive = lectureCourseClicked.getCover();
+                intent.putExtra("bitmap", receive);
+                //把相应的属性设空
+                lectureCourseClicked.setCover( ImageUtil.getBitmap("1111"));
+                intent.putExtra("LectureCourse",lectureCourseClicked);
+
+                startActivity(intent);
+
+
+                try {
                     Thread.sleep(200);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -250,7 +262,7 @@ public class fragment_lecture_video extends Fragment {
                 builder.setNegativeButton("好的", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                             ;
+                        ;
                     }
                 });
 

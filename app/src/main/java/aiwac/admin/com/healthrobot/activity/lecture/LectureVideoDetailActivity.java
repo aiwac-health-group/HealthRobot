@@ -2,6 +2,7 @@ package aiwac.admin.com.healthrobot.activity.lecture;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -14,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import aiwac.admin.com.healthrobot.R;
 import aiwac.admin.com.healthrobot.bean.LectureAVDetail;
@@ -31,11 +33,13 @@ public class LectureVideoDetailActivity extends AppCompatActivity {
     protected ImageView lectureCover;
     protected TextView lectureName, lectureDuration, lectureUpdateTime, lectureDescription;
     private Button backButton, buttonplay_pause;
-    protected String link;
+    protected String link = "noLink";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.d("lecture","viodeo detail");
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_lecture_av_details);
@@ -47,11 +51,13 @@ public class LectureVideoDetailActivity extends AppCompatActivity {
             actionbar.hide();
         }
 
+        setView();
+
         //获取已经到达 的讲座组消息数据，信息请求在 fragment_lecture_article 被发送
         getLectureVideoDetailAsync loadCourseGroupAsync = new getLectureVideoDetailAsync();
         loadCourseGroupAsync.execute();
 
-        setView();
+
         Vitamio.isInitialized(this);
 
     }
@@ -79,14 +85,23 @@ public class LectureVideoDetailActivity extends AppCompatActivity {
                 {
                     buttonplay_pause.setSelected(true);
 
-                    Intent intent = new Intent(LectureVideoDetailActivity.this, LectureVideoPlayActivity.class);
+                    if ( link.equals("noLink" ) )
+                    {
+                        Toast.makeText(LectureVideoDetailActivity.this, "抱歉，暂无相关资源", Toast.LENGTH_SHORT).show();
+
+                    }
+                    else
+                    {
+                        Intent intent = new Intent(LectureVideoDetailActivity.this, LectureVideoPlayActivity.class);
 
 //                    //测试
 //                    link  = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
 //                    //测试
-                    log.d("lecture test",link);
-                    intent.putExtra("Link",link);
-                    startActivity(intent);
+                        Log.d("lecture",link);
+                        intent.putExtra("Link",link);
+                        startActivity(intent);
+                    }
+
                     buttonplay_pause.setSelected(false);
                 }
 
@@ -96,14 +111,16 @@ public class LectureVideoDetailActivity extends AppCompatActivity {
 
         backButton = (Button)findViewById(R.id.backButton) ;
         backButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        finish();
-                    }
-                });
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
-        lectureCover.setImageBitmap(lectureCourseNow.getCover());
+        //lectureCover.setImageBitmap(lectureCourseNow.getCover());
+        Bitmap receive=(Bitmap)(getIntent().getParcelableExtra("bitmap"));
+        lectureCover.setImageBitmap(receive);
         lectureName.setText(lectureCourseNow.getName());
         lectureDuration.setText(lectureCourseNow.getDuration());
         lectureUpdateTime.setText(lectureCourseNow.getUpdateTime());
@@ -136,8 +153,18 @@ public class LectureVideoDetailActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
+
+                for (int i = 0; i < 5; i++) {
+                    Thread.sleep(500);
                     lectureAVDetail = WebSocketApplication.getWebSocketApplication().getWebSocketHelperLectureVideoDetail();
-                    link = lectureAVDetail.getLink();
+
+                    if (lectureAVDetail != null) {
+                        link = lectureAVDetail.getLink();
+
+                        Log.d("lecture","link: "+link);
+                    }
+                    return true;
+                }
 
             } catch (Exception e) {
                 Log.d("tag", e.getMessage());

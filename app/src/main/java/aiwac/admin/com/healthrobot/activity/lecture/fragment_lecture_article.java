@@ -144,7 +144,7 @@ public class fragment_lecture_article extends Fragment {
 
 
 
-   protected class LectureAdapter extends BaseAdapter {
+    protected class LectureAdapter extends BaseAdapter {
         private List<LectureCourse> lectureCourses;
         private Context mContext;
 
@@ -173,7 +173,7 @@ public class fragment_lecture_article extends Fragment {
             View view = convertView;
             if (view == null)
 
-            view = View.inflate(this.mContext, R.layout.lecture_article_listview_item, null);
+                view = View.inflate(this.mContext, R.layout.lecture_article_listview_item, null);
 
             TextView articleTime = view.findViewById(R.id.lecture_article_upTtime);
             TextView articleName = view.findViewById(R.id.lecture_article_name);

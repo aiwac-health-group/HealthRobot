@@ -31,6 +31,7 @@ import io.vov.vitamio.Vitamio;
 import io.vov.vitamio.utils.ScreenResolution;
 import io.vov.vitamio.utils.StringUtils;
 import io.vov.vitamio.widget.VideoView;
+import zuo.biao.library.util.Log;
 
 /**
  * Created by recker on 16/8/6.
@@ -97,7 +98,7 @@ public class LectureAudioPlayActivity extends AppCompatActivity implements View.
                     }
                     break;
                 case HIDE_CONTROL_BAR:
-                  //  hideControlBar();
+                    //  hideControlBar();
                     showControlBar();
                     break;
                 case SHOW_CENTER_CONTROL:
@@ -126,6 +127,8 @@ public class LectureAudioPlayActivity extends AppCompatActivity implements View.
         setContentView(R.layout.activity_audio_play);
 
         mPlayUrl= getIntent().getStringExtra("Link");
+        //mPlayUrl  = "http://other.web.ri01.sycdn.kuwo.cn/resource/n2/96/19/2142954236.mp3";
+        Log.d("lecture", "link: " + mPlayUrl );
 
         //隐藏标题栏
         ActionBar actionbar = getSupportActionBar();
@@ -335,9 +338,9 @@ public class LectureAudioPlayActivity extends AppCompatActivity implements View.
 
 
                     if (distanceY > 0) {//向上滑动
-                            changeVolume(ADD_FLAG);
+                        changeVolume(ADD_FLAG);
                     } else {//向下滑动
-                            changeVolume(SUB_FLAG);
+                        changeVolume(SUB_FLAG);
                     }
 
                     //音乐不需要调节亮度

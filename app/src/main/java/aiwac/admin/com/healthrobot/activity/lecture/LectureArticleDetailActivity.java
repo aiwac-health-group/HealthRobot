@@ -66,7 +66,7 @@ public class LectureArticleDetailActivity extends AppCompatActivity {
         articleTime.setText(lectureCourseNow.getUpdateTime());
 
 
-        articleContent.setText(content);
+
 
 
         //articleContent.setText("正在加载...");
@@ -103,7 +103,14 @@ public class LectureArticleDetailActivity extends AppCompatActivity {
                 for (int i = 0; i < 5; i++) {
                     Thread.sleep(500);
                     lectureArticleDetail = WebSocketApplication.getWebSocketApplication().getWebSocketHelperLectureArticleDetail();
-                    content = lectureArticleDetail.getLectureContext();
+
+                    if (lectureArticleDetail != null) {
+                        content = lectureArticleDetail.getLectureContext();
+
+                        Log.d("lecture", "  (lectureArticleDetail != null)   content: "+content);
+                        return true;
+                    }
+
 
                 }
             } catch (Exception e) {
@@ -119,6 +126,7 @@ public class LectureArticleDetailActivity extends AppCompatActivity {
             dialog.cancel();
             if (aBoolean) {   //加载讲座内容
                 articleContent.setText(content);
+                Log.d("lecture", "设置content: "+content);
 
             } else { // 失败。显示空白
 

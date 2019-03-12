@@ -2,6 +2,7 @@ package aiwac.admin.com.healthrobot.activity.lecture;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -14,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import aiwac.admin.com.healthrobot.R;
 import aiwac.admin.com.healthrobot.bean.LectureAVDetail;
@@ -29,7 +31,7 @@ public class LectureAudioDetailActivity extends AppCompatActivity {
     private LectureAVDetail lectureAVDetail;
     protected ImageView lectureCover;
     protected TextView lectureName, lectureDuration, lectureUpdateTime, lectureDescription;
-    protected String link;
+    protected String link = "noLink";
     private Button backButton, buttonplay_pause;
 
     @Override
@@ -66,7 +68,9 @@ public class LectureAudioDetailActivity extends AppCompatActivity {
         lectureDescription = (TextView)findViewById(R.id.lecture_description);
 
         //集成需要加入
-        lectureCover.setImageBitmap(lectureCourseNow.getCover());
+        //lectureCover.setImageBitmap(lectureCourseNow.getCover());
+        Bitmap receive=(Bitmap)(getIntent().getParcelableExtra("bitmap"));
+        lectureCover.setImageBitmap(receive);
         lectureName.setText(lectureCourseNow.getName());
         lectureDuration.setText(lectureCourseNow.getDuration());
         lectureUpdateTime.setText(lectureCourseNow.getUpdateTime());
@@ -94,14 +98,24 @@ public class LectureAudioDetailActivity extends AppCompatActivity {
                 {
                     buttonplay_pause.setSelected(true);
 
-                    Intent intent = new Intent(LectureAudioDetailActivity.this, LectureAudioPlayActivity.class);
+                    if ( link.equals("noLink" ) )
+                    {
+                        Toast.makeText(LectureAudioDetailActivity.this, "抱歉，暂无相关资源", Toast.LENGTH_SHORT).show();
+
+                    }
+                    else
+                    {
+                        Intent intent = new Intent(LectureAudioDetailActivity.this, LectureAudioPlayActivity.class);
 
 //                    //测试
 //                    link  = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
 //                    //测试
-                    log.d("lecture test",link);
-                    intent.putExtra("Link",link);
-                    startActivity(intent);
+                        log.d("lecture test",link);
+                        intent.putExtra("Link",link);
+                        startActivity(intent);
+                    }
+
+                    buttonplay_pause.setSelected(false);
                 }
 
 
@@ -135,8 +149,19 @@ public class LectureAudioDetailActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
-                lectureAVDetail = WebSocketApplication.getWebSocketApplication().getWebSocketHelperLectureAudioDetail();
-                link = lectureAVDetail.getLink();
+
+
+                for (int i = 0; i < 5; i++) {
+                    Thread.sleep(500);
+                    lectureAVDetail = WebSocketApplication.getWebSocketApplication().getWebSocketHelperLectureAudioDetail();
+
+                    if (lectureAVDetail != null) {
+                        link = lectureAVDetail.getLink();
+                        return true;
+                    }
+                }
+
+
 
             } catch (Exception e) {
                 Log.d("tag", e.getMessage());
