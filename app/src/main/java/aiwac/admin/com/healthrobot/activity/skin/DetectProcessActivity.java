@@ -137,6 +137,7 @@ public class DetectProcessActivity extends AppCompatActivity{
                                 SkinResult skinResult = new SkinResult();
 
                                 skinResult.setFace(srcBitmap);
+
                                 //一个个传
                                 skinResult.setHeitouResults(heitouResults[0],heitouResults[1]);
                                 skinResult.setDouResults(douResults[0],douResults[1]);
@@ -158,8 +159,11 @@ public class DetectProcessActivity extends AppCompatActivity{
 
                                 skinResult.setBusinessType(Constant.WEBSOCKET_SKIN_RESULT_CODE);
                                 skinResult.setUuid(UUID.randomUUID().toString());
+
+
                                 String json = JsonUtil.skinResultToJson(skinResult);
 
+                                Log.d("test",json.length()+"");
                                 WebSocketApplication.getWebSocketApplication().send(json);
 
                             }catch (Exception e){

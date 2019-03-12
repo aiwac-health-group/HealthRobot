@@ -409,6 +409,7 @@ public class JsonUtil {
 
 
             root.put(Constant.WEBSOCKET_SKINRESULT_FACE, ImageUtil.getBase64Str(skinResult.getFace()));
+    //        root.put(Constant.WEBSOCKET_SKINRESULT_FACE,"1");
 
 
             JSONObject resultJson = new JSONObject();
