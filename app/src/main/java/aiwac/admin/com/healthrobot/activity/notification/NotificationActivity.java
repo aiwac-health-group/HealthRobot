@@ -139,13 +139,14 @@ public class NotificationActivity extends BaseHttpListActivity<Notification,List
             intent.putExtra(Constant.WEBSOCKET_NOTIFICTION_MESSAGEID,notification.getMessageID());
             startActivity(intent);
         }else if(notification.getMessageType()==2){//如果messageType=2，为挂号信息新消息
+            final int registerID = notification.getMessageID();
             ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         BaseEntity baseEntity = new BaseEntity();
                         baseEntity.setBusinessType(Constant.WEBSOCKET_REGISTERRESULT_BUSSINESSTYPE_CODE);
-                        WebSocketApplication.getWebSocketApplication().send(JsonUtil.baseEntity2Json(baseEntity));
+                        WebSocketApplication.getWebSocketApplication().send(JsonUtil.queryRegistgerInfoById(baseEntity,registerID+"" ));
                     } catch (Exception e) {
                         LogUtil.d(e.getMessage());
                         //其他异常处理

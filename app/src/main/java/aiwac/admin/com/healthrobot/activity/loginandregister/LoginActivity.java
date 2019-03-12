@@ -169,7 +169,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Log.d(LOG_TAG, Constant.JSON_GENERATE_SUCCESS + root.toString());
                                 String resultJson = HttpUtil.requestPostJson(Constant.HTTP_CHECKCODE_URL, root.toString());
                                 Log.d(LOG_TAG, "resultJson : " + resultJson);
-                                if(resultJson .equals("200")) {
+                                if((resultJson != null) && resultJson.equals("200")) {
                                     message.what = Constant.USER_GET_CHECKCODE;
                                 }else{
                                     message.what = Constant.USER_GET_CHECKCODE_EXCEPTION;

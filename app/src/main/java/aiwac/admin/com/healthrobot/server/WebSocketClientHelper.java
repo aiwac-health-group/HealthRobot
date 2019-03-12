@@ -178,7 +178,7 @@ public class WebSocketClientHelper extends WebSocketClient {
                     MessageEvent messageEvent = new MessageEvent("MainActivity", json);
                     EventBus.getDefault().post(messageEvent);
                 }else if(notification.getMessageType()==1){
-                    //如果messageType=1，为健康周报新消息
+                    //如果messageType=1，为健康周报  gf ghgj新消息
 
                 }else if(notification.getMessageType()==2){
                     //如果messageType=2，为挂号信息新消息

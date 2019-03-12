@@ -4,18 +4,26 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.Locale;
 
 import aiwac.admin.com.healthrobot.R;
+import aiwac.admin.com.healthrobot.bean.BaseEntity;
+import aiwac.admin.com.healthrobot.common.Constant;
+import aiwac.admin.com.healthrobot.server.WebSocketApplication;
+import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
+import aiwac.admin.com.healthrobot.utils.JsonUtil;
+import aiwac.admin.com.healthrobot.utils.LogUtil;
 import io.agora.rtc.Constants;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
@@ -52,6 +60,7 @@ public class VoiceChatActivity extends AppCompatActivity {
     };
 
     private String roomID;
+    private Chronometer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +72,12 @@ public class VoiceChatActivity extends AppCompatActivity {
         if (checkSelfPermission(Manifest.permission.RECORD_AUDIO, PERMISSION_REQ_ID_RECORD_AUDIO)) {
             initAgoraEngineAndJoinChannel();
         }
+
+        timer = (Chronometer) findViewById(R.id.timer);
+        //设置开始计时时间
+        timer.setBase(SystemClock.elapsedRealtime());
+        //启动计时器
+        timer.start();
     }
 
     private void initAgoraEngineAndJoinChannel() {
@@ -151,6 +166,22 @@ public class VoiceChatActivity extends AppCompatActivity {
 
     // Tutorial Step 3
     public void onEncCallClicked(View view) {
+        timer.stop();
+        ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    BaseEntity baseEntity = new BaseEntity();
+                    baseEntity.setBusinessType(Constant.WEBSOCKET_HANGUPCHAT_BUSSINESSTYPE_CODE);
+                    String json = JsonUtil.baseEntity2Json(baseEntity);
+                    WebSocketApplication.getWebSocketApplication().send(json);
+                }catch (Exception e){
+                    LogUtil.d( e.getMessage());
+                    //其他异常处理
+                }
+            }
+        });
+        showLongToast("已挂断");
         finish();
     }
 
@@ -168,7 +199,7 @@ public class VoiceChatActivity extends AppCompatActivity {
 
     // Tutorial Step 2
     private void joinChannel() {
-        mRtcEngine.joinChannel(null, "roomID", "Extra Optional Data", 0); // if you do not specify the uid, we will generate the uid for you
+        mRtcEngine.joinChannel(null, roomID, "Extra Optional Data", 0); // if you do not specify the uid, we will generate the uid for you
     }
 
     // Tutorial Step 3
@@ -178,7 +209,9 @@ public class VoiceChatActivity extends AppCompatActivity {
 
     // Tutorial Step 4
     private void onRemoteUserLeft(int uid, int reason) {
-        showLongToast(String.format(Locale.US, "user %d left %d", (uid & 0xFFFFFFFFL), reason));
+        timer.stop();
+        //showLongToast(String.format(Locale.US, "user %d left %d", (uid & 0xFFFFFFFFL), reason));
+        showLongToast("已挂断");
         View tipMsg = findViewById(R.id.quick_tips_when_use_agora_sdk); // optional UI
         tipMsg.setVisibility(View.VISIBLE);
         finish();

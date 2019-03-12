@@ -52,10 +52,6 @@ public class RegisterHistoryActivity extends BaseActivity {
 
             }
         });
-
-
-
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
@@ -69,7 +65,10 @@ public class RegisterHistoryActivity extends BaseActivity {
             registerInfoList.add(registerInfo);
             table.setData(registerInfoList);
         }
-
+        MessageEvent stickyEvent = EventBus.getDefault().removeStickyEvent(MessageEvent.class);
+        if(stickyEvent != null) {
+            EventBus.getDefault().removeStickyEvent(MessageEvent.class);
+        }
     }
 
 

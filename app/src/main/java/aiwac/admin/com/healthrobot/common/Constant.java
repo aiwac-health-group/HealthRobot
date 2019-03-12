@@ -6,7 +6,7 @@ package aiwac.admin.com.healthrobot.common;
 
 public class Constant {
 
-    public final static String IP="192.168.1.113";
+    public final static String IP="192.168.1.105";
     public final static String HTTP_IP = IP+":8080";
     public final static String WEBSOCKET_IP = IP+":8082";
     //public final static String HTTP_PORT="8080";
@@ -41,24 +41,6 @@ public class Constant {
     //和安全相关的
     public final static String SECURITY_MD5 = "MD5";
     public final static String SECURITY_MD5_FAILURE = SECURITY_MD5 + "算法加密失败";
-
-    //和定时任务有关的
-    public final static String TIMER_ATTENTIONTYPE_EAT = "01";
-    public final static String TIMER_ATTENTIONTYPE_EAT_VALUE = "该吃饭了";
-    public final static String TIMER_ATTENTIONTYPE_SLEEP = "02";
-    public final static String TIMER_ATTENTIONTYPE_EDUCATION = "03";
-    public final static String TIMER_ATTENTIONTYPE_CUSTOM = "99";
-    public final static int TIMER_OPERATIONTYPE_ADD = 1;
-    public final static int TIMER_OPERATIONTYPE_UPDATE = 2;
-    public final static int TIMER_OPERATIONTYPE_DELETE = 3;
-    public final static int TIMER_OPEN = 1;
-    public final static int TIMER_CLOSE = 2;
-    public final static int TIMER_COMMIT = 1;
-    public final static int TIMER_UNCOMMIT = 2;
-    public final static String TIMER_OPEN_VALUE = "开启";
-    public final static String TIMER_CLOSE_VALUE = "未开启";
-    public final static String TIMER_UPDATE = "更新定时任务";
-
 
 
     //文件相关操作
@@ -161,7 +143,7 @@ public class Constant {
     public final static String WEBSOCKET_NOTIFICTION_MESSAGETYPE="messageType";
     public final static String WEBSOCKET_NOTIFICTION_MESSAGEID="messageID";
 
-
+    public final static String WEBSOCKET_REGISTER_ID = "registerID";
     public final static String WEBSOCKET_MESSAGE_ID = "messageID";//新消息通知
     public final static String WEBSOCKET_RESULT_ID = "resultID";//健康周报结果查询
     public final static String WEBSOCKET_HEALTH_WEEKLY_REPORT_RESULT_CONTEXT="resultContext";//健康周报结果查询返回的json里保存doc的link的key。
@@ -361,6 +343,7 @@ public class Constant {
     public final static String HTTP_BASE_URL = "http://" + HTTP_IP;
 
     public final static String HTTP_CHECKCODE_URL = HTTP_BASE_URL + "/login/getIdentifyCode";
+    public final static String HTTP_GET_TOKEN_STRING_URL = HTTP_BASE_URL + "/login/getTokenString";
     public final static String HTTP_USER_LOGIN_PASSWORD_BASEURL = HTTP_BASE_URL + "/web/login/" + USER_LOGIN_PASSWORD_OPT;
     public final static String HTTP_USER_LOGIN_IDENTIFYCODE_BASEURL = HTTP_BASE_URL + "/login/loginWithIdentifyCode";
 

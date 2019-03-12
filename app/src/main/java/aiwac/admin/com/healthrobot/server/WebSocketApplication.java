@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,9 +23,12 @@ import aiwac.admin.com.healthrobot.common.Constant;
 import aiwac.admin.com.healthrobot.db.UserData;
 import aiwac.admin.com.healthrobot.exception.WebSocketException;
 import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
+import aiwac.admin.com.healthrobot.utils.HttpUtil;
+import aiwac.admin.com.healthrobot.utils.JsonUtil;
 import aiwac.admin.com.healthrobot.utils.LogUtil;
 import aiwac.admin.com.healthrobot.utils.StringUtil;
 
+import static aiwac.admin.com.healthrobot.common.Constant.USER_CHECKCODE_ERROR_EXCEPTION;
 import static android.content.Context.MODE_PRIVATE;
 
 /**     用于WebSocket建立唯一的连接等操作
@@ -42,8 +48,9 @@ public class WebSocketApplication {
     private void init(Context context){
         try{
             SharedPreferences pref = HealthRobotApplication.getContext().getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE);
-            String token = pref.getString(Constant.USER_DATA_FIELD_TOKEN, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBY2NvdW50IjoiMjIyMjIyMjIyMjIiLCJDbGllbnRUeXBlIjoicm9ib3QiLCJFeHByZXNzSW4iOjE1NTIzNTc4MTh9.xmrF3IcT-PeGSvkSaHiG7t7M7TZA52THjGuV9rpNnnc");
+            String token = pref.getString(Constant.USER_DATA_FIELD_TOKEN, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBY2NvdW50IjoiMjIyMjIyMjIyMjIiLCJDbGllbnRUeXBlIjoicm9ib3QiLCJFeHByZXNzSW4iOjE1NTI0NDIxMTF9.ztzVH-f4OucpMROmGQH-sO2L4s2NRlnGROegrUwc0V8");
             URI uri = new URI(Constant.WEBSOCKET_URL+token);
+            LogUtil.d("uri:"+uri);
             //URI uri = new URI(Constant.WEBSOCKET_URL);
             //这里会进行和服务端的握手操作
             webSocketHelper = new WebSocketClientHelper(uri, getDefaultMap(),context);
@@ -171,11 +178,37 @@ public class WebSocketApplication {
                 @Override
                 public void run() {
                     try {
+                        //检测token有效期，无效则更新
+                        /*SharedPreferences pref = context.getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE);
+                        Long validTime = pref.getLong(Constant.USER_DATA_FIELD_TOKENTIME, 0);
+                        if (System.currentTimeMillis() - validTime > 23 * 60 * 60 * 1000) {  //有效期为1天
+                            JSONObject root = new JSONObject();
+                            root.put(Constant.USER_REGISTER_NUMBER, UserData.getUserData().getNumber());
+                            LogUtil.d(Constant.JSON_GENERATE_SUCCESS + root.toString());
+                            String resultJson = HttpUtil.requestTokenString(Constant.HTTP_GET_TOKEN_STRING_URL, root.toString());
+                            LogUtil.d("resultJson : " + resultJson);
+                            if (resultJson != null) {
+                                String errorCode = JsonUtil.parseErrorCode(resultJson);
+                                if (errorCode.equals(Constant.MESSAGE_ERRORCODE_2000)) {
+                                    String token = JsonUtil.parseToken(resultJson);
+                                    SharedPreferences.Editor editor = context.getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE).edit();
+                                    editor.putString(Constant.USER_DATA_FIELD_TOKEN, token);
+                                    editor.putLong(Constant.USER_DATA_FIELD_TOKENTIME, System.currentTimeMillis());
+                                    editor.apply();
+                                    LogUtil.d("token更新成功");
+                                    close();
+                                } else {
+                                    LogUtil.d("token更新失败");
+                                }
+                            } else {
+                                LogUtil.d("连接失败，token更新失败");
+                            }
+                        }*/
                         //获得连接
                         webSocketApplication.connection(context);
                     } catch (Exception e) {
                         e.printStackTrace();
-                        LogUtil.d( Constant.WEBSOCKET_CONNECTION_EXCEPTION);
+                        LogUtil.d(Constant.WEBSOCKET_CONNECTION_EXCEPTION);
                     }
                 }
             });

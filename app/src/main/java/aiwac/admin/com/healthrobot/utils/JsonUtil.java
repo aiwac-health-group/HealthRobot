@@ -194,6 +194,25 @@ public class JsonUtil {
         }
     }
 
+    //通过id查询挂号信息
+    public static String queryRegistgerInfoById(BaseEntity baseEntity, String id){
+        JSONObject root = new JSONObject();
+        try{
+            root.put(Constant.WEBSOCKET_MESSAGE_CLIENTID, baseEntity.getClientId());
+            root.put(Constant.WEBSOCKET_MESSAGE_BUSSINESSTYPE, baseEntity.getBusinessType());
+            root.put(Constant.WEBSOCKET_MESSAGE_UUID, UUID.randomUUID().toString());
+            root.put(Constant.WEBSOCKET_MESSAGE_CLIENTTYPE, baseEntity.getClientType());
+            root.put(Constant.WEBSOCKET_MESSAGE_TIME, System.currentTimeMillis()+"");
+            root.put(Constant.WEBSOCKET_REGISTER_ID, id);
+            LogUtil.d(Constant.JSON_GENERATE_SUCCESS + root.toString());
+            return root.toString();
+        }catch (Exception e){
+            e.printStackTrace();
+            LogUtil.d(Constant.JSON_GENERATE_EXCEPTION);
+            throw new JsonException(Constant.JSON_GENERATE_EXCEPTION, e);
+        }
+    }
+
 
     //解析json获取用户注册是否成功
     public static boolean isUserRegisterSucess(String jsonStr){

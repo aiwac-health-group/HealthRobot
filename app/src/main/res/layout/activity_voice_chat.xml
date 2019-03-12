@@ -28,7 +28,7 @@
         android:layout_marginBottom="129dp"
         android:gravity="center"
         android:text="00:00"
-        android:textSize="13sp" />
+        android:textSize="20sp" />
 
 
     <LinearLayout

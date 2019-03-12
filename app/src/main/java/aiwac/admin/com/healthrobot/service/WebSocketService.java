@@ -81,7 +81,7 @@ public class WebSocketService extends Service{
 
                 //开启定时任务
                 AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                int anMinute = 60 * 1000; //10分钟，单位为毫秒数
+                int anMinute = 60 * 1000; //1分钟，单位为毫秒数
                 long triggerAtTime = SystemClock.elapsedRealtime() + anMinute;
                 Intent timeIntent = new Intent(this, WebSocketService.class);
                 timeIntent.putExtra(Constant.SERVICE_TIMER_TYPE, Constant.SERVICE_TIMER_TYPE_WEBSOCKET);

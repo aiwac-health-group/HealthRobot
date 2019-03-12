@@ -86,8 +86,7 @@ public class VoiceRegisterActivity extends BaseActivity {
                         }
                     }
                 });
-
-                toActivity(RegisterHistoryActivity.createIntent(context));
+                /*toActivity(RegisterHistoryActivity.createIntent(context));*/
 
             }
         });
@@ -105,6 +104,8 @@ public class VoiceRegisterActivity extends BaseActivity {
                 }else if(departmentName.equals("")){
                     Toast.makeText(VoiceRegisterActivity.this, "请选择科室", Toast.LENGTH_SHORT).show();
                 }else{
+                    showShortToast("挂号申请提交成功");
+
                     ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
                         @Override
                         public void run() {

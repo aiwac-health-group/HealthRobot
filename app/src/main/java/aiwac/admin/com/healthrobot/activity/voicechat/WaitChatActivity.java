@@ -113,6 +113,13 @@ public class WaitChatActivity extends AppCompatActivity{
     public void event(MessageEvent messageEvent){
 
         String roomID = JsonUtil.parseByKey(messageEvent.getMessage(),"roomID");
+
+        MessageEvent stickyEvent = EventBus.getDefault().removeStickyEvent(MessageEvent.class);
+        if(stickyEvent != null) {
+            EventBus.getDefault().removeStickyEvent(MessageEvent.class);
+        }
+
+
         Intent intent = new Intent(WaitChatActivity.this, VoiceChatActivity.class);
         intent.putExtra("roomID", roomID);
         startActivity(intent);
