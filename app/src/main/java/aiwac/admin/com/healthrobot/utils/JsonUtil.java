@@ -605,17 +605,24 @@ public class JsonUtil {
         List<MedicalExam> list =new ArrayList<MedicalExam>();
         try {
             JSONObject root = new JSONObject(json);
-            JSONArray jsonArray = root.getJSONArray(Constant.WEBSOCKET_MESSAGE_ITEMS);
-            for(int i=0;i<jsonArray.length();i++){
-                JSONObject oneItem=jsonArray.getJSONObject(i);
-                MedicalExam medicalExam = new MedicalExam();
-                medicalExam.setExamID(oneItem.getInt(Constant.WEBSOCKET_EXAM_ID));
-                medicalExam.setName(oneItem.getString(Constant.WEBSOCKET_EXAM_NAME));
-                medicalExam.setDescription(oneItem.getString(Constant.WEBSOCKET_EXAM_DESCRIPTION));
-                medicalExam.setDate(oneItem.getString(Constant.WEBSOCKET_EXAM_UPDATETIME));
-                medicalExam.setCover(ImageUtil.getBitmap(oneItem.getString(Constant.WEBSOCKET_EXAM_COVER)));
-                list.add(medicalExam);
+            JSONObject data = root.getJSONObject(Constant.WEBSOCKET_BUSINESS_DATA);
+            JSONArray jsonArray = data.getJSONArray(Constant.WEBSOCKET_MESSAGE_ITEMS);
+            if(root.getString(Constant.WEBSOCKET_MESSAGE_ERRORDESC).equals(Constant.WEBSOCKET_EXAM_LIST_IS_NULL)){
+                return list;
+            }else{
+                for(int i=0;i<jsonArray.length();i++){
+                    JSONObject oneItem=jsonArray.getJSONObject(i);
+                    MedicalExam medicalExam = new MedicalExam();
+                    medicalExam.setExamID(oneItem.getInt(Constant.WEBSOCKET_EXAM_ID));
+                    medicalExam.setName(oneItem.getString(Constant.WEBSOCKET_EXAM_NAME));
+                    medicalExam.setDescription(oneItem.getString(Constant.WEBSOCKET_EXAM_DESCRIPTION));
+                    medicalExam.setDate(oneItem.getString(Constant.WEBSOCKET_EXAM_UPDATETIME));
+                    medicalExam.setCover(ImageUtil.getBitmap(oneItem.getString(Constant.WEBSOCKET_EXAM_COVER)));
+                    list.add(medicalExam);
+                    LogUtil.d(medicalExam.toString());
+                }
             }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -659,7 +666,12 @@ public class JsonUtil {
     public static String getExamContextFromJson(String json){
         try {
             JSONObject root=new JSONObject(json);
-            return root.getString(Constant.WEBSOCKET_EXAM_CONTEXT);
+            if(root.getString(Constant.WEBSOCKET_MESSAGE_ERRORDESC).equals(Constant.WEBSOCKET_EXAM_DETAIL_IS_NULL)){
+                return "";
+            }else{
+                return root.getString(Constant.WEBSOCKET_EXAM_CONTEXT);
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -967,7 +979,7 @@ public class JsonUtil {
 
 
     /**
-     * 从服务器获取 体检套餐的link
+     * 从服务器获取 健康周报的link
      * @param json
      * @return
      */

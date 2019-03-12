@@ -38,7 +38,14 @@ public class MedicalExamView extends BaseView<MedicalExam> implements View.OnCli
         super.bindView(data_!=null?data_:new MedicalExam());
 
         textViewTitle.setText(data_.getName());
-        textViewDescription.setText(data_.getDescription().substring(0,20)+"...");//这里怕显示的的太多会导致错乱，请在测试的时候检查一下
+        String description="";
+        if(data_.getDescription().length()>80){
+            description=data_.getDescription().substring(0,80);
+
+        }else{
+            description=data_.getDescription();
+        }
+        textViewDescription.setText(description);//这里怕显示的的太多会导致错乱，请在测试的时候检查一下
         textViewDate.setText(data_.getDataToShowAsText());
     }
 

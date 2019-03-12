@@ -114,14 +114,17 @@ public class MedicalExamRecommendActivity extends BaseHttpListActivity<MedicalEx
                 //onHttpResponse(-page, page >= 5 ? null : JSON.toJSONString(GetMedicalExamUtil.getUserList(page, 10)), null);
                 while (GetMedicalExamUtil.list.isEmpty()){
                     try {
-                        Thread.sleep(700);
+                        Thread.sleep(100);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-                onHttpResponse(-page, page >= 5 ? null : JSON.toJSONString(GetMedicalExamUtil.list), null);
+                for(MedicalExam m:GetMedicalExamUtil.list){
+                    LogUtil.d(m.toString());
+                }
+                onResponse(-page,  GetMedicalExamUtil.list, null);
             }
-        }, 1000);
+        }, 100);
         //仅测试用>>>>>>>>>>>>
     }
 
@@ -135,7 +138,6 @@ public class MedicalExamRecommendActivity extends BaseHttpListActivity<MedicalEx
     @Override
     public void initEvent() {//必须调用
         super.initEvent();
-
     }
     @Override
     public void onDragBottom(boolean rightToLeft) {
@@ -151,8 +153,9 @@ public class MedicalExamRecommendActivity extends BaseHttpListActivity<MedicalEx
         Log.d(TAG, "在体检推荐的消息页：点击了一项："+position+"  id:"+id);
         Intent intent = new Intent(MedicalExamRecommendActivity.this,MedicalExamDetailActivity.class);
         intent.putExtra("position",GetMedicalExamUtil.list.get(position));
-        startActivity(intent);
+        toActivity(intent);
     }
+
 
     //生命周期、onActivityResult<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 

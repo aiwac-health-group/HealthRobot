@@ -36,6 +36,16 @@ public class NotificationSqliteHelper implements SQLiteHelper<Notification> {
     }
 
     /**
+     * 设置消息已读
+     * @param notification
+     * @return
+     */
+    public void setNotificationIsRead(Notification notification){
+        notification.setIsRead(1);
+        this.update(notification);
+    }
+
+    /**
      * 插入一条新的通知
      * @param notification
      */

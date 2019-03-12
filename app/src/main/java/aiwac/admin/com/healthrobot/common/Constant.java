@@ -135,9 +135,9 @@ public class Constant {
     public final static String WEBSOCKET_EXAM_DESCRIPTION="description";//体检的描述
     public final static String WEBSOCKET_EXAM_UPDATETIME="updateTime";//体检的时间
     public final static String WEBSOCKET_EXAM_CONTEXT="examContext";//体检的详情
-    public final static String WEBSOCKET_EXAM_MENU_LINK="link";//体检套餐的文件link
-
-
+    public final static String WEBSOCKET_EXAM_MENU_LINK="packageLink";//体检套餐的文件link
+    public final static String WEBSOCKET_EXAM_LIST_IS_NULL="体检推荐列表为空";
+    public final static String WEBSOCKET_EXAM_DETAIL_IS_NULL="未查询到该体检推荐";
 
     //消息通知相关
     public final static String WEBSOCKET_NOTIFICTION_MESSAGETYPE="messageType";

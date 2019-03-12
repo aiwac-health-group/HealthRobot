@@ -36,6 +36,11 @@ public class MedicalExam extends BaseModel {
     }
 
     @Override
+    public String toString() {
+        return "examID:"+examID+" name:"+name+" description:"+description+" date:"+date+" cover:"+cover;
+    }
+
+    @Override
     protected boolean isCorrect() {
         return false;
     }

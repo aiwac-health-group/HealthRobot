@@ -51,9 +51,9 @@ public class HealthWeeklyReportActivity extends AppCompatActivity {
         });
         Log.d("111", "init: "+getFilesDir().getAbsolutePath());
 
-        //getFileUrlFromServer();
+        getFileUrlFromServer();
 
-        getFileFromLocal();
+       //getFileFromLocal();
 
     }
 

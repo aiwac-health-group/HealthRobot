@@ -36,6 +36,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import aiwac.admin.com.healthrobot.activity.medicalexam.MedicalExamDetailActivity;
 import aiwac.admin.com.healthrobot.activity.medicalexam.MedicalExamMenuActivity;
 import aiwac.admin.com.healthrobot.activity.medicalexam.MedicalExamRecommendActivity;
 import aiwac.admin.com.healthrobot.activity.notification.NotificationActivity;
@@ -49,6 +50,7 @@ import aiwac.admin.com.healthrobot.bean.BaseEntity;
 import aiwac.admin.com.healthrobot.bean.ExamInfoForCarousel;
 import aiwac.admin.com.healthrobot.bean.MessageEvent;
 import aiwac.admin.com.healthrobot.common.Constant;
+import aiwac.admin.com.healthrobot.medicalexam.adapter.GetMedicalExamUtil;
 import aiwac.admin.com.healthrobot.server.WebSocketApplication;
 import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
 import aiwac.admin.com.healthrobot.utils.ActivityUtil;
@@ -137,7 +139,10 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.start_lecture).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MedicalExamMenuActivity.class);
+                /*Intent intent = new Intent(MainActivity.this, MedicalExamMenuActivity.class);
+                startActivity(intent);*/
+                Intent intent = new Intent(MainActivity.this,MedicalExamMenuActivity.class);
+
                 startActivity(intent);
             }
         });

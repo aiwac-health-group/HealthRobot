@@ -219,7 +219,6 @@ public class WebSocketApplication {
     public void send(String json){
         LogUtil.printJson("json",json,"##");
         webSocketHelper.send(json);
-
     }
 
 

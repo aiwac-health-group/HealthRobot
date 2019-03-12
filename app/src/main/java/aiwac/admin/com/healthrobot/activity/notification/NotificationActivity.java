@@ -16,6 +16,7 @@ import aiwac.admin.com.healthrobot.activity.healthweeklyreport.HealthWeeklyRepor
 import aiwac.admin.com.healthrobot.activity.voiceregister.RegisterHistoryActivity;
 import aiwac.admin.com.healthrobot.bean.BaseEntity;
 import aiwac.admin.com.healthrobot.common.Constant;
+import aiwac.admin.com.healthrobot.db.NotificationSqliteHelper;
 import aiwac.admin.com.healthrobot.notification.GetNotificationUtil;
 import aiwac.admin.com.healthrobot.notification.Notification;
 import aiwac.admin.com.healthrobot.notification.NotificationAdapter;
@@ -161,6 +162,12 @@ public class NotificationActivity extends BaseHttpListActivity<Notification,List
         /*Intent intent = new Intent(NotificationActivity.this,MedicalExamDetailActivity.class);
         intent.putExtra("position",position);
         startActivity(intent);*/
+
+        //点击后需要把他设置为已读
+        if(notification.getIsRead()==0){
+            NotificationSqliteHelper ndatabase = new NotificationSqliteHelper(HealthRobotApplication.getContext());
+            ndatabase.setNotificationIsRead(notification);
+        }
     }
 
     //生命周期、onActivityResult<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<

@@ -22,9 +22,9 @@ import aiwac.admin.com.healthrobot.utils.JsonUtil;
 import aiwac.admin.com.healthrobot.utils.LogUtil;
 
 public class MedicalExamDetailActivity extends AppCompatActivity {
-    private TextView tvTitle=findViewById(R.id.textview_rec_detail_title);
-    private TextView tvDate=findViewById(R.id.textview_rec_detail_date);
-    private TextView tvcontext=findViewById(R.id.textview_rec_detail_context);
+    private TextView tvTitle;
+    private TextView tvDate;
+    private TextView tvcontext;
     private Thread thread;
     private MedicalExam medicalExam;
     private boolean runExit=false;//退出询问线程的标志位
@@ -32,14 +32,19 @@ public class MedicalExamDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medical_exam_detail);
+        tvTitle=findViewById(R.id.textview_rec_detail_title);
+        tvDate=findViewById(R.id.textview_rec_detail_date);
+        tvcontext=findViewById(R.id.textview_rec_detail_context);
         initViewFromWeb(getIntent().getExtras().getInt("position"));
+
+
     }
     /**
      * 这里是从服务器通过examid来查询体检推荐的具体信息
      * @param position
      */
-    private void initViewFromWeb(int position){
-        medicalExam= GetMedicalExamUtil.getList().get(position);
+    private void initViewFromWeb(int position) {
+        medicalExam = GetMedicalExamUtil.getList().get(position);
         tvTitle.setText(medicalExam.getName());
         tvDate.setText(medicalExam.getDataToShowAsText());
 
@@ -47,10 +52,10 @@ public class MedicalExamDetailActivity extends AppCompatActivity {
         ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
             @Override
             public void run() {
-                try{
+                try {
                     String string = JsonUtil.requestMedicalExamDetailString(medicalExam.getExamID());
                     WebSocketApplication.getWebSocketApplication().send(string);
-                }catch (Exception e){
+                } catch (Exception e) {
                     LogUtil.d(e.getMessage());
                     //其他异常处理
                 }
@@ -58,21 +63,19 @@ public class MedicalExamDetailActivity extends AppCompatActivity {
         });
 
         //检查examContext有没有内容，直到有内容的时候就显示
-        thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while((MedicalExam.getExamContext()==null||MedicalExam.getExamContext().equals(""))&&!runExit){
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                tvcontext.setText(MedicalExam.getExamContext());
+
+        while ((MedicalExam.getExamContext() == null || MedicalExam.getExamContext().equals("")) && !runExit) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        });
-        thread.start();
+        }
+        tvcontext.setText(MedicalExam.getExamContext());
     }
+
+
+
 
     /**
      * 这里是本地显示体检推荐的测试函数
