@@ -36,11 +36,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-<<<<<<< HEAD
 import aiwac.admin.com.healthrobot.activity.medicalexam.MedicalExamDetailActivity;
-=======
 import aiwac.admin.com.healthrobot.activity.lecture.LectureActivtiy;
->>>>>>> 8aace34a629eb4610c77515e6903ed23c5449f5d
 import aiwac.admin.com.healthrobot.activity.medicalexam.MedicalExamMenuActivity;
 import aiwac.admin.com.healthrobot.activity.medicalexam.MedicalExamRecommendActivity;
 import aiwac.admin.com.healthrobot.activity.notification.NotificationActivity;
