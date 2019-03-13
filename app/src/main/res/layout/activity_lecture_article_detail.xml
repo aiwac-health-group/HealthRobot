@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LectureVideoDetailActivity"
+    tools:context=".activity.lecture.LectureArticleDetailActivity"
     android:orientation="vertical">
 
 
@@ -90,7 +90,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
 
-                    android:text="TextView" />
+                    android:text="暂无资源" />
 
 
             </ScrollView>

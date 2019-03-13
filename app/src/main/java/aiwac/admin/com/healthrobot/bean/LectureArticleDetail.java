@@ -10,7 +10,7 @@ public class LectureArticleDetail extends LectureDetail{
     public String getLectureContext() {
         return lectureContext;
     }
-    public void setLectureContext(String link) {
+    public void setLectureContext(String lectureContext) {
         this.lectureContext = lectureContext;
     }
 

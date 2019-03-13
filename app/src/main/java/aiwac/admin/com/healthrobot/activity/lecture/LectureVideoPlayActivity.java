@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.Pair;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -126,7 +127,9 @@ public class LectureVideoPlayActivity extends AppCompatActivity implements View.
             actionbar.hide();
         }
 
-        mPlayUrl= getIntent().getStringExtra("Link");
+        mPlayUrl= (String) getIntent().getStringExtra("Link");
+        //mPlayUrl = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
+        Log.d("lecture", "link: "+mPlayUrl);
 
 
         mVideoLayout = (FrameLayout) findViewById(R.id.video_layout);
@@ -148,7 +151,7 @@ public class LectureVideoPlayActivity extends AppCompatActivity implements View.
 
         mIvBack.setOnClickListener(this);
         mIvPlay.setOnClickListener(this);
-       // mIvIsFullScreen.setOnClickListener(this);
+        // mIvIsFullScreen.setOnClickListener(this);
 
         init();
     }

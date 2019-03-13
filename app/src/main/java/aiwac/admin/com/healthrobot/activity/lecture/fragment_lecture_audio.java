@@ -3,6 +3,7 @@ package aiwac.admin.com.healthrobot.activity.lecture;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,7 @@ import aiwac.admin.com.healthrobot.bean.LectureCourseAbstractInfo;
 import aiwac.admin.com.healthrobot.common.Constant;
 import aiwac.admin.com.healthrobot.server.WebSocketApplication;
 import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
+import aiwac.admin.com.healthrobot.utils.ImageUtil;
 import aiwac.admin.com.healthrobot.utils.JsonUtil;
 
 public class fragment_lecture_audio extends Fragment {
@@ -108,7 +110,14 @@ public class fragment_lecture_audio extends Fragment {
 
 
                 Intent intent = new Intent(getContext(), LectureAudioDetailActivity.class);
+
+
+                Bitmap receive = lectureCourseClicked.getCover();
+                intent.putExtra("bitmap", receive);
+
+                lectureCourseClicked.setCover( ImageUtil.getBitmap("1111"));
                 intent.putExtra("LectureCourse",lectureCourseClicked);
+
                 startActivity(intent);
 
 
@@ -138,7 +147,7 @@ public class fragment_lecture_audio extends Fragment {
     }
 
 
-   protected class LectureAdapter extends BaseAdapter {
+    protected class LectureAdapter extends BaseAdapter {
         private List<LectureCourse> lectureCourses;
         private Context mContext;
 
@@ -177,7 +186,7 @@ public class fragment_lecture_audio extends Fragment {
             lecture_name.setText(lectureCourse.getName());
 
             //集成需要加入
-             cover_image.setImageBitmap(lectureCourse.getCover());
+            cover_image.setImageBitmap(lectureCourse.getCover());
 
             return view;
         }
