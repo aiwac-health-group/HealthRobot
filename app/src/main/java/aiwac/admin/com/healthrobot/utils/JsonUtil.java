@@ -728,6 +728,8 @@ public class JsonUtil {
     public static Notification json2Notification(String json){
         try {
             JSONObject root=new JSONObject(json);
+
+
             Notification notification = new Notification();
             notification.setMessageID(root.getInt(Constant.WEBSOCKET_NOTIFICTION_MESSAGEID));
             notification.setMessageType(root.getInt(Constant.WEBSOCKET_NOTIFICTION_MESSAGETYPE));

@@ -121,9 +121,9 @@ public class NotificationSqliteHelper implements SQLiteHelper<Notification> {
         if(cursor.getCount()>0){
             while (cursor.moveToNext()){
                 Notification notification=new Notification();
-                notification.setNotificationId(cursor.getInt(0));
+                notification.setMessageType(cursor.getInt(0));
                 notification.setMessageID(cursor.getInt(1));
-                notification.setMessageType(cursor.getInt(2));
+                notification.setNotificationId(cursor.getInt(2));
                 notification.setIsRead(cursor.getInt(3));
                 list.add(notification);
             }
