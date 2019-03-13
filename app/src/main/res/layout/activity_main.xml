@@ -1,41 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    style="@style/activity_page" >
 
-    <!--标题栏-->
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:orientation="horizontal"
-        >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/btn_notification"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_margin="10dp"
-
-                android:src="@drawable/message"/>
-        </RelativeLayout>
-
-
-    </LinearLayout>
+    <RelativeLayout style="@style/topbar_bg" >
+        <TextView
+            style="@style/topbar_title"
+            android:layout_centerHorizontal="true"
+            android:text="首页" />
+        <ImageView
+            android:id="@+id/btn_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:src="@drawable/message"/>
+    </RelativeLayout>
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none">
+        style="@style/ll_vertical_match_match"
+        android:layout_weight="1" >
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="vertical">
             <!--滚动图片-->
             <LinearLayout
@@ -51,8 +39,7 @@
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="120sp"
-                        android:layout_marginTop="0sp"
-                        android:background="@android:color/white">
+                        android:layout_marginTop="0sp">
 
                         <ImageSwitcher
                             android:id="@+id/imageSwitcher1"
@@ -95,7 +82,7 @@
                     android:layout_marginLeft="80dp"
                     android:layout_marginRight="40dp"
                     android:layout_weight="1"
-                    android:background="@drawable/before_click"
+                    android:background="@color/white"
                     android:src="@drawable/register"
 
 
@@ -106,11 +93,11 @@
                     android:id="@+id/btn_voicechat"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginRight="40dp"
+                    android:layout_weight="1.5"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:src="@drawable/consult24h"
-                    android:background="@drawable/before_click"
+                    android:background="@color/white"
                     />
                 <!--健康讲座-->
                 <ImageButton
@@ -121,7 +108,7 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginRight="80dp"
                     android:src="@drawable/lecture"
-                    android:background="@drawable/before_click"
+                    android:background="@color/white"
                     />
 
 
@@ -132,7 +119,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="20dp"
                 >
 
                 <!-- android:text="智能测肤"-->
@@ -144,8 +131,21 @@
                     android:layout_marginLeft="80dp"
                     android:layout_marginRight="40dp"
                     android:src="@drawable/skin"
-                    android:background="@drawable/before_click"
+                    android:background="@color/white"
 
+                    />
+
+                <!-- android:text="体检推荐"-->
+                <ImageButton
+                    android:id="@+id/btn_medical_exam_recommand"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/recommendation"
+
+                    android:background="@color/white"
                     />
 
                 <!-- android:text="个人中心"-->
@@ -155,25 +155,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginLeft="40dp"
-                    android:layout_marginRight="40dp"
-                    android:src="@drawable/personal_center"
-                    android:background="@drawable/before_click"
-
-                    />
-                <!-- android:text="体检推荐"-->
-                <ImageButton
-                    android:id="@+id/btn_medical_exam_recommand"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="40dp"
                     android:layout_marginRight="80dp"
-                    android:src="@drawable/recommendation"
+                    android:src="@drawable/personal_center"
+                    android:background="@color/white"
 
-                    android:background="@drawable/before_click"
                     />
-
-
             </LinearLayout>
 
             <!--测试用的按钮-->

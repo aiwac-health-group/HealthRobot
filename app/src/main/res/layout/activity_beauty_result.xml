@@ -1,41 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".activity.skin.BeautyResultActivity">
+    style="@style/activity_page" >
 
-    <!--标题栏-->
-    <RelativeLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="40sp"
-        android:background="@color/colorPrimary">
+    <RelativeLayout style="@style/topbar_bg" >
 
-        <ImageView
-            android:id="@+id/tv_back"
-            android:layout_width="12dp"
-            android:layout_height="19dp"
-            android:layout_alignParentLeft="true"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginLeft="11dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/back" />
+        <ImageButton style="@style/topbar_return_img"
+            android:id="@+id/tv_back"/>
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="我的健康状态"
-            android:gravity="center"
-            android:textSize="22sp"
-            android:textColor="@android:color/white"
-            android:id="@+id/info_title"/>
+            style="@style/topbar_title"
+            android:layout_centerHorizontal="true"
+            android:text="我的健康检测报告" />
     </RelativeLayout>
 
     <ScrollView

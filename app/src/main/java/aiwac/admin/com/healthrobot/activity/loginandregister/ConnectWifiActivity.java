@@ -171,7 +171,7 @@ public class ConnectWifiActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE).edit();
                 editor.putBoolean(Constant.USER_DATA_ISCONNECTWIFI, true);
                 editor.apply();
-                Toast.makeText(ConnectWifiActivity.this,"配置机器人成功",Toast.LENGTH_SHORT).show();
+                Toast.makeText(ConnectWifiActivity.this,"wifi连接成功",Toast.LENGTH_SHORT).show();
                 if(from!= null && from.equals("setting")){
                     finish();
                 }else{
@@ -179,7 +179,7 @@ public class ConnectWifiActivity extends AppCompatActivity {
                 }
 
             }else{
-                showNormalDialog("","wifi密码错误，配置机器人失败");
+                showNormalDialog("","wifi密码错误");
                 connectButton.setEnabled(true);
                 wifiChooseBtn.setEnabled(true);
             }
@@ -195,7 +195,7 @@ public class ConnectWifiActivity extends AppCompatActivity {
         bar.setMax(100);
 
         builder.setIcon(R.mipmap.ic_launcher);
-        builder.setTitle("正在配置wifi...");
+        builder.setTitle("正在连接wifi...");
         builder.setView(view);
 
         dialog = builder.create();

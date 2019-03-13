@@ -158,6 +158,8 @@ public class NotificationActivity extends BaseHttpListActivity<Notification,List
             Intent intent = new Intent(NotificationActivity.this,RegisterHistoryActivity.class);
             intent.putExtra(Constant.WEBSOCKET_NOTIFICTION_MESSAGEID,notification.getMessageID());
             startActivity(intent);
+        }else if(notification.getMessageType()==0){
+
         }
         /*Intent intent = new Intent(NotificationActivity.this,MedicalExamDetailActivity.class);
         intent.putExtra("position",position);

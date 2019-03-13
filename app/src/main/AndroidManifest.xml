@@ -27,43 +27,62 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="landscape">
         </activity>
-        <activity android:name=".activity.loginandregister.LoginActivity">
+        <activity android:name=".activity.loginandregister.LoginActivity"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.loginandregister.RegisterActivity" />
-        <activity android:name=".activity.loginandregister.ConnectWifiActivity" />
-        <activity android:name=".activity.voicechat.VoiceChatActivity" />
-        <activity android:name=".activity.voicechat.WaitChatActivity" />
-        <activity android:name=".activity.setting.PersonInfoActivity" />
-        <activity android:name=".activity.setting.SettingActivity" />
-        <activity android:name=".activity.setting.AboutActivity" />
-        <activity android:name=".activity.voiceregister.VoiceRegisterActivity" />
-        <activity android:name=".activity.voiceregister.RegisterHistoryActivity">
-            <!--变成主界面-->
-
-        </activity>
+        <activity android:name=".activity.loginandregister.RegisterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.loginandregister.ConnectWifiActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".activity.voicechat.VoiceChatActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".activity.voicechat.WaitChatActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".activity.setting.PersonInfoActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".activity.setting.SettingActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".activity.setting.AboutActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".activity.voiceregister.VoiceRegisterActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".activity.voiceregister.RegisterHistoryActivity"
+            android:screenOrientation="landscape"/>
         <!-- skin activities -->
-        <activity android:name=".activity.skin.BeautyResultActivity" />
-        <activity android:name=".activity.skin.BaseActivity" />
-        <activity android:name=".activity.skin.CameraActivity" />
-        <activity android:name=".activity.skin.TestHelpActivity" />
-        <activity android:name=".activity.skin.DetectProcessActivity" />
-        <activity android:name=".activity.skin.SkinMainActivity" />
+        <activity android:name=".activity.skin.BeautyResultActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".activity.skin.BaseActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".activity.skin.CameraActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".activity.skin.TestHelpActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".activity.skin.DetectProcessActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".activity.skin.SkinMainActivity"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".activity.skin.AlarmActivity"
             android:launchMode="singleTop"
             android:theme="@style/ActivityDialog" />
-        <activity android:name=".activity.speechrecog.SpeechRecogActivity" />
-        <activity android:name=".activity.medicalexam.MedicalExamRecommendActivity" />
-        <activity android:name=".activity.medicalexam.MedicalExamDetailActivity" />
-        <activity android:name=".activity.medicalexam.MedicalExamMenuActivity" />
-        <activity android:name=".activity.notification.NotificationActivity"></activity>
+        <activity android:name=".activity.speechrecog.SpeechRecogActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".activity.medicalexam.MedicalExamRecommendActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".activity.medicalexam.MedicalExamDetailActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".activity.medicalexam.MedicalExamMenuActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".activity.notification.NotificationActivity"
+            android:screenOrientation="landscape"/>
 
 
         <!--lecture-->
@@ -82,6 +101,8 @@
         <activity android:name=".activity.lecture.LectureAudioPlayActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="landscape"/>
+        <activity android:name=".activity.healthweeklyreport.HealthWeeklyReportActivity"
+            android:screenOrientation="landscape"/>
 
         <service
             android:name=".service.SpeechRecogService"
@@ -92,8 +113,6 @@
             android:name=".service.WebSocketService"
             android:enabled="true"
             android:exported="true" />
-
-        <activity android:name=".activity.healthweeklyreport.HealthWeeklyReportActivity"></activity>
     </application>
 
 </manifest>

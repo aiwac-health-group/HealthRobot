@@ -413,6 +413,7 @@ public class JsonUtil {
 
 
             JSONObject resultJson = new JSONObject();
+
             resultJson.put(Constant.WEBSOCKET_SKINRESULT_SCORE, skinResult.getScore().toString());
 
             JSONArray heitou = new JSONArray();
@@ -443,7 +444,10 @@ public class JsonUtil {
             resultJson.put(Constant.WEBSOCKET_SKINRESULT_MEDICINE, skinResult.getMedicine());
             resultJson.put(Constant.WEBSOCKET_SKINRESULT_DRUG, skinResult.getDrug());
 
-            root.put(Constant.WEBSOCKET_SKINRESULT_RESULT,resultJson);
+            //JSONArray results=new JSONArray();
+           // results.put(resultJson);
+
+            root.put(Constant.WEBSOCKET_SKINRESULT_RESULT,resultJson.toString());
 
             LogUtil.d(Constant.JSON_GENERATE_SUCCESS + root.toString());
             return root.toString();

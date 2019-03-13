@@ -6,6 +6,7 @@ import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -21,6 +22,11 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState,PersistableBundle persistentState) {
         super.onCreate(savedInstanceState,persistentState);
+        //隐藏标题栏
+        ActionBar actionbar = getSupportActionBar();
+        if (actionbar != null) {
+            actionbar.hide();
+        }
     }
 
     public void requestRunPermisssion(String[] permissions, PermissionListener listener){
@@ -68,4 +74,5 @@ public class BaseActivity extends AppCompatActivity {
                 break;
         }
     }
+
 }

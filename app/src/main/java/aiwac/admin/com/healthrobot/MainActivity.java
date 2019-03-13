@@ -1,11 +1,13 @@
 package aiwac.admin.com.healthrobot;
 
 
+import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -13,6 +15,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -58,13 +62,14 @@ import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
 import aiwac.admin.com.healthrobot.utils.ActivityUtil;
 import aiwac.admin.com.healthrobot.utils.JsonUtil;
 import aiwac.admin.com.healthrobot.utils.LogUtil;
+import zuo.biao.library.base.BaseActivity;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private ImageButton btn_voicechat;
     private ArrayList<ExamInfoForCarousel> examInfoForCarousels;
-
+    private ImageView btnNotification;
     //滚动动画用
     private ImageSwitcher mImageSwitcher;
     private int[] imgIds;
@@ -80,11 +85,14 @@ public class MainActivity extends AppCompatActivity {
         mImageSwitcher = findViewById(R.id.imageSwitcher1);
         linearLayout = findViewById(R.id.viewGroup);
 
+        //申请权限
+        initPermission();
+
         //隐藏标题栏
-        ActionBar actionbar = getSupportActionBar();
+        /*ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
             actionbar.hide();
-        }
+        }*/
         //每天中午十二点提醒用户拍照测肤
         alarm(MainActivity.this);
 
@@ -199,13 +207,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //消息通知测试
-        ImageView btnNotification = findViewById(R.id.btn_notification);
+        btnNotification = findViewById(R.id.btn_notification);
         btnNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, NotificationActivity.class);
                 startActivity(intent);
+
+
             }
         });
 
@@ -245,6 +255,8 @@ public class MainActivity extends AppCompatActivity {
             examInfoForCarousels.add(examInfoForCarousel);
             //通知界面更改
             setImageSwitcherByNetwork();
+        }else if(messageEvent.getTo().equals("NewNotificationComing")){
+            btnNotification.setBackgroundResource(R.drawable.message2);
         }
 
     }
@@ -274,7 +286,8 @@ public class MainActivity extends AppCompatActivity {
      * 设置循环播放的图片
      *
      */
-    private void initView(){
+    @Override
+    public void initView(){
 
         imgIds = new int[]{R.drawable.fig1, R.drawable.fig2, R.drawable.fig3};
         mImageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
@@ -302,6 +315,16 @@ public class MainActivity extends AppCompatActivity {
         // 设置动画
         mImageSwitcher.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left));
         mImageSwitcher.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right));
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initEvent() {
 
     }
 
@@ -560,5 +583,47 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "当前网络不可用，请检查你的网络设置", Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+
+
+
+    /**
+     * android 6.0 以上需要动态申请权限
+     */
+    private void initPermission() {
+        String permissions[] = {
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.ACCESS_NETWORK_STATE,
+                Manifest.permission.INTERNET,
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.SYSTEM_ALERT_WINDOW,
+                Manifest.permission.ACCESS_WIFI_STATE
+                /*,
+                Manifest.permission.READ_EXTERNAL_STORAGE*/
+        };
+
+        ArrayList<String> toApplyList = new ArrayList<String>();
+
+        for (String perm :permissions){
+            if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(this, perm)) {
+                toApplyList.add(perm);
+                //进入到这里代表没有权限.
+
+            }
+        }
+        String tmpList[] = new String[toApplyList.size()];
+        if (!toApplyList.isEmpty()){
+            ActivityCompat.requestPermissions(this, toApplyList.toArray(tmpList), 123);
+        }
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        // 此处为android 6.0以上动态授权的回调，用户自行实现。
+
     }
 }

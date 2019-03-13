@@ -32,6 +32,7 @@ import aiwac.admin.com.healthrobot.utils.HttpUtil;
 import aiwac.admin.com.healthrobot.utils.JsonUtil;
 import aiwac.admin.com.healthrobot.utils.LogUtil;
 import aiwac.admin.com.healthrobot.utils.StringUtil;
+import aiwac.admin.com.healthrobot.utils.WifiUtil;
 
 import static aiwac.admin.com.healthrobot.common.Constant.USER_CHECKCODE_ERROR_EXCEPTION;
 
@@ -145,15 +146,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final String number = numberEdit.getText().toString().trim();
-                /*
-                if(StringUtil.isValidate(password) && StringUtil.isPassword(password)){
-                    phonePassword = password;
-                }else{
-                    passwordEdit.setError(getString(R.string.error_invalid_password));
-                    passwordEdit.requestFocus();
-                    return;
-                }*/
-
                 if(StringUtil.isNumber(number)) {
                     phoneNumber = number;
 
@@ -211,8 +203,6 @@ public class LoginActivity extends AppCompatActivity {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
                     @Override
                     public void run() {
@@ -279,25 +269,51 @@ public class LoginActivity extends AppCompatActivity {
         Boolean isRegister = pref.getBoolean(Constant.USER_DATA_FIELD_REGISTER, false);
         Boolean isConnectWifi = pref.getBoolean(Constant.USER_DATA_ISCONNECTWIFI, false);
         LogUtil.d("number:"+number+"isRegister:"+isRegister);
-        if(!number.equals("")){
-            UserData.getUserData().setNumber(number);
-            if(true){
+        boolean isNet = WifiUtil.checkNet(this); //判断是否连接网络
+        if(isNet){
+            if(!number.equals("")){
+                UserData.getUserData().setNumber(number);
+
                 //开启服务，创建websocket连接
                 Intent intent = new Intent(this, WebSocketService.class);
                 intent.putExtra(Constant.SERVICE_TIMER_TYPE, Constant.SERVICE_TIMER_TYPE_WEBSOCKET);
                 startService(intent);
-            }else{
-                ActivityUtil.skipActivity(LoginActivity.this, ConnectWifiActivity.class,true);
-                finish();
-            }
 
-            if(isRegister){
-                ActivityUtil.skipActivity(LoginActivity.this, MainActivity.class,true);
-            }else{
-                ActivityUtil.skipActivity(LoginActivity.this, RegisterActivity.class,true);
-            }
+                if(isRegister){
+                    ActivityUtil.skipActivity(LoginActivity.this, MainActivity.class,true);
+                }else{
+                    ActivityUtil.skipActivity(LoginActivity.this, RegisterActivity.class,true);
+                }
 
+            }
+        }else{
+            //没联网
+
+            ActivityUtil.skipActivity(LoginActivity.this, ConnectWifiActivity.class,true);
+            finish();
+
+
+            /*if(!number.equals("")){
+                UserData.getUserData().setNumber(number);
+                if(isConnectWifi){
+                    //开启服务，创建websocket连接
+                    Intent intent = new Intent(this, WebSocketService.class);
+                    intent.putExtra(Constant.SERVICE_TIMER_TYPE, Constant.SERVICE_TIMER_TYPE_WEBSOCKET);
+                    startService(intent);
+                }else{
+                    ActivityUtil.skipActivity(LoginActivity.this, ConnectWifiActivity.class,true);
+                    finish();
+                }
+
+                if(isRegister){
+                    ActivityUtil.skipActivity(LoginActivity.this, MainActivity.class,true);
+                }else{
+                    ActivityUtil.skipActivity(LoginActivity.this, RegisterActivity.class,true);
+                }
+
+            }*/
         }
+
     }
 
     //判断用户以前有没有登录并填写信息了，如果登录则直接进入

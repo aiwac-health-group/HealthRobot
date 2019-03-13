@@ -1,5 +1,6 @@
 package aiwac.admin.com.healthrobot.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Network;
@@ -220,6 +221,19 @@ public class WifiUtil {
         return wifiId;
     }
 
+
+    public static boolean checkNet(Context context){
+        ConnectivityManager con = (ConnectivityManager)context.getSystemService(Activity.CONNECTIVITY_SERVICE);
+        boolean wifi=con.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnectedOrConnecting();
+        boolean internet=con.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnectedOrConnecting();
+        if(wifi|internet){
+            //网络已连接
+            return true;
+        }else{
+            //网络未连接
+            return false;
+        }
+    }
 
 
     public void connect(String ssid,String pass){

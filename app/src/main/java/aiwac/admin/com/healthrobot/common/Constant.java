@@ -219,13 +219,9 @@ public class Constant {
     public final static String DB_NUMBER_EXCEPTION = "手机号码已经被注册";
 
     //wifi相关常量
-    public final static String AIWAC_CONFIG_ING = "正在配置AIWAC机器人";
-    public final static String AIWAC_CONFIG_SUCCESS = "配置AIWAC机器人成功";
-    public final static String AIWAC_CONFIG_EXCEPTION = "配置AIWAC机器人异常";
-    public final static String AIWAC_CONFIG_FAILURE= "配置AIWAC机器人失败";
     public final static String AIWAC_CONFIG_PASSWORD = "请输入wifi密码";
     public final static String AIWAC_CONFIG_PASSWORD_ERROR = "wifi密码不得少于8位";
-    public final static String AIWAC_CONFIG_SELECT = "请选择AIWAC机器人连接的Wifi";
+    public final static String AIWAC_CONFIG_SELECT = "请选择机器人连接的Wifi";
     public final static String AIWAC_CONFIG_PASSWORD_FAILURE = "Wifi密码错误或无权访问Wifi，请重新配置";
 
     public final static String WIFI_CLOSE = "Wifi没有打开,请打开Wifi";
