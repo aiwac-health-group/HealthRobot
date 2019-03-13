@@ -153,7 +153,7 @@ public class MedicalExamRecommendActivity extends BaseHttpListActivity<MedicalEx
         Log.d(TAG, "在体检推荐的消息页：点击了一项："+position+"  id:"+id);
         Intent intent = new Intent(MedicalExamRecommendActivity.this,MedicalExamDetailActivity.class);
         intent.putExtra("position",GetMedicalExamUtil.list.get(position));
-        toActivity(intent);
+        startActivity(intent);
     }
 
 
