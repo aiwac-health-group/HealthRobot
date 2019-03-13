@@ -12,6 +12,7 @@ import java.util.List;
 import aiwac.admin.com.healthrobot.common.Constant;
 import aiwac.admin.com.healthrobot.exception.DBException;
 import aiwac.admin.com.healthrobot.notification.Notification;
+import aiwac.admin.com.healthrobot.utils.LogUtil;
 
 public class NotificationSqliteHelper implements SQLiteHelper<Notification> {
     private final static String LOG_TAG = "NotifSqliteHelper";
@@ -83,11 +84,13 @@ public class NotificationSqliteHelper implements SQLiteHelper<Notification> {
             values.put("messageid", notification.getMessageID());
             values.put("messagetype", notification.getMessageType());
             values.put("isread", notification.getIsRead());
+
             sdb = dbManager.getWritableDatabase();
             Log.d(LOG_TAG, Constant.DB_OPEN_WRITE_CONNECTION);
 
-            sdb.update(tableName, values,"notificationid = ?",new String[]{"notification.getNotificationId()"});
+            int result = sdb.update(tableName, values,"notificationid = ?",new String[]{notification.getNotificationId()+""});
             Log.d(LOG_TAG, Constant.DB_UPDATE + notification);
+            LogUtil.d("数据库更新结果："+result);
         }catch (Exception e){
             Log.d(LOG_TAG, Constant.DB_UPDATE_EXCEPTIOIN);
             throw new DBException(Constant.DB_UPDATE_EXCEPTIOIN, e);

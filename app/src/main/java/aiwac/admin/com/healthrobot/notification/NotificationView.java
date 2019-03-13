@@ -30,19 +30,20 @@ public class NotificationView extends BaseView<Notification> implements View.OnC
         super.bindView(data_!=null?data_:new Notification());
         if(data_.getMessageType()==1){//1是健康周报  2是挂号信息
             //textViewNotification.setText("您的健康周报已经生成啦");
-            textViewNotification.setText("您的健康周报已经生成啦 "+data_.getMessageType()+"  messageid:"+data_.getMessageID()+"  notiID:"+data_.getNotificationId());
+            textViewNotification.setText("您的健康周报已经生成啦 Type:"+data_.getMessageType()+"  messageid:"+data_.getMessageID()+"  notiID:"+data_.getNotificationId()+" isread:"+data_.getIsRead());
         }else if(data_.getMessageType()==2){
             //textViewNotification.setText("您的挂号信息更新啦");
-            textViewNotification.setText("您的挂号信息更新啦 "+data_.getMessageType()+"  messageid:"+data_.getMessageID()+"  notiID:"+data_.getNotificationId());
+            textViewNotification.setText("您的挂号信息更新啦 Type"+data_.getMessageType()+"  messageid:"+data_.getMessageID()+"  notiID:"+data_.getNotificationId()+" isread:"+data_.getIsRead());
         }else if(data_.getMessageType()==0){
-            textViewNotification.setText("体检推荐（供测试查询） "+data_.getMessageType()+"  messageid:"+data_.getMessageID()+"  notiID:"+data_.getNotificationId());
+            textViewNotification.setText("体检推荐（供测试查询） Type"+data_.getMessageType()+"  messageid:"+data_.getMessageID()+"  notiID:"+data_.getNotificationId()+" isread:"+data_.getIsRead());
         }else{
-            textViewNotification.setText("其他消息："+data_.getMessageType()+"  messageid:"+data_.getMessageID()+"  notiID:"+data_.getNotificationId());
+            textViewNotification.setText("其他消息：Type"+data_.getMessageType()+"  messageid:"+data_.getMessageID()+"  notiID:"+data_.getNotificationId()+" isread:"+data_.getIsRead());
         }
         if(data_.getIsRead()==0){//1已读 0未读
+            textViewIsRead.setText("[新]");
             textViewIsRead.setVisibility(View.VISIBLE);
         }else{
-            textViewIsRead.setVisibility(View.INVISIBLE);
+            textViewIsRead.setText("");
         }
     }
 

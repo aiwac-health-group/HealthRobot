@@ -52,9 +52,14 @@ public class Notification extends BaseModel implements Comparable<Notification> 
         return "这是一个消息的内容：id:"+notificationId+"  messageid:"+ messageID+ "   messageType:"+messageType+"   isRead:"+ isRead+"";
     }
 
+    /**
+     * 这个是用于排序的比较函数
+     * @param o
+     * @return
+     */
     @Override
     public int compareTo(@NonNull Notification o) {
-        int i=this.getNotificationId()-o.getNotificationId();
+        int i=o.getNotificationId()-this.getNotificationId();
         return i;
     }
 }

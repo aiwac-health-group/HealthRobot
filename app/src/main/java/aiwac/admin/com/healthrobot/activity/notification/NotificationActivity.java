@@ -83,6 +83,15 @@ public class NotificationActivity extends BaseHttpListActivity<Notification,List
 
     private void getNotification(){
         GetNotificationUtil getNotificationUtil = new GetNotificationUtil(HealthRobotApplication.getContext());
+        getNotificationUtil.initListFromLocal();
+    }
+
+    private void initNotification(){
+        GetNotificationUtil getNotificationUtil = new GetNotificationUtil(HealthRobotApplication.getContext());
+        getNotificationUtil.initListFromLocal();
+        onResponse(-0,  GetNotificationUtil.list, null);
+
+        //srlBaseHttpList.autoRefresh();
     }
 
 
@@ -104,7 +113,8 @@ public class NotificationActivity extends BaseHttpListActivity<Notification,List
                         e.printStackTrace();
                     }
                 }
-                onHttpResponse(-page, page >= 5 ? null : JSON.toJSONString(GetNotificationUtil.list), null);
+                onResponse(-page,  GetNotificationUtil.list, null);
+
             }
         }, 1000);
         //仅测试用>>>>>>>>>>>>
@@ -164,12 +174,14 @@ public class NotificationActivity extends BaseHttpListActivity<Notification,List
         /*Intent intent = new Intent(NotificationActivity.this,MedicalExamDetailActivity.class);
         intent.putExtra("position",position);
         startActivity(intent);*/
-
         //点击后需要把他设置为已读
         if(notification.getIsRead()==0){
             NotificationSqliteHelper ndatabase = new NotificationSqliteHelper(HealthRobotApplication.getContext());
             ndatabase.setNotificationIsRead(notification);
         }
+
+        //点击后需要初始化一下列表，这里是全部重新查询一下
+        this.initNotification();
     }
 
     //生命周期、onActivityResult<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<

@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 import aiwac.admin.com.healthrobot.db.NotificationSqliteHelper;
+import aiwac.admin.com.healthrobot.utils.LogUtil;
 
 
 public class GetNotificationUtil {
@@ -21,18 +22,24 @@ public class GetNotificationUtil {
 
     public GetNotificationUtil(Context context){
         notifiSqlHelper=new NotificationSqliteHelper(context);
-        initListFromLocal();
+        //initListFromLocal();
     }
 
     /**
      * 获取本地所有消息通知
      */
-    private void initListFromLocal(){
+    public void initListFromLocal(){
         list = notifiSqlHelper.getAllNotification();
 
         //进行排序
         Collections.sort(list);
+        for (Notification a :list){
+            LogUtil.d(a.toString());
+        }
     }
+
+
+
 
     public static List<Notification> getUserList() {
         return getUserList(0);
