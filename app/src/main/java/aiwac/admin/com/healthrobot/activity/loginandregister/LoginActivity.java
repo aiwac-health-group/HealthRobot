@@ -261,36 +261,6 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-
-                /*if(phoneNumber != null && checkcode != null && StringUtil.isCheckcodeValidate(userCheckcode, checkcode)){
-
-                    if(isPhoneNumberExist){ //存在，直接登录
-                        //注入用户数据
-                        UserData userData = UserData.getUserData();
-                        userData.setNumber(phoneNumber);
-                        ActivityUtil.skipActivity(RegisterActivity.this, Main2Activity.class, true);
-                    }else {  //不存在，注册
-                        //这里实现注册逻辑
-                        RegisterTask registerTask = new RegisterTask(RegisterActivity.this);
-                        registerTask.execute(phoneNumber);
-                    }
-
-                    //Map<String, String> msg = new HashMap<String, String>();
-                    //msg.put("number", phoneNumber);
-
-                    *//*
-                    Intent bindIntent = new Intent(RegisterActivity.this, WebSocketService.class);
-                    bindIntent.putExtra(Constant.SERVICE_USERSERVICE_ACTION, Constant.SERVICE_USERSERVICE_REGISTER);
-                    bindService(bindIntent, connection, BIND_AUTO_CREATE);
-                    *//*
-
-                }else{
-                    //验证码无效
-                    checkcodeEidt.setError(getString(R.string.error_incorrect_checkcode));
-                    checkcodeEidt.requestFocus();
-                }*/
-
             }
         });
     }
@@ -299,10 +269,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //测试用，去掉获取验证码这一步
-        SharedPreferences.Editor editor = getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE).edit();
+        /*SharedPreferences.Editor editor = getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE).edit();
         editor.putString(Constant.USER_DATA_FIELD_NUMBER, "15844096407");
         editor.putBoolean(Constant.USER_DATA_FIELD_REGISTER, true);
-        editor.apply();
+        editor.apply();*/
         //检查用户是否已经持久化
         SharedPreferences pref = getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE);
         String number = pref.getString(Constant.USER_DATA_FIELD_NUMBER, "");

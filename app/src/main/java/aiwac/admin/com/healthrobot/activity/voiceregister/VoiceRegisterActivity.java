@@ -86,7 +86,7 @@ public class VoiceRegisterActivity extends BaseActivity {
                         }
                     }
                 });
-                /*toActivity(RegisterHistoryActivity.createIntent(context));*/
+                toActivity(RegisterHistoryActivity.createIntent(context));
 
             }
         });

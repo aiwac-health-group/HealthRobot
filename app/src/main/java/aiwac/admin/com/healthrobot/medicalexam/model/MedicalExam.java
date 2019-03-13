@@ -19,9 +19,7 @@ public class MedicalExam extends BaseModel {
     private Date date;//体检的日期
     private Bitmap cover;//体检的图片
 
-
-
-    private static String examContext;//体检的具体内容 ，用来在体检的具体内容页面显示，因为只有一个页面，只需要一个，所以作为static
+    private  String examContext;//体检的具体内容 ，用来在体检的具体内容页面显示，因为只有一个页面，只需要一个，所以作为static
 
     public String getDataToShowAsText(){
         if(date!=null){
@@ -92,13 +90,12 @@ public class MedicalExam extends BaseModel {
     public void setCover(Bitmap cover) {
         this.cover = cover;
     }
-
-    public static String getExamContext() {
+    public String getExamContext() {
         return examContext;
     }
 
-    public static void setExamContext(String examContext) {
-        MedicalExam.examContext = examContext;
+    public void setExamContext(String examContext) {
+        this.examContext = examContext;
     }
 
 }

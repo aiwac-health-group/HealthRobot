@@ -45,6 +45,7 @@ public class MedicalExamRecommendActivity extends BaseHttpListActivity<MedicalEx
         initEvent();
         //功能归类分区方法，必须调用>>>>>>>>>>
 
+        getMedicalExamRecommend();//获得体检推荐摘要
         srlBaseHttpList.autoRefresh();
     }
 
@@ -86,7 +87,6 @@ public class MedicalExamRecommendActivity extends BaseHttpListActivity<MedicalEx
     @Override
     public void initData() {//必须调用
         super.initData();
-        getMedicalExamRecommend();//获得体检推荐摘要
     }
     public void getMedicalExamRecommend(){
         ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
@@ -150,9 +150,9 @@ public class MedicalExamRecommendActivity extends BaseHttpListActivity<MedicalEx
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // toActivity(UserActivity.createIntent(context, id));
-        Log.d(TAG, "在体检推荐的消息页：点击了一项："+position+"  id:"+id);
+        Log.d(TAG, "在体检推荐的消息页：点击了一项："+position+"  id:"+id+  "  examID"+GetMedicalExamUtil.list.get(position).getExamID());
         Intent intent = new Intent(MedicalExamRecommendActivity.this,MedicalExamDetailActivity.class);
-        intent.putExtra("position",GetMedicalExamUtil.list.get(position));
+        intent.putExtra(Constant.WEBSOCKET_EXAM_ID,new Long(id).intValue());
         startActivity(intent);
     }
 

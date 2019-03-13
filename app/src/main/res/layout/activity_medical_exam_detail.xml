@@ -2,8 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/llDemoRoot"
-    style="@style/activity_page"
-    android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+    style="@style/activity_page">
     <RelativeLayout style="@style/topbar_bg">
 
         <ImageButton style="@style/topbar_return_img" />

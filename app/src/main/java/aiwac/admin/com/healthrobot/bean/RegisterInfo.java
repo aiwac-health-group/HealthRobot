@@ -3,6 +3,10 @@ package aiwac.admin.com.healthrobot.bean;
 import com.bin.david.form.annotation.SmartColumn;
 import com.bin.david.form.annotation.SmartTable;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 @SmartTable(name="挂号信息列表")
 public class RegisterInfo extends BaseEntity {
 
@@ -28,7 +32,20 @@ public class RegisterInfo extends BaseEntity {
     }
 
     public void setCreateTime(String createTime) {
-        this.createTime = createTime;
+        try {
+            Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(createTime);
+            if(date!=null){
+                String showDate="";
+                showDate+=(date.getYear()+1900)+"年"+date.getMonth()+"月"+date.getDay()+"日  "
+                        +(date.getHours()==0?"00":date.getHours())+ ":"
+                        +(date.getMinutes()==0?"00":date.getMinutes())+":"
+                        +(date.getSeconds()==0?"00":date.getSeconds());
+
+                this.createTime = showDate;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getUpdateTime() {

@@ -519,13 +519,15 @@ public class JsonUtil {
 
         try{
             JSONObject object = new JSONObject(json);
-            JSONArray infos = object.getJSONArray(Constant.WEBSOCKET_MESSAGE_ITEMS);
+            JSONObject data=object.getJSONObject(Constant.WEBSOCKET_MESSAGE_DATA);
+            JSONArray infos = data.getJSONArray(Constant.WEBSOCKET_MESSAGE_ITEMS);
             for(int i=0; i<infos.length(); i++){
                 JSONObject root = infos.getJSONObject(i);
                 RegisterInfo registerInfo = new RegisterInfo();
                 registerInfo.setProvince(root.getString(Constant.WEBSOCKET_REGISTERINFO_PROVINCE));
                 registerInfo.setBusinessType(root.getString(Constant.WEBSOCKET_REGISTERINFO_CITY));
                 registerInfo.setHospital(root.getString(Constant.WEBSOCKET_REGISTERINFO_HOSPITAL));
+                registerInfo.setCity(root.getString(Constant.WEBSOCKET_REGISTERINFO_CITY));
                 registerInfo.setDepartment(root.getString(Constant.WEBSOCKET_REGISTERINFO_DEPARTMENT));
                 registerInfo.setRegisterStatus(root.getString(Constant.WEBSOCKET_REGISTERINFO_STATUS));
                 registerInfo.setDescription(root.getString(Constant.WEBSOCKET_REGISTERINFO_DESCRIPTION));
@@ -547,7 +549,8 @@ public class JsonUtil {
         ArrayList<ExamInfoForCarousel> list = new ArrayList<>();
         try{
             JSONObject object = new JSONObject(json);
-            JSONArray infos = object.getJSONArray(Constant.WEBSOCKET_MESSAGE_ITEMS);
+            JSONObject data = object.getJSONObject(Constant.WEBSOCKET_BUSINESS_DATA);
+            JSONArray infos = data.getJSONArray(Constant.WEBSOCKET_MESSAGE_ITEMS);
             for(int i=0; i<infos.length(); i++){
                 JSONObject root = infos.getJSONObject(i);
                 ExamInfoForCarousel examInfoForCarousel = new ExamInfoForCarousel();
@@ -660,23 +663,26 @@ public class JsonUtil {
     }
 
     /**
-     * 从服务器端传来的json，从中获取examContext
+     * 从服务器端传来的json，从中获取MedicalExam
      * @param json
      * @return
      */
-    public static String getExamContextFromJson(String json){
+    public static MedicalExam getExamContextFromJson(String json){
+        MedicalExam medicalExam = new MedicalExam();
         try {
             JSONObject root=new JSONObject(json);
             if(root.getString(Constant.WEBSOCKET_MESSAGE_ERRORDESC).equals(Constant.WEBSOCKET_EXAM_DETAIL_IS_NULL)){
-                return "";
+                return null;
             }else{
-                return root.getString(Constant.WEBSOCKET_EXAM_CONTEXT);
+                medicalExam.setDate(root.getString(Constant.WEBSOCKET_EXAM_UPDATETIME));
+                medicalExam.setExamContext(root.getString(Constant.WEBSOCKET_EXAM_CONTEXT));
+                medicalExam.setName(root.getString(Constant.WEBSOCKET_EXAM_NAME));
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return "获取内容失败";
+        return medicalExam;
     }
 
 

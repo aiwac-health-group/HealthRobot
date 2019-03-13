@@ -167,7 +167,7 @@ public class WebSocketClientHelper extends WebSocketClient {
                 EventBus.getDefault().postSticky(messageEvent);
             }else if(businessType.equals(Constant.WEBSOCKET_REGISTERHISTORY_BUSSINESSTYPE_CODE)){ //挂号历史纪录
                 MessageEvent messageEvent = new MessageEvent("RegisterHistory", json);
-                EventBus.getDefault().postSticky(new MessageEvent(json));
+                EventBus.getDefault().postSticky(messageEvent);
             }else if(businessType.equals(Constant.WEBSOCKET_QUERYPERSONINFO_BUSSINESSTYPE_CODE)){ //个人信息查询
 
                 user = JsonUtil.jsonToPersonInfo(json);
@@ -192,7 +192,8 @@ public class WebSocketClientHelper extends WebSocketClient {
             }else if(businessType.equals(Constant.WEBSOCKET_MEDICAL_EXAM_SUMMARY_BUSSINESSTYPE_CODE)){//体检推荐摘要查询
                  new GetMedicalExamUtil().initList(JsonUtil.jsonToMedicalExam(json));
             }else if(businessType.equals(Constant.WEBSOCKET_MEDICAL_EXAM_DETAIL_BUSSINESSTYPE_CODE)){//体检推荐详情查询
-                MedicalExam.setExamContext(JsonUtil.getExamContextFromJson(json));
+                MessageEvent messageEvent = new MessageEvent("MedicalExamDetail", json);
+                EventBus.getDefault().post(messageEvent);
             }else if(businessType.equals(Constant.WEBSOCKET_MEDICAL_EXAM_MENU_CODE)){//体检套餐查询
                 MedicalExamMenuActivity.setFilePath(JsonUtil.getMedicalExamMenuLinkFromJson(json));
             }else if(businessType.equals(Constant.WEBSOCKET_HEALTH_WEEKLY_REPORT_CODE)){//健康周报查询

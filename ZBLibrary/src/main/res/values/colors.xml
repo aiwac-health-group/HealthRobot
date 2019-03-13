@@ -2,7 +2,7 @@
 <resources>
 
     <color name="activity_bg">#f7f8f8</color>
-    <color name="topbar_bg">#33cc99</color>
+    <color name="topbar_bg">#4db8c4</color>
     <color name="topbar_bg_white">#ffffffff</color>
     <color name="topbar_bg_black">#272e2a</color>
     <color name="divider">#dddddd</color>

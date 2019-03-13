@@ -52,6 +52,7 @@ import aiwac.admin.com.healthrobot.bean.ExamInfoForCarousel;
 import aiwac.admin.com.healthrobot.bean.MessageEvent;
 import aiwac.admin.com.healthrobot.common.Constant;
 import aiwac.admin.com.healthrobot.medicalexam.adapter.GetMedicalExamUtil;
+import aiwac.admin.com.healthrobot.medicalexam.model.MedicalExam;
 import aiwac.admin.com.healthrobot.server.WebSocketApplication;
 import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
 import aiwac.admin.com.healthrobot.utils.ActivityUtil;
@@ -90,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
         initView();
 
         //异步加载，查询三条体检推荐消息
-        /*LoadThreeExamAsyc loadThreeExamAsyc = new LoadThreeExamAsyc();
-        loadThreeExamAsyc.execute();*/
+        LoadThreeExamAsyc loadThreeExamAsyc = new LoadThreeExamAsyc();
+        loadThreeExamAsyc.execute();
 
 
         //测肤功能测试
@@ -333,9 +334,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //向后台查询体检推荐具体信息
                 String examId = examInfoForCarousels.get(curPos).getExamID();
-                BaseEntity baseEntity = new BaseEntity();
-                baseEntity.setBusinessType("0008");
-                sendJson(JsonUtil.baseEntity2Json(baseEntity));
+                /*BaseEntity baseEntity = new BaseEntity();
+                baseEntity.setBusinessType("0008");*/
+                //sendJson(JsonUtil.requestMedicalExamDetailString(Integer.parseInt(examId)));
+
+                Intent intent = new Intent(MainActivity.this, MedicalExamDetailActivity.class);
+                intent.putExtra(Constant.WEBSOCKET_EXAM_ID,Integer.parseInt(examId));
+                startActivity(intent);
                 //跳转到体检推荐详情界面****************************************************************
 
             }
@@ -531,7 +536,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             } catch (Exception e) {
-                LogUtil.d( e.getMessage());
                 e.printStackTrace();
             }
 
