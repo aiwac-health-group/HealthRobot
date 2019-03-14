@@ -6,6 +6,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import aiwac.admin.com.healthrobot.sport.AiwacSportApi;
+import aiwac.admin.com.healthrobot.utils.LogUtil;
 
 public class RobotControlService extends Service {
     private static RobotControlService minstance;
@@ -40,7 +41,11 @@ public class RobotControlService extends Service {
         }else{
             messageCode="NONE";
         }
-        this.getMessageCode(messageCode);
+        try {
+            this.getMessageCode(messageCode);
+        }catch (Exception e){
+            LogUtil.d("控制模块还没有正常连接");
+        }
     }
 
     public void getMessageCode(String messageCode){
