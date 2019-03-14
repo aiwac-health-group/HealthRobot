@@ -19,7 +19,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import aiwac.admin.com.healthrobot.R;
+import aiwac.admin.com.healthrobot.service.RobotControlService;
 import aiwac.admin.com.healthrobot.service.SpeechRecogService;
+import aiwac.admin.com.healthrobot.utils.LogUtil;
 
 
 /**
@@ -95,6 +97,10 @@ public class SpeechRecogActivity extends AppCompatActivity implements  SpeechRec
     public void speechRecogResult(String result) {
         Log.d(TAG, "speechRecogResult: "+result);
         textView.setText(result);
+        //进入机器人方向控制
+        String subDirection=result.substring(1,2);
+        LogUtil.d("方向："+subDirection);
+        RobotControlService.getInstance().getMessage(subDirection);
     }
 
 
