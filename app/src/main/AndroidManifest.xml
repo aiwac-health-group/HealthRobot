@@ -71,7 +71,9 @@
         <activity android:name=".activity.skin.DetectProcessActivity"
             android:screenOrientation="landscape"/>
         <activity android:name=".activity.skin.SkinMainActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape">
+
+        </activity>
         <activity
             android:name=".activity.skin.AlarmActivity"
             android:launchMode="singleTop"
@@ -118,6 +120,11 @@
             android:name=".service.WebSocketService"
             android:enabled="true"
             android:exported="true" />
+
+        <service
+            android:name=".service.RobotControlService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

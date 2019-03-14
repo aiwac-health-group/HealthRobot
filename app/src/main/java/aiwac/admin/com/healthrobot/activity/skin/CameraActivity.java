@@ -347,7 +347,7 @@ public class CameraActivity extends FragmentActivity implements CameraHintDialog
             //设置最适合的预览尺寸
             Camera.Parameters parameters = mCamera.getParameters();
             parameters.setPreviewSize(bestPreviewSizeValue.width,bestPreviewSizeValue.height);
-            mCamera.setParameters(parameters);
+            //mCamera.setParameters(parameters);
             //预览方向矫正
             if(mBackCameraInfo!=null) setCameraDisplayOrientation(mBackCameraId);
             else if(mFrontCameraInfo!=null) setCameraDisplayOrientation(mFrontCameraId);
@@ -428,7 +428,7 @@ public class CameraActivity extends FragmentActivity implements CameraHintDialog
     private void doAutoFocus() {
         Camera.Parameters parameters = mCamera.getParameters();
               parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-              mCamera.setParameters(parameters);
+              //mCamera.setParameters(parameters);
               mCamera.autoFocus(new Camera.AutoFocusCallback() {
                      @Override
                      public void onAutoFocus(boolean success, Camera camera) {
@@ -437,11 +437,11 @@ public class CameraActivity extends FragmentActivity implements CameraHintDialog
                                    if (!Build.MODEL.equals("KORIDY H30")) {
                                           Camera.Parameters parameters = camera.getParameters();
                                           parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);// 1连续对焦
-                                          camera.setParameters(parameters);
+                                         // camera.setParameters(parameters);
                                    }else{
                                           Camera.Parameters parameters = camera.getParameters();
                                           parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-                                          camera.setParameters(parameters);
+                                         // camera.setParameters(parameters);
                                    }
                           }
                      }
