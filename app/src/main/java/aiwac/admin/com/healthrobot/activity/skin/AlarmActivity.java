@@ -21,6 +21,7 @@ public class AlarmActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
+        this.getWindow().setBackgroundDrawableResource(android.R.color.transparent);//去除黑边儿
 
         Calendar calendar = Calendar.getInstance();
         //设置明天的提醒

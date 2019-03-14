@@ -68,13 +68,17 @@
         <activity android:name=".activity.skin.DetectProcessActivity"
             android:screenOrientation="landscape"/>
         <activity android:name=".activity.skin.SkinMainActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape">
+
+        </activity>
         <activity
             android:name=".activity.skin.AlarmActivity"
             android:launchMode="singleTop"
             android:theme="@style/ActivityDialog" />
         <activity android:name=".activity.speechrecog.SpeechRecogActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape">
+
+        </activity>
         <activity android:name=".activity.medicalexam.MedicalExamRecommendActivity"
             android:screenOrientation="landscape"/>
         <activity android:name=".activity.medicalexam.MedicalExamDetailActivity"

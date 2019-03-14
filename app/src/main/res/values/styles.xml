@@ -22,6 +22,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@null</item> <!--必须设置该属性为空，才能占满屏幕，否则会有边界空白-->
+        <item name="android:windowFrame">@null</item>
     </style>
 
 
