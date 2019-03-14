@@ -110,8 +110,6 @@ public class MainActivity extends BaseActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SkinMainActivity.class);
                 startActivity(intent);
-                Toast.makeText(MainActivity.this, "按按钮",
-                        Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -122,8 +120,6 @@ public class MainActivity extends BaseActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AlarmActivity.class);
                 startActivity(intent);
-                Toast.makeText(MainActivity.this, "按按钮",
-                        Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -222,29 +218,6 @@ public class MainActivity extends BaseActivity {
         EventBus.getDefault().register(this);
 
     }
-//
-//    //判断用户是否登录，如果没有登录，则跳转到登录界面
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//
-//        LogUtil.d( Constant.USER_IS_LOGIN);
-//        if(!StringUtil.isValidate(UserData.getUserData().getNumber())){
-//            //用户没有登录, 跳转到登录界面
-//            ActivityUtil.skipActivity(MainActivity.this, LoginActivity.class);
-//        }
-//
-//
-//        //开启服务，创建websocket连接
-//        Intent intent = new Intent(this, WebSocketService.class);
-//        intent.putExtra(Constant.SERVICE_TIMER_TYPE, Constant.SERVICE_TIMER_TYPE_WEBSOCKET);
-//        startService(intent);
-//
-//
-//    }
-
-
-
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(MessageEvent messageEvent) {

@@ -15,8 +15,9 @@ import android.widget.RelativeLayout;
 import android.widget.ViewSwitcher.ViewFactory;
 
 import aiwac.admin.com.healthrobot.R;
+import zuo.biao.library.base.BaseFragment;
 
-public class HomeFragment extends Fragment implements ViewFactory{
+public class HomeFragment extends BaseFragment implements ViewFactory{
 
     private static final int UPDATE_LISTVIEW=0;
     private int pageNo=0;
@@ -28,6 +29,21 @@ public class HomeFragment extends Fragment implements ViewFactory{
 
 
     private LinearLayout testBtn;
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initEvent() {
+
+    }
 
     public interface Callback{
         void onClick(int which);

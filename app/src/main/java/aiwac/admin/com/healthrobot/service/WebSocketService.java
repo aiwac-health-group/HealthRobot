@@ -115,6 +115,10 @@ public class WebSocketService extends Service{
         //关闭连接资源
         WebSocketApplication.getWebSocketApplication().setNull();
 
+        Intent intent = new Intent(this, WebSocketService.class);
+        intent.putExtra(Constant.SERVICE_TIMER_TYPE, Constant.SERVICE_TIMER_TYPE_WEBSOCKET);
+        startService(intent);
+
     }
 
 

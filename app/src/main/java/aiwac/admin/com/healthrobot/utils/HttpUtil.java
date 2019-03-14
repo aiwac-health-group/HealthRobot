@@ -272,6 +272,7 @@ public class HttpUtil {
             dos.write(postData);
             dos.flush();
 
+            LogUtil.d(urlConn.getResponseCode()+"@@@");
             // 判断请求是否成功
             if (urlConn.getResponseCode() == 200) {
                 // 获取返回的数据

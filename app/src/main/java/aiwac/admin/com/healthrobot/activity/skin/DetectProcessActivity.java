@@ -46,6 +46,7 @@ public class DetectProcessActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detect_process);
 
+
         imageView = (ImageView) findViewById(R.id.miniPhoto);
         textView = (TextView) findViewById(R.id.processText);
 

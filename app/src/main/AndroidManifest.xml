@@ -23,12 +23,13 @@
     <application
         android:name=".HealthRobotApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/aiwac"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"
             android:screenOrientation="landscape">
+
         </activity>
         <activity android:name=".activity.loginandregister.LoginActivity"
             android:screenOrientation="landscape">
@@ -39,9 +40,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.loginandregister.RegisterActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.loginandregister.ConnectWifiActivity"
             android:screenOrientation="landscape"/>
+        <activity android:name=".activity.loginandregister.ConnectWifiActivity"
+            android:screenOrientation="landscape">
+
+        </activity>
         <activity android:name=".activity.voicechat.VoiceChatActivity"
             android:screenOrientation="landscape"/>
         <activity android:name=".activity.voicechat.WaitChatActivity"
@@ -74,7 +77,9 @@
             android:launchMode="singleTop"
             android:theme="@style/ActivityDialog" />
         <activity android:name=".activity.speechrecog.SpeechRecogActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape">
+
+        </activity>
         <activity android:name=".activity.medicalexam.MedicalExamRecommendActivity"
             android:screenOrientation="landscape"/>
         <activity android:name=".activity.medicalexam.MedicalExamDetailActivity"

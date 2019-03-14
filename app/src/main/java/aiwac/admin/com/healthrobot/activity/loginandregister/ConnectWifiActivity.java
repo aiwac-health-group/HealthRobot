@@ -1,16 +1,22 @@
 package aiwac.admin.com.healthrobot.activity.loginandregister;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -24,7 +30,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import aiwac.admin.com.healthrobot.MainActivity;
 import aiwac.admin.com.healthrobot.R;
 import aiwac.admin.com.healthrobot.bean.WifiInfo;
 import aiwac.admin.com.healthrobot.common.Constant;
@@ -32,8 +37,9 @@ import aiwac.admin.com.healthrobot.utils.ActivityUtil;
 import aiwac.admin.com.healthrobot.utils.LogUtil;
 import aiwac.admin.com.healthrobot.utils.StringUtil;
 import aiwac.admin.com.healthrobot.utils.WifiUtil;
+import zuo.biao.library.base.BaseActivity;
 
-public class ConnectWifiActivity extends AppCompatActivity {
+public class ConnectWifiActivity extends BaseActivity {
 
     private Button connectButton;
     private Button wifiChooseBtn;
@@ -47,6 +53,7 @@ public class ConnectWifiActivity extends AppCompatActivity {
 
     private List<String> permissionList = new ArrayList<>();
     private String from;
+    private int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +77,17 @@ public class ConnectWifiActivity extends AppCompatActivity {
         wifiChooseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //蓝牙连接需要模糊定位的权限
+                if(ContextCompat.checkSelfPermission(ConnectWifiActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+                    permissionList.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+                if(ContextCompat.checkSelfPermission(ConnectWifiActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+                    permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
+                if(!permissionList.isEmpty())
+                    ActivityCompat.requestPermissions(ConnectWifiActivity.this, permissionList.toArray(new String[permissionList.size()]), 2);
+                else{
+                    toOpenGPS();
+                }
 
-                selectConfigWifi();
             }
         });
 
@@ -144,6 +160,7 @@ public class ConnectWifiActivity extends AppCompatActivity {
                     LogUtil.d("连接已断开");
                 } else if (info.getState().equals(NetworkInfo.State.CONNECTED)) {
                     LogUtil.d("已连接到网络" );
+                    count ++;
                     Message message = new Message();
                     message.obj = true;
                     handler.sendMessage(message);
@@ -171,10 +188,14 @@ public class ConnectWifiActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE).edit();
                 editor.putBoolean(Constant.USER_DATA_ISCONNECTWIFI, true);
                 editor.apply();
-                Toast.makeText(ConnectWifiActivity.this,"wifi连接成功",Toast.LENGTH_SHORT).show();
+
                 if(from!= null && from.equals("setting")){
-                    finish();
+                    if(count > 1){
+                        Toast.makeText(ConnectWifiActivity.this,"wifi连接成功",Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
                 }else{
+                    Toast.makeText(ConnectWifiActivity.this,"wifi连接成功",Toast.LENGTH_SHORT).show();
                     ActivityUtil.skipActivity(ConnectWifiActivity.this,LoginActivity.class,true);
                 }
 
@@ -213,12 +234,6 @@ public class ConnectWifiActivity extends AppCompatActivity {
         // 显示
         normalDialog.show();
     }
-
-
-
-
-
-
     private void selectConfigWifi(){
         AlertDialog.Builder dialog = new AlertDialog.Builder(ConnectWifiActivity.this);
         dialog.setTitle(Constant.WIFI_SELECT);
@@ -255,24 +270,92 @@ public class ConnectWifiActivity extends AppCompatActivity {
                     });
                 }else{  //没有可连接的wifi
                     LogUtil.d( Constant.WIFI_NO_CONNECTABLE);
-                    dialog.setMessage(Constant.WIFI_NO_CONNECTABLE);
+                    dialog.setTitle(Constant.WIFI_NO_CONNECTABLE);
                 }
                 dialog.show();
             }else{ // wifi没有打开，让用户打开wifi
-                dialog.setMessage(Constant.WIFI_CLOSE);
+                dialog.setTitle(Constant.WIFI_CLOSE);
                 dialog.show();
             }
         }catch (Exception e){ // wifi模块不可用
-            dialog.setMessage(Constant.WIFI_UNAVAILABILITY);
+            dialog.setTitle(Constant.WIFI_UNAVAILABILITY);
             dialog.show();
         }
     }
 
+    //打开GPS（跳转到GPS界面）
+    public void toOpenGPS(){
+        boolean isOpen = isOPen();//判断GPS是否打开
+        if (!isOpen) {
+            new android.app.AlertDialog.Builder(this)
+                    .setTitle("提示")
+                    .setMessage("请打开机器人定位")
+                    // 拒绝, 退出应用
+                    .setNegativeButton("取消", null)
+                    .setPositiveButton("前往设置",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //跳转GPS设置界面
+                                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                    startActivityForResult(intent, 2);
+                                }
+                            })
+                    .show();
+
+        }else{
+            selectConfigWifi();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 2) {
+            if(isOPen()){
+                selectConfigWifi();
+            }else{
+                Toast.makeText(ConnectWifiActivity.this,"请打开机器人定位",Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    /**
+     * 判断GPS是否开启，GPS或者AGPS开启一个就认为是开启的
+     * @return true 表示开启
+     */
+    public boolean isOPen() {
+        LocationManager locationManager
+                = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        // 通过GPS卫星定位，定位级别可以精确到街（通过24颗卫星定位，在室外和空旷的地方定位准确、速度快）
+        boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        // 通过WLAN或移动网络(3G/2G)确定的位置（也称作AGPS，辅助GPS定位。主要用于在室内或遮盖物（建筑群或茂密的深林等）密集的地方定位）
+        boolean network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        if (gps || network) {
+            return true;
+        }
+
+        return false;
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(wifiReceiver);
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initEvent() {
+
     }
 }
 

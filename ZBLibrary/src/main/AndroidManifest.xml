@@ -67,17 +67,17 @@
             android:windowSoftInputMode="stateVisible|adjustResize|adjustUnspecified" />
         <activity
             android:name="zuo.biao.library.ui.PlacePickerWindow"
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
             android:theme="@style/Window"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="zuo.biao.library.ui.DatePickerWindow"
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
             android:theme="@style/Window"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="zuo.biao.library.ui.TimePickerWindow"
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
             android:theme="@style/Window"
             android:windowSoftInputMode="stateAlwaysHidden" />
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 
 //import android.text.Html;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.KeyEvent;
 
@@ -57,6 +58,12 @@ public class BeautyResultActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beauty_result);
+
+        //隐藏标题栏
+        ActionBar actionbar = getSupportActionBar();
+        if (actionbar != null) {
+            actionbar.hide();
+        }
 
         //调用存放activity类
         instance = MyActivity.getInstance();

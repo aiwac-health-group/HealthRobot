@@ -48,7 +48,7 @@ public class WebSocketApplication {
     private void init(Context context){
         try{
             SharedPreferences pref = HealthRobotApplication.getContext().getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE);
-            String token = pref.getString(Constant.USER_DATA_FIELD_TOKEN, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBY2NvdW50IjoiMjIyMjIyMjIyMjIiLCJDbGllbnRUeXBlIjoicm9ib3QiLCJFeHByZXNzSW4iOjE1NTI0NDIxMTF9.ztzVH-f4OucpMROmGQH-sO2L4s2NRlnGROegrUwc0V8");
+            String token = pref.getString(Constant.USER_DATA_FIELD_TOKEN, "");
             URI uri = new URI(Constant.WEBSOCKET_URL+token);
             LogUtil.d("uri:"+uri);
             //URI uri = new URI(Constant.WEBSOCKET_URL);
@@ -169,17 +169,19 @@ public class WebSocketApplication {
             webSocketHelper.close();
             LogUtil.d( Constant.WEBSOCKET_CONNECTION_CLOSE);
         }
+        //startWebSocketConnection(HealthRobotApplication.getContext());
     }
 
     //在新的线程中开启一个websocket连接
     public void startWebSocketConnection(final Context context){
+        LogUtil.d("startWebSocketConnection");
         if(webSocketHelper == null || (!webSocketHelper.isOpen() && !webSocketHelper.isConnecting())) {
             ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         //检测token有效期，无效则更新
-                        /*SharedPreferences pref = context.getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE);
+                        SharedPreferences pref = context.getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE);
                         Long validTime = pref.getLong(Constant.USER_DATA_FIELD_TOKENTIME, 0);
                         if (System.currentTimeMillis() - validTime > 23 * 60 * 60 * 1000) {  //有效期为1天
                             JSONObject root = new JSONObject();
@@ -203,7 +205,7 @@ public class WebSocketApplication {
                             } else {
                                 LogUtil.d("连接失败，token更新失败");
                             }
-                        }*/
+                        }
                         //获得连接
                         webSocketApplication.connection(context);
                     } catch (Exception e) {

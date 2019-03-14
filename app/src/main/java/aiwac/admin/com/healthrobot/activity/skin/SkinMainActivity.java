@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -28,6 +29,11 @@ public class SkinMainActivity extends BaseActivity implements HomeFragment.Callb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skin_main);
 
+        //隐藏标题栏
+        ActionBar actionbar = getSupportActionBar();
+        if (actionbar != null) {
+            actionbar.hide();
+        }
         setView();
         addFragment(new HomeFragment());
     }

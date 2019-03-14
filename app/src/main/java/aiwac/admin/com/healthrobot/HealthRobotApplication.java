@@ -14,7 +14,7 @@ public class HealthRobotApplication extends BaseApplication {
        // LogcatHelper.getInstance(this).start();
 
         context = getApplicationContext();
-        LogUtil.d( context.toString()+"+++++++++++++++++++++++++++++++++++++");
+        LogUtil.d( context.toString());
     }
 
     public static Context getContext(){

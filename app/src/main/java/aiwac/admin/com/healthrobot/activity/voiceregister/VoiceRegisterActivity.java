@@ -55,13 +55,13 @@ public class VoiceRegisterActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_voice_register);
         initJsonData();
-        ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
+        /*ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
             @Override
             public void run() {
                 //语音合成
                 SpeechSyntherizer.speak("请选择您的所在地区挂号医院和科室");
             }
-        });
+        });*/
         btn_send = (Button) findViewById(R.id.btn_send);
         spinner_province = (Spinner)findViewById(R.id.province);
         spinner_city = (Spinner)findViewById(R.id.city);
@@ -125,9 +125,7 @@ public class VoiceRegisterActivity extends BaseActivity {
 
             }
         });
-
         showData();
-
 
     }
 
@@ -142,13 +140,10 @@ public class VoiceRegisterActivity extends BaseActivity {
     private String departmentName = "";
 
     private void showData(){
-
-
-
-        spinner_province.setAdapter(provinceAdapter =new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, options1Items));
-        spinner_city.setAdapter(cityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, options2Items));
-        spinner_hospital.setAdapter(hosipitalAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, options3Items));
-
+        spinner_province.setAdapter(provinceAdapter =new ArrayAdapter<String>(this, R.layout.item_dialog_item, options1Items));
+        spinner_city.setAdapter(cityAdapter = new ArrayAdapter<String>(this, R.layout.item_dialog_item, options2Items));
+        spinner_hospital.setAdapter(hosipitalAdapter = new ArrayAdapter<String>(this, R.layout.item_dialog_item, options3Items));
+        spinner_province.setSelection(0, true);
         spinner_province.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -158,14 +153,14 @@ public class VoiceRegisterActivity extends BaseActivity {
                 for(String city:cityList.get(position)){
                     options2Items.add(city);
                 }
-                spinner_city.setSelection(0);
+                spinner_city.setSelection(0,true);
                 cityAdapter.notifyDataSetChanged();
 
                 options3Items.clear();
                 for(String hospital:hospitalList.get(position).get(0)){
                     options3Items.add(hospital);
                 }
-                spinner_hospital.setSelection(0);
+                spinner_hospital.setSelection(0,true);
                 hosipitalAdapter.notifyDataSetChanged();
             }
 
@@ -176,7 +171,7 @@ public class VoiceRegisterActivity extends BaseActivity {
 
 
         });
-
+        spinner_city.setSelection(0, true);
         spinner_city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -195,7 +190,7 @@ public class VoiceRegisterActivity extends BaseActivity {
             }
 
         });
-
+        spinner_hospital.setSelection(0, true);
         spinner_hospital.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -209,7 +204,7 @@ public class VoiceRegisterActivity extends BaseActivity {
 
         });
 
-        spinner_department.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, departments));
+        spinner_department.setAdapter(new ArrayAdapter<String>(this, R.layout.item_dialog_item, departments));
         spinner_department.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

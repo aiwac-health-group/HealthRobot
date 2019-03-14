@@ -23,8 +23,8 @@
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:layout_margin="@dimen/item_distance"
-                android:scaleType="centerCrop"
-                android:src="@drawable/default_head" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/aiwac" />
 
             <View
                 style="@style/divider_horizontal_1px"
@@ -74,6 +74,7 @@
 
             <LinearLayout
                 android:id="@+id/llSettingLogout"
+                android:layout_marginBottom="20dp"
                 style="@style/content_item_white" >
 
                 <TextView

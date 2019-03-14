@@ -65,12 +65,6 @@ public class WebSocketClientHelper extends WebSocketClient {
         this.context = context;
     }
 
-
-
-
-
-
-
     // 讲座   视频 音频  文章  和 健康检测结果摘要信息，每次获取到一次摘要json 更新一次
     protected LectureCourseAbstractInfo lectureVideoAllInfo;
     protected LectureCourseAbstractInfo lectureAudioAllInfo;

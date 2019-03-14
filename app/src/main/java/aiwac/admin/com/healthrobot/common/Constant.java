@@ -6,7 +6,8 @@ package aiwac.admin.com.healthrobot.common;
 
 public class Constant {
 
-    public final static String IP="192.168.1.109";
+    //public final static String IP="192.168.1.109";
+    public final static String IP="101.132.192.66";
     public final static String HTTP_IP = IP+":8080";
     public final static String WEBSOCKET_IP = IP+":8082";
     //public final static String HTTP_PORT="8080";

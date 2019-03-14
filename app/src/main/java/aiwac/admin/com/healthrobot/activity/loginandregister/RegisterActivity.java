@@ -263,7 +263,7 @@ public class RegisterActivity extends BaseActivity  {
             AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
             View view = View.inflate(RegisterActivity.this, R.layout.activity_progress, null);
             builder.setIcon(R.drawable.aiwac);
-            builder.setTitle("网络速度有点慢");
+            builder.setTitle("正在加载...");
             builder.setView(view);  //必须使用view加载，如果使用R.layout设置则无法改变bar的进度
 
             dialog = builder.create();

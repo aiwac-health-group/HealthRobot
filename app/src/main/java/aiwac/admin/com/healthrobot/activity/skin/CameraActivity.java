@@ -156,6 +156,13 @@ public class CameraActivity extends FragmentActivity implements CameraHintDialog
                 capture();
             }
         });
+
+        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

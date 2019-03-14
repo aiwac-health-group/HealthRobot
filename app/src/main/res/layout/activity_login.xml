@@ -103,51 +103,26 @@
                 android:id="@+id/register_check_code_button"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
-                android:layout_height="30sp"
+                android:layout_height="40sp"
                 android:text="@string/action_checkcode"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:background="@drawable/login_logbutton"
                 android:layout_gravity="center"
                 android:textColor="@color/white"/>
 
-
-
-
-
-
+            <Button
+                android:id="@+id/register_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="40sp"
+                android:layout_height="30sp"
+                android:layout_gravity="center_horizontal"
+                android:clickable="false"
+                android:enabled="false"
+                android:layout_margin="20sp"
+                android:background="@drawable/register_rightlog"
+                />
         </LinearLayout>
-
-
-
     </ScrollView>
-
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:orientation="vertical" >
-
-        <Button
-            android:id="@+id/register_button"
-            style="?android:textAppearanceSmall"
-            android:layout_width="40sp"
-            android:layout_height="30sp"
-            android:layout_gravity="center_horizontal"
-            android:clickable="false"
-            android:enabled="false"
-            android:background="@drawable/register_rightlog"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="确认登陆"
-            android:textColor="@color/white"
-            android:textAlignment="center"
-            />
-
-
-    </LinearLayout>
 
 </LinearLayout>

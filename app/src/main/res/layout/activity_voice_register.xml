@@ -30,16 +30,18 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="请选择您的所在地区挂号医院和科室"
-                android:textSize="20sp"
-                android:layout_marginTop="50sp"
+                android:text="请选择所在地区挂号医院和科室"
+                android:textColor="@color/theme"
+                android:textSize="16sp"
+                android:layout_marginTop="30sp"
                 android:layout_gravity="center"
-                 />
+                />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="300sp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20sp"
+                android:layout_gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
@@ -47,6 +49,7 @@
                     android:layout_margin="10sp"
                     android:layout_weight="1"
                     android:text="省份:"
+                    android:textColor="@color/theme"
                     android:layout_height="wrap_content" />
 
                 <Spinner
@@ -59,9 +62,10 @@
 
             </LinearLayout>
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="300sp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20sp"
+                android:layout_gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
@@ -69,6 +73,7 @@
                     android:layout_margin="10sp"
                     android:layout_weight="1"
                     android:text="城市:"
+                    android:textColor="@color/theme"
                     android:layout_height="wrap_content" />
                 <Spinner
                     android:id="@+id/city"
@@ -80,9 +85,10 @@
 
             </LinearLayout>
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="300sp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20sp"
+                android:layout_gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
@@ -90,6 +96,7 @@
                     android:layout_margin="10sp"
                     android:layout_weight="1"
                     android:text="医院:"
+                    android:textColor="@color/theme"
                     android:layout_height="wrap_content" />
 
                 <Spinner
@@ -102,9 +109,10 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="300sp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20sp"
+                android:layout_gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
@@ -112,6 +120,7 @@
                     android:layout_margin="10sp"
                     android:layout_weight="1"
                     android:text="科室:"
+                    android:textColor="@color/theme"
                     android:layout_height="wrap_content" />
 
                 <Spinner
@@ -122,13 +131,18 @@
                     android:layout_weight="3" />
 
             </LinearLayout>
+
             <Button
                 android:id="@+id/btn_send"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_width="300sp"
+                android:layout_height="40sp"
+                android:background="@drawable/login_emptylogbutton"
                 android:text="提交"
-                 />
+                android:textColor="@color/theme"
+                android:textAlignment="center"
+                android:layout_marginBottom="10sp"
+                android:layout_gravity="center"
+                />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
