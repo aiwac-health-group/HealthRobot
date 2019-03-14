@@ -71,6 +71,9 @@ public class SpeechRecogActivity extends AppCompatActivity implements  SpeechRec
             }
         });
 
+        //控制机器人方向
+        startService(new Intent(this, RobotControlService.class));
+
     }
     private SpeechRecogService mMyService=null;
     /* 绑定service监听*/
@@ -97,10 +100,13 @@ public class SpeechRecogActivity extends AppCompatActivity implements  SpeechRec
     public void speechRecogResult(String result) {
         Log.d(TAG, "speechRecogResult: "+result);
         textView.setText(result);
+
         //进入机器人方向控制
-        //tring subDirection=result.substring(1,2);
-        //LogUtil.d("方向："+subDirection);
-        //RobotControlService.getInstance().getMessage(subDirection);
+        String subDirection=result.substring(1,2);
+        LogUtil.d("方向："+subDirection);
+
+        RobotControlService.getInstance().getMessage(subDirection);//需要提前开启服务RobotControlService
+
     }
 
 

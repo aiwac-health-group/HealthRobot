@@ -164,7 +164,7 @@ public class LectureVideoPlayActivity extends AppCompatActivity implements View.
         //播放网络资源
         mVideoView.setVideoPath(mPlayUrl);
         //设置缓冲大小为2M
-        mVideoView.setBufferSize(1024*1024*2);
+        mVideoView.setBufferSize(1024*512);
 
         initVolumeWithLight();
         addVideoViewListener();
