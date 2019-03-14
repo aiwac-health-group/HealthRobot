@@ -499,17 +499,24 @@ public class JsonUtil {
         }
     }
 
-
+    /**
+     * 消息挂号查询，将json信息解析为挂号信息
+     * @param json
+     * @return
+     */
     public static RegisterInfo jsonToRegisterInfo(String json){
         RegisterInfo registerInfo = new RegisterInfo();
         try{
             JSONObject root = new JSONObject(json);
             registerInfo.setProvince(root.getString(Constant.WEBSOCKET_REGISTERINFO_PROVINCE));
-            registerInfo.setBusinessType(root.getString(Constant.WEBSOCKET_REGISTERINFO_CITY));
+           // registerInfo.setBusinessType(root.getString(Constant.WEBSOCKET_REGISTERINFO_CITY));
             registerInfo.setHospital(root.getString(Constant.WEBSOCKET_REGISTERINFO_HOSPITAL));
             registerInfo.setDepartment(root.getString(Constant.WEBSOCKET_REGISTERINFO_DEPARTMENT));
             registerInfo.setRegisterStatus(root.getString(Constant.WEBSOCKET_REGISTERINFO_STATUS));
             registerInfo.setDescription(root.getString(Constant.WEBSOCKET_REGISTERINFO_DESCRIPTION));
+            registerInfo.setCreateTime(root.getString(Constant.WEBSOCKET_REGISTERINFO_CREATETIME));
+            registerInfo.setCity(root.getString(Constant.WEBSOCKET_REGISTERINFO_CITY));
+            registerInfo.setUpdateTime(root.getString(Constant.WEBSOCKET_REGISTERINFO_UPDATETIME));
             return registerInfo;
         }catch (Exception e){
             e.printStackTrace();

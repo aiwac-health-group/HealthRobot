@@ -6,7 +6,7 @@ package aiwac.admin.com.healthrobot.common;
 
 public class Constant {
 
-    public final static String IP="192.168.1.114";
+    public final static String IP="192.168.1.109";
     public final static String HTTP_IP = IP+":8080";
     public final static String WEBSOCKET_IP = IP+":8082";
     //public final static String HTTP_PORT="8080";
@@ -110,7 +110,7 @@ public class Constant {
     public final static String WEBSOCKET_REGISTERINFO_HOSPITAL = "hospital";
     public final static String WEBSOCKET_REGISTERINFO_DEPARTMENT = "department";
     public final static String WEBSOCKET_REGISTERINFO_STATUS = "registerStatus";
-    public final static String WEBSOCKET_REGISTERINFO_DESCRIPTION = "description";
+    public final static String WEBSOCKET_REGISTERINFO_DESCRIPTION = "registDescription";
     public final static String WEBSOCKET_REGISTERINFO_CREATETIME = "createTime";
     public final static String WEBSOCKET_REGISTERINFO_UPDATETIME = "updateTime";
 
