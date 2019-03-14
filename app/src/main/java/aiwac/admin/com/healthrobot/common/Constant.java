@@ -97,7 +97,7 @@ public class Constant {
     public final static String WEBSOCKET_MESSAGE_TIME = "time";
 
 
-    public final static String WEBSOCKET_USER_NAME = "name";
+    public final static String WEBSOCKET_USER_NAME = "clientName";
     public final static String WEBSOCKET_USER_SEX = "sex";
     public final static String WEBSOCKET_USER_BIRTHDAY = "birthday";
     public final static String WEBSOCKET_USER_ADDRESS = "address";

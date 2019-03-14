@@ -364,7 +364,7 @@ public class JsonUtil {
             root.put(Constant.WEBSOCKET_USER_SEX, user.getSex());
             root.put(Constant.WEBSOCKET_USER_BIRTHDAY, user.getBirthday());
             root.put(Constant.WEBSOCKET_USER_WECHAT, user.getWechat());
-            root.put(Constant.WEBSOCKET_USER_ADDRESS, user.getArea()+user.getAddress());
+            root.put(Constant.WEBSOCKET_USER_ADDRESS, user.getArea()+"市"+user.getAddress());
 
             LogUtil.d(Constant.JSON_GENERATE_SUCCESS + root.toString());
             return root.toString();
@@ -488,7 +488,7 @@ public class JsonUtil {
             user.setWechat(root.getString(Constant.WEBSOCKET_USER_WECHAT));
             String place = root.getString(Constant.WEBSOCKET_USER_ADDRESS);
             int index = place.indexOf("市", 3);
-            user.setArea(place.substring(0,index+1));
+            user.setArea(place.substring(0,index));
             user.setAddress(place.substring(index+1,place.length()));
 
             return user;
