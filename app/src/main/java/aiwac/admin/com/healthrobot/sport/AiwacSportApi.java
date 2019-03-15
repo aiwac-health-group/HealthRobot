@@ -28,7 +28,7 @@ public class AiwacSportApi {
 	String content  = null ;
 
 	String A33Ip = "127.0.0.1";
-	int socketPort = 9999;
+	int socketPort = 8888;
 
 
 	String aiwacState = "1";
