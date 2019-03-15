@@ -94,34 +94,38 @@ public class VoiceRegisterActivity extends BaseActivity {
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(provinceName!=null&&cityName!=null&&hosipitalName!=null&&departmentName!=null){
+                    if(provinceName.equals("")){
+                        Toast.makeText(VoiceRegisterActivity.this, "请选择省份", Toast.LENGTH_SHORT).show();
+                    }else if(cityName.equals("")){
+                        Toast.makeText(VoiceRegisterActivity.this, "请选择城市", Toast.LENGTH_SHORT).show();
+                    }else if(hosipitalName.equals("")){
+                        Toast.makeText(VoiceRegisterActivity.this, "请选择医院", Toast.LENGTH_SHORT).show();
+                    }else if(departmentName.equals("")){
+                        Toast.makeText(VoiceRegisterActivity.this, "请选择科室", Toast.LENGTH_SHORT).show();
+                    }else{
+                        showShortToast("挂号申请提交成功");
 
-                if(provinceName.equals("")){
-                    Toast.makeText(VoiceRegisterActivity.this, "请选择省份", Toast.LENGTH_SHORT).show();
-                }else if(cityName.equals("")){
-                    Toast.makeText(VoiceRegisterActivity.this, "请选择城市", Toast.LENGTH_SHORT).show();
-                }else if(hosipitalName.equals("")){
-                    Toast.makeText(VoiceRegisterActivity.this, "请选择医院", Toast.LENGTH_SHORT).show();
-                }else if(departmentName.equals("")){
-                    Toast.makeText(VoiceRegisterActivity.this, "请选择科室", Toast.LENGTH_SHORT).show();
-                }else{
-                    showShortToast("挂号申请提交成功");
-
-                    ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
-                        @Override
-                        public void run() {
-                            try{
-                                RegisterInfo registerInfo = new RegisterInfo(provinceName,cityName,hosipitalName,departmentName);
-                                registerInfo.setBusinessType(Constant.WEBSOCKET_VOICEREGISTER_BUSSINESSTYPE_CODE);
-                                String json = JsonUtil.registerInfoToJson(registerInfo);
-                                WebSocketApplication.getWebSocketApplication().send(json);
-                            }catch (Exception e){
-                                showShortToast("网络信号不好");
-                                LogUtil.d( e.getMessage());
-                                //其他异常处理
+                        ThreadPoolManager.getThreadPoolManager().submitTask(new Runnable() {
+                            @Override
+                            public void run() {
+                                try{
+                                    RegisterInfo registerInfo = new RegisterInfo(provinceName,cityName,hosipitalName,departmentName);
+                                    registerInfo.setBusinessType(Constant.WEBSOCKET_VOICEREGISTER_BUSSINESSTYPE_CODE);
+                                    String json = JsonUtil.registerInfoToJson(registerInfo);
+                                    WebSocketApplication.getWebSocketApplication().send(json);
+                                }catch (Exception e){
+                                    showShortToast("网络信号不好");
+                                    LogUtil.d( e.getMessage());
+                                    //其他异常处理
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
+                }else {
+                    showShortToast("部分数据为空");
                 }
+
 
             }
         });
@@ -143,7 +147,7 @@ public class VoiceRegisterActivity extends BaseActivity {
         spinner_province.setAdapter(provinceAdapter =new ArrayAdapter<String>(this, R.layout.item_dialog_item, options1Items));
         spinner_city.setAdapter(cityAdapter = new ArrayAdapter<String>(this, R.layout.item_dialog_item, options2Items));
         spinner_hospital.setAdapter(hosipitalAdapter = new ArrayAdapter<String>(this, R.layout.item_dialog_item, options3Items));
-        spinner_province.setSelection(0, true);
+        spinner_province.setSelection(0);
         spinner_province.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -153,14 +157,14 @@ public class VoiceRegisterActivity extends BaseActivity {
                 for(String city:cityList.get(position)){
                     options2Items.add(city);
                 }
-                spinner_city.setSelection(0,true);
+                spinner_city.setSelection(0);
                 cityAdapter.notifyDataSetChanged();
 
                 options3Items.clear();
                 for(String hospital:hospitalList.get(position).get(0)){
                     options3Items.add(hospital);
                 }
-                spinner_hospital.setSelection(0,true);
+                spinner_hospital.setSelection(0);
                 hosipitalAdapter.notifyDataSetChanged();
             }
 
@@ -190,7 +194,7 @@ public class VoiceRegisterActivity extends BaseActivity {
             }
 
         });
-        spinner_hospital.setSelection(0, true);
+        spinner_hospital.setSelection(0);
         spinner_hospital.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
