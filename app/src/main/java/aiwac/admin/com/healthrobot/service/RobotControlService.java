@@ -11,14 +11,14 @@ import aiwac.admin.com.healthrobot.utils.LogUtil;
 public class RobotControlService extends Service {
     private static RobotControlService minstance;
     private static String TAG="RobotControlService";
-    private AiwacSportApi aiwacSportApi;
+   private AiwacSportApi aiwacSportApi;
     private int type=0b0000000;
     public RobotControlService() {
         minstance=this;
         minstance=this;
+
         aiwacSportApi=new AiwacSportApi();
-        aiwacSportApi.startAiwacSport();
-        Log.d(TAG, "onBind: 启动服务");
+
     }
     public static RobotControlService getInstance(){
         return minstance;
@@ -87,13 +87,14 @@ public class RobotControlService extends Service {
             downAndRight();
         }
 
-
+        type=0b0000000;
         Log.d(TAG, "getMessage: type:"+type);
     }
 
     private void  up(){
         type=type|0b0000001;
         aiwacSportApi.aiwacSportType(type);
+        type= 0;
     }
     private void  down(){
         type=type|0b0000010;
@@ -142,5 +143,10 @@ public class RobotControlService extends Service {
     private void closeLightTwo(){
         type=type|0b1011111;
         aiwacSportApi.aiwacSportType(type);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

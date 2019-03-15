@@ -41,6 +41,8 @@ public class SpeechRecogActivity extends AppCompatActivity implements  SpeechRec
         btn_stop=findViewById(R.id.btn_stop);
         textView=findViewById(R.id.textView_result);
 
+
+
         initPermission();
 
         Intent bindIntent=new Intent(SpeechRecogActivity.this,SpeechRecogService.class);
@@ -70,6 +72,48 @@ public class SpeechRecogActivity extends AppCompatActivity implements  SpeechRec
                 }
             }
         });
+
+
+
+        findViewById(R.id.buttonUP).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    {
+                        RobotControlService.getInstance().getMessage("前");
+                        Log.i("A33Socket","触发  前");
+                }
+            }
+        });
+
+        findViewById(R.id.buttonDOWN).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                {
+                    RobotControlService.getInstance().getMessage("后");
+                    Log.i("A33Socket","触发  后");
+                }
+            }
+        });
+
+        findViewById(R.id.buttonLEFT).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                {
+                    RobotControlService.getInstance().getMessage("左");
+                    Log.i("A33Socket","触发  左");
+                }
+            }
+        });
+        findViewById(R.id.buttonRIGHT).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                {
+                    RobotControlService.getInstance().getMessage("右");
+                    Log.i("A33Socket","触发  右");
+                }
+            }
+        });
+
 
 
         //控制机器人方向
