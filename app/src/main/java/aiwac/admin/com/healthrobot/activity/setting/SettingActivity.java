@@ -7,8 +7,10 @@ import android.view.View;
 
 import aiwac.admin.com.healthrobot.R;
 import aiwac.admin.com.healthrobot.activity.loginandregister.ConnectWifiActivity;
+import aiwac.admin.com.healthrobot.activity.loginandregister.LoginActivity;
 import aiwac.admin.com.healthrobot.activity.loginandregister.RegisterActivity;
 import aiwac.admin.com.healthrobot.common.Constant;
+import aiwac.admin.com.healthrobot.utils.ActivityUtil;
 import aiwac.admin.com.healthrobot.utils.LogUtil;
 import zuo.biao.library.base.BaseActivity;
 import zuo.biao.library.ui.AlertDialog;
@@ -41,7 +43,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private void logout() {
         SharedPreferences.Editor editor = getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE).edit();
         editor.putString(Constant.USER_DATA_FIELD_NUMBER, "");
-        context.finish();
+        editor.apply();
+        ActivityUtil.skipActivity(SettingActivity.this, LoginActivity.class,true);
     }
 
 

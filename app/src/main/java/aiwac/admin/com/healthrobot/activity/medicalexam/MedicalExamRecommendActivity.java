@@ -1,13 +1,18 @@
 package aiwac.admin.com.healthrobot.activity.medicalexam;
 
 import android.content.Intent;
-import android.os.Handler;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -30,6 +35,8 @@ import zuo.biao.library.util.JSON;
 public class MedicalExamRecommendActivity extends BaseHttpListActivity<MedicalExam,ListView,MedicalExamAdapter> implements OnBottomDragListener {
 
     private static final String TAG="MedicalExamRecommend";
+    private ImageView imageView1, imageView2, imageView3;
+    private TextView tv_exam_name1,tv_exam_name2,tv_exam_name3,tv_exam_desc1,tv_exam_desc2,tv_exam_desc3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +61,17 @@ public class MedicalExamRecommendActivity extends BaseHttpListActivity<MedicalEx
     @Override
     public void initView() {//必须调用
         super.initView();
+
+        imageView1 = findView(R.id.iv_exam_1);
+        imageView2 = findView(R.id.iv_exam_2);
+        imageView3 = findView(R.id.iv_exam_3);
+        tv_exam_name1 = findView(R.id.tv_exam_name1);
+        tv_exam_name2 = findView(R.id.tv_exam_name2);
+        tv_exam_name3 = findView(R.id.tv_exam_name3);
+        tv_exam_desc1 = findView(R.id.tv_exam_desc1);
+        tv_exam_desc2 = findView(R.id.tv_exam_desc2);
+        tv_exam_desc3 = findView(R.id.tv_exam_desc3);
+
         //设置右上角体检套餐按钮
         Button btnMedicalExamMenu=findViewById(R.id.btn_medical_menu);
         btnMedicalExamMenu.setOnClickListener(new View.OnClickListener() {
@@ -63,10 +81,28 @@ public class MedicalExamRecommendActivity extends BaseHttpListActivity<MedicalEx
                startActivity(intent);
             }
         });
+
+
+
     }
 
     @Override
     public void setList(final List<MedicalExam> list) {
+
+        findView(R.id.ll_stronger_exam).setVisibility(View.VISIBLE);
+
+        imageView1.setImageBitmap(list.get(0).getCover());
+        tv_exam_name1.setText(list.get(0).getName());
+        tv_exam_desc1.setText(list.get(0).getDescription());
+        imageView2.setImageBitmap(list.get(1).getCover());
+        tv_exam_name2.setText(list.get(1).getName());
+        tv_exam_desc2.setText(list.get(1).getDescription());
+        imageView3.setImageBitmap(list.get(2).getCover());
+        tv_exam_name3.setText(list.get(2).getName());
+        tv_exam_desc3.setText(list.get(2).getDescription());
+        list.remove(0);
+        list.remove(0);
+        list.remove(0);
         setList(new AdapterCallBack<MedicalExamAdapter>() {
             @Override
             public MedicalExamAdapter createAdapter() {
@@ -77,6 +113,12 @@ public class MedicalExamRecommendActivity extends BaseHttpListActivity<MedicalEx
                 adapter.refresh(list);
             }
         });
+
+        ListView listView = findView(R.id.lvBaseList);
+        setListViewHeightByItem(listView);
+        ScrollView scrollView = findView(R.id.scrollView);
+        scrollView.smoothScrollTo(0,0);
+
     }
 
 
@@ -120,7 +162,7 @@ public class MedicalExamRecommendActivity extends BaseHttpListActivity<MedicalEx
                     }
                 }
                 for(MedicalExam m:GetMedicalExamUtil.list){
-                    LogUtil.d(m.toString());
+                    //LogUtil.d(m.toString());
                 }
                 onResponse(-page,  GetMedicalExamUtil.list, null);
             }
@@ -138,6 +180,30 @@ public class MedicalExamRecommendActivity extends BaseHttpListActivity<MedicalEx
     @Override
     public void initEvent() {//必须调用
         super.initEvent();
+        findView(R.id.ll_stronger_exam1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MedicalExamRecommendActivity.this,MedicalExamDetailActivity.class);
+                intent.putExtra(Constant.WEBSOCKET_EXAM_ID,0);
+                startActivity(intent);
+            }
+        });
+        findView(R.id.ll_stronger_exam2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MedicalExamRecommendActivity.this,MedicalExamDetailActivity.class);
+                intent.putExtra(Constant.WEBSOCKET_EXAM_ID,1);
+                startActivity(intent);
+            }
+        });
+        findView(R.id.ll_stronger_exam3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MedicalExamRecommendActivity.this,MedicalExamDetailActivity.class);
+                intent.putExtra(Constant.WEBSOCKET_EXAM_ID,2);
+                startActivity(intent);
+            }
+        });
     }
     @Override
     public void onDragBottom(boolean rightToLeft) {
@@ -156,6 +222,31 @@ public class MedicalExamRecommendActivity extends BaseHttpListActivity<MedicalEx
         startActivity(intent);
     }
 
+
+    private void setListViewHeightByItem(ListView listView) {
+        if (listView == null) {
+            return;
+        }
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            return;
+        }
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View item = listAdapter.getView(i, null, listView);
+            //item的布局要求是linearLayout，否则measure(0,0)会报错。
+            item.measure(0, 0);
+            //计算出所有item高度的总和
+            totalHeight += item.getMeasuredHeight();
+        }
+        //获取ListView的LayoutParams,只需要修改高度就可以。
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        //修改ListView高度为item总高度和所有分割线的高度总和。
+        //这里的分隔线是指ListView自带的divider
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        //将修改过的参数，重新设置给ListView
+        listView.setLayoutParams(params);
+    }
 
     //生命周期、onActivityResult<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 

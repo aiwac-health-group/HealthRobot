@@ -17,7 +17,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="#4aedf0"
+                android:background="@drawable/top"
                 android:orientation="vertical"
                 >
 
@@ -66,15 +66,16 @@
                     android:id="@+id/lecture_articl_detail_name"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:textStyle="bold"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textSize="24sp"/>
 
                 <TextView
                     android:id="@+id/lecture_articl_detail_time"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:text="TextView"
                     />
 

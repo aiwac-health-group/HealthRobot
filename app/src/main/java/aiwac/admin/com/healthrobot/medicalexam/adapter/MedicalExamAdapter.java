@@ -2,8 +2,6 @@ package aiwac.admin.com.healthrobot.medicalexam.adapter;
 
 import android.app.Activity;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-
 
 import aiwac.admin.com.healthrobot.medicalexam.model.MedicalExam;
 import aiwac.admin.com.healthrobot.medicalexam.view.MedicalExamView;
@@ -23,6 +21,7 @@ public class MedicalExamAdapter extends BaseAdapter<MedicalExam,MedicalExamView>
     public long getItemId(int position) {
         return getItem(position).getExamID();
     }
+
 
 
 }

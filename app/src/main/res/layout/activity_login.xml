@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_login"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/white"
-    tools:context="aiwac.admin.com.healthrobot.activity.loginandregister.LoginActivity">
+    style="@style/activity_page" >
+
+    <RelativeLayout style="@style/topbar_bg" >
+
+        <TextView
+            style="@style/topbar_title"
+            android:layout_centerHorizontal="true"
+            android:text="手机号登录" />
+    </RelativeLayout>
+
 
 
     <ScrollView
         android:id="@+id/login_form"
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="40sp"
@@ -28,99 +25,117 @@
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="30sp"
-                android:layout_gravity="center"
-                android:src="@drawable/register_account_image" />
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40sp"
-                android:layout_marginBottom="20sp"
-                android:background="@drawable/register_account_bg"
-                >
-
-                <AutoCompleteTextView
-                    android:id="@+id/register_number_edit"
-                    android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/btn_login_slide"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_margin="5dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_number"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/theme"
-                    android:layout_marginLeft="20sp"
-                    android:layout_marginRight="10sp"
-                    android:background="@null"
-                    android:textAlignment="center"
-                    />
-            </android.support.design.widget.TextInputLayout>
-
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="30sp"
-                android:layout_gravity="center"
-                android:src="@drawable/register_password_image" />
-
-
-
-            <LinearLayout android:id="@+id/regiter_btn_form"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="30sp">
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/login_person" />
 
                 <android.support.design.widget.TextInputLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="40sp"
-                    android:layout_weight="15"
-                    android:background="@drawable/register_account_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:layout_gravity="center_vertical"
                     >
 
-                    <EditText
+                    <AutoCompleteTextView
+                        android:id="@+id/register_number_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_number"
+                        android:textSize="20sp"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/theme"
+                        android:background="@null"
+                        android:textAlignment="center"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/btn_login_slide"
+                android:padding="10dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/login_checkcode" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:layout_gravity="center_vertical"
+                    >
+
+                    <AutoCompleteTextView
                         android:id="@+id/register_checkcode_edit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/prompt_check_code"
-                        android:layout_gravity="center_vertical"
+                        android:textSize="20sp"
                         android:inputType="textEmailAddress"
-                        android:layout_marginLeft="20sp"
-                        android:layout_marginRight="20sp"
                         android:textColor="@color/theme"
                         android:background="@null"
                         android:textAlignment="center"
-
                         />
                 </android.support.design.widget.TextInputLayout>
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/login_line" />
+
+                <Button
+                    android:id="@+id/register_check_code_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="40sp"
+                    android:layout_weight="3"
+                    android:text="@string/action_checkcode"
+                    android:textSize="24sp"
+                    android:textColor="#4385C8"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    />
 
             </LinearLayout>
 
-
-            <Button
-                android:id="@+id/register_check_code_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="40sp"
-                android:text="@string/action_checkcode"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:background="@drawable/login_logbutton"
-                android:layout_gravity="center"
-                android:textColor="@color/white"/>
-
             <Button
                 android:id="@+id/register_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="40sp"
-                android:layout_height="30sp"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:clickable="false"
                 android:enabled="false"
-                android:layout_margin="20sp"
-                android:background="@drawable/register_rightlog"
+                android:layout_marginTop="20dp"
+                android:text="立即登录"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                android:background="@drawable/login_register"
                 />
         </LinearLayout>
     </ScrollView>

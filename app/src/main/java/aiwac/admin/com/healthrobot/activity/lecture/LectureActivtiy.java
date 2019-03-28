@@ -4,25 +4,22 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
-
+import android.widget.LinearLayout;
 
 import aiwac.admin.com.healthrobot.R;
 import aiwac.admin.com.healthrobot.server.WebSocketApplication;
 import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
 import aiwac.admin.com.healthrobot.utils.JsonUtil;
+import zuo.biao.library.base.BaseActivity;
 
 
 //  讲座activity ,  视频 音频  文章三类
-public class LectureActivtiy extends AppCompatActivity {
+public class LectureActivtiy extends BaseActivity {
 
-    private View videoView,musicView,articleView;
+    private LinearLayout videoView,musicView,articleView;
 
     private Button backButton1;
 
@@ -30,17 +27,17 @@ public class LectureActivtiy extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //隐藏系统栏
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        /*requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
 
         setContentView(R.layout.activity_lecture_activtiy);
 
 
-        //隐藏标题栏
+       /* //隐藏标题栏
         ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
             actionbar.hide();
-        }
+        }*/
 
         // 发起向服务器 获取讲座摘要的请求
         sendeQquestLectureAllAbstract();
@@ -61,9 +58,12 @@ public class LectureActivtiy extends AppCompatActivity {
 
     private void setView() {
 
-        videoView = findViewById(R.id.topbar_lecture_video);
+        /*videoView = findViewById(R.id.topbar_lecture_video);
         musicView = findViewById(R.id.topbar_lecture_music);
-        articleView = findViewById(R.id.topbar_lecture_article);
+        articleView = findViewById(R.id.topbar_lecture_article);*/
+        videoView = findViewById(R.id.ll_video);
+        musicView = findViewById(R.id.ll_audio);
+        articleView = findViewById(R.id.ll_article);
 
 
         videoView.setSelected(true);
@@ -96,13 +96,6 @@ public class LectureActivtiy extends AppCompatActivity {
         });
         videoView.performClick();
 
-        backButton1 = (Button)findViewById(R.id.backButton_2) ;
-        backButton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
     private void addFragment(Fragment fragment) {
@@ -165,4 +158,18 @@ public class LectureActivtiy extends AppCompatActivity {
 
     }
 
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initEvent() {
+
+    }
 }

@@ -17,10 +17,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -40,9 +39,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import aiwac.admin.com.healthrobot.activity.medicalexam.MedicalExamDetailActivity;
 import aiwac.admin.com.healthrobot.activity.lecture.LectureActivtiy;
-import aiwac.admin.com.healthrobot.activity.medicalexam.MedicalExamMenuActivity;
+import aiwac.admin.com.healthrobot.activity.medicalexam.MedicalExamDetailActivity;
 import aiwac.admin.com.healthrobot.activity.medicalexam.MedicalExamRecommendActivity;
 import aiwac.admin.com.healthrobot.activity.notification.NotificationActivity;
 import aiwac.admin.com.healthrobot.activity.setting.SettingActivity;
@@ -55,8 +53,6 @@ import aiwac.admin.com.healthrobot.bean.BaseEntity;
 import aiwac.admin.com.healthrobot.bean.ExamInfoForCarousel;
 import aiwac.admin.com.healthrobot.bean.MessageEvent;
 import aiwac.admin.com.healthrobot.common.Constant;
-import aiwac.admin.com.healthrobot.medicalexam.adapter.GetMedicalExamUtil;
-import aiwac.admin.com.healthrobot.medicalexam.model.MedicalExam;
 import aiwac.admin.com.healthrobot.server.WebSocketApplication;
 import aiwac.admin.com.healthrobot.task.ThreadPoolManager;
 import aiwac.admin.com.healthrobot.utils.ActivityUtil;
@@ -75,7 +71,19 @@ public class MainActivity extends BaseActivity {
     private int[] imgIds;
     private LinearLayout linearLayout;
     private ImageView[] tips;
-    private int curPos;
+    /**
+     * 当前选中的图片id序号
+     */
+    private int mCurrentPosition=0;
+    /**
+     * 按下点的X坐标
+     */
+    private float downX;
+
+    /**
+     * 设置循环播放的图片
+     *
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -255,10 +263,6 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    /**
-     * 设置循环播放的图片
-     *
-     */
     @Override
     public void initView(){
 
@@ -272,6 +276,43 @@ public class MainActivity extends BaseActivity {
                 return i;
             }
         });
+        mImageSwitcher.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        downX = event.getX();//downX为全局变量：手指按下时x坐标
+                        break;
+                    case MotionEvent.ACTION_CANCEL:
+                        float upX = event.getX(); //upX: 手指抬起时x坐标
+                        if (upX > downX) {   //向右滑
+                            if (mCurrentPosition == 0) {
+                                mCurrentPosition = imgIds.length - 1;
+                            } else {
+                                --mCurrentPosition;
+                            }
+                            mImageSwitcher.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.slide_in_left));
+                            mImageSwitcher.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.slide_out_right));
+                        }
+                        if (upX < downX) {    //向左滑
+                            if (mCurrentPosition == imgIds.length - 1) {
+                                mCurrentPosition = 0;
+                            } else {
+                                ++mCurrentPosition;
+                            }
+                            mImageSwitcher.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_in_right));
+                            mImageSwitcher.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_out_left));
+                        }
+                        Drawable drawable = new BitmapDrawable(examInfoForCarousels.get(mCurrentPosition).getCover());
+                        mImageSwitcher.setImageDrawable(drawable);
+                        setImageBackground(mCurrentPosition);
+                        break;
+                }
+                return true;//返回true才能touch有效
+            }
+        });
+
+
         tips = new ImageView[imgIds.length];
         for (int i=0; i<imgIds.length; i++){
             ImageView mImageView = new ImageView(MainActivity.this);
@@ -291,6 +332,7 @@ public class MainActivity extends BaseActivity {
 
     }
 
+
     @Override
     public void initData() {
 
@@ -305,31 +347,30 @@ public class MainActivity extends BaseActivity {
      * 从网络获取图片
      */
     public void setImageSwitcherByNetwork(){
-        curPos=0;
-        Drawable drawable = new BitmapDrawable(examInfoForCarousels.get(curPos).getCover());
+        Drawable drawable = new BitmapDrawable(examInfoForCarousels.get(mCurrentPosition).getCover());
         mImageSwitcher.setImageDrawable(drawable);
-        setImageBackground(curPos);
+        setImageBackground(mCurrentPosition);
         //
         // 按时切换图片
         mImageSwitcher.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(curPos==imgIds.length-1){
-                    curPos=0;
+                if(mCurrentPosition >= imgIds.length-1){
+                    mCurrentPosition = 0;
                 }else{
-                    curPos++;
+                    mCurrentPosition++;
                 }
-                Drawable drawable = new BitmapDrawable(examInfoForCarousels.get(curPos).getCover());
+                Drawable drawable = new BitmapDrawable(examInfoForCarousels.get(mCurrentPosition).getCover());
                 mImageSwitcher.setImageDrawable(drawable);
-                setImageBackground(curPos);
-                mImageSwitcher.postDelayed(this, 1500);
+                setImageBackground(mCurrentPosition);
+                mImageSwitcher.postDelayed(this, 5000);
             }
-        }, 1500);
+        }, 5000);
         mImageSwitcher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //向后台查询体检推荐具体信息
-                String examId = examInfoForCarousels.get(curPos).getExamID();
+                String examId = examInfoForCarousels.get(mCurrentPosition).getExamID();
                 /*BaseEntity baseEntity = new BaseEntity();
                 baseEntity.setBusinessType("0008");*/
                 //sendJson(JsonUtil.requestMedicalExamDetailString(Integer.parseInt(examId)));
@@ -337,7 +378,7 @@ public class MainActivity extends BaseActivity {
                 Intent intent = new Intent(MainActivity.this, MedicalExamDetailActivity.class);
                 intent.putExtra(Constant.WEBSOCKET_EXAM_ID,Integer.parseInt(examId));
                 startActivity(intent);
-                //跳转到体检推荐详情界面****************************************************************
+                //跳转到体检推荐详情界面********************
 
             }
         });
@@ -349,21 +390,19 @@ public class MainActivity extends BaseActivity {
      */
     public void setDefaultImageSwitcher(){
         // 图片 index 布局的生成
-
-        curPos=0;
-        mImageSwitcher.setImageResource(imgIds[curPos]);
-        setImageBackground(curPos);
+        mImageSwitcher.setImageResource(imgIds[mCurrentPosition]);
+        setImageBackground(mCurrentPosition);
         // 按时切换图片
         mImageSwitcher.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(curPos==imgIds.length-1){
-                    curPos=0;
+                if(mCurrentPosition >= imgIds.length-1){
+                    mCurrentPosition = 0;
                 }else{
-                    curPos++;
+                    mCurrentPosition++;
                 }
-                mImageSwitcher.setImageResource(imgIds[curPos]);
-                setImageBackground(curPos);
+                mImageSwitcher.setImageResource(imgIds[mCurrentPosition]);
+                setImageBackground(mCurrentPosition);
                 mImageSwitcher.postDelayed(this, 1500);
             }
         }, 1500);

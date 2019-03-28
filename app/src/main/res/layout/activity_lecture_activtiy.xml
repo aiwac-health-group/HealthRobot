@@ -45,7 +45,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/bottombar_home"
+            android:id="@+id/ll_video"
             android:descendantFocusability= "blocksDescendants"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
 
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/bottombar_news"
+            android:id="@+id/ll_audio"
             android:descendantFocusability= "blocksDescendants"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/bottombar_shop"
+            android:id="@+id/ll_article"
             android:descendantFocusability= "blocksDescendants"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

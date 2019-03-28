@@ -49,7 +49,7 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp">
+                            >
 
                             <LinearLayout
                                 android:id="@+id/viewGroup"
@@ -75,29 +75,30 @@
                 >
 
                 <!--语音挂号-->
-                <ImageButton
-                    android:id="@+id/voice_register"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="80dp"
-                    android:layout_marginRight="40dp"
-                    android:layout_weight="1"
-                    android:background="@color/white"
-                    android:src="@drawable/register"
 
-
-                    />
-                <!--24小时在线问诊-->
 
                 <ImageButton
                     android:id="@+id/btn_voicechat"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.5"
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/register"
+                    android:background="@color/white"
+                    android:scaleType="fitCenter"
+                    />
+                <!--24小时在线问诊-->
+                <ImageButton
+                    android:id="@+id/voice_register"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/consult24h"
                     android:background="@color/white"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/consult24h"
                     />
                 <!--健康讲座-->
                 <ImageButton
@@ -109,6 +110,7 @@
                     android:layout_marginRight="80dp"
                     android:src="@drawable/lecture"
                     android:background="@color/white"
+                    android:scaleType="fitCenter"
                     />
 
 
@@ -119,7 +121,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 >
 
                 <!-- android:text="智能测肤"-->
@@ -132,19 +134,21 @@
                     android:layout_marginRight="40dp"
                     android:src="@drawable/skin"
                     android:background="@color/white"
-
+                    android:scaleType="fitCenter"
                     />
 
                 <!-- android:text="体检推荐"-->
+
+
                 <ImageButton
                     android:id="@+id/btn_medical_exam_recommand"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.5"
+                    android:layout_weight="1"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:src="@drawable/recommendation"
-
+                    android:scaleType="fitCenter"
                     android:background="@color/white"
                     />
 
@@ -158,7 +162,7 @@
                     android:layout_marginRight="80dp"
                     android:src="@drawable/personal_center"
                     android:background="@color/white"
-
+                    android:scaleType="fitCenter"
                     />
             </LinearLayout>
 

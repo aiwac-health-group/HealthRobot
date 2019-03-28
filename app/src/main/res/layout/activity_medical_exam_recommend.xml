@@ -18,30 +18,138 @@
             android:text="体检套餐" />
     </RelativeLayout>
 
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <!-- BaseHttpRecyclerXXX的子类布局layout中，SmartRefreshLayout和RecyclerView必须有，且它们的id必须按以下写法 -->
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        style="@style/match_match"
-        android:id="@id/srlBaseHttpList"
-        app:srlEnableLoadmore="true"
-        app:srlEnablePreviewInEditMode="true"
-        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
-            style="@style/match_wrap"
-            />
-        <ListView
-            android:id="@id/lvBaseList"
-            style="@style/lv"
-            />
+            <LinearLayout
+                android:id="@+id/ll_stronger_exam"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:orientation="horizontal"
+                android:background="#ffffff"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone">
 
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-            style="@style/match_wrap"
-            />
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+                <LinearLayout
+                    android:id="@+id/ll_stronger_exam1"
+                    android:layout_width="0dp"
+                    android:layout_height="300dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
 
+                    <ImageView
+                        android:id="@+id/iv_exam_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"/>
 
+                    <TextView
+                        android:id="@+id/tv_exam_name1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/tv_exam_desc1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_stronger_exam2"
+                    android:layout_width="0dp"
+                    android:layout_height="300dp"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_exam_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"/>
+
+                    <TextView
+                        android:id="@+id/tv_exam_name2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/tv_exam_desc2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_stronger_exam3"
+                    android:layout_width="0dp"
+                    android:layout_height="300dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_exam_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"/>
+
+                    <TextView
+                        android:id="@+id/tv_exam_name3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/tv_exam_desc3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+
+            </LinearLayout>
+            <!-- BaseHttpRecyclerXXX的子类布局layout中，SmartRefreshLayout和RecyclerView必须有，且它们的id必须按以下写法 -->
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                style="@style/match_match"
+                android:id="@id/srlBaseHttpList"
+                app:srlEnableLoadmore="true"
+                app:srlEnablePreviewInEditMode="true"
+                >
+
+                <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                    style="@style/match_wrap"
+                    />
+
+                <ListView
+                    android:id="@id/lvBaseList"
+                    android:background="#ffffff"
+                    style="@style/lv"
+                    />
+
+                <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                    style="@style/match_wrap"
+                    />
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

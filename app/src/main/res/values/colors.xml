@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#4db8c4</color>
+    <!--<color name="colorPrimary">#4db8c4</color>
     <color name="colorPrimaryDark">#328e9c</color>
-    <color name="colorAccent">#4db8c4</color>
+    <color name="colorAccent">#4db8c4</color>-->
+
+    <color name="colorPrimary">#2193b0</color>
+    <color name="colorPrimaryDark">#2193b0</color>
+    <color name="colorAccent">#6dd5ed</color>
+
     <color name="colorWindowBackground">#FFFFFF</color>
 
     <color name="colorText">#444444</color>
@@ -15,6 +20,10 @@
     <color name="blue">#419DE4</color>
 
     <color name="theme">#4db8c4</color>
+    <color name="new_theme">#229EBE</color>
+    <color name="text_color">#F17651</color>
+
+
     <color name="colorLightBlue">#dbf1f3</color>
     <color name="colorBackivory">#f1f7f8</color>
 

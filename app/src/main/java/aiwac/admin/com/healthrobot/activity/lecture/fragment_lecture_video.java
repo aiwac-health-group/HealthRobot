@@ -32,7 +32,6 @@ import aiwac.admin.com.healthrobot.utils.JsonUtil;
 
 public class fragment_lecture_video extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
 
 
@@ -182,14 +181,14 @@ public class fragment_lecture_video extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup viewGroup) {
             View view = convertView;
-            if (view == null)
-
+            if (view == null) {
                 view = View.inflate(this.mContext, R.layout.lecture_audi_video_gridview_item, null);
+            }
 
             TextView lecture_name = view.findViewById(R.id.lecture_gridview_name);
             ImageView cover_image = view.findViewById(R.id.lecture_gridview_cover_image);
-
-            LectureCourse lectureCourse = this.lectureCourses.get(position);  //取出一节讲座的信息
+            //取出一节讲座的信息
+            LectureCourse lectureCourse = this.lectureCourses.get(position);
 
             lecture_name.setText(lectureCourse.getName());
             //集成需要加入

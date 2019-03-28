@@ -10,8 +10,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,8 +35,8 @@ public class LectureAudioDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        /*requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
         setContentView(R.layout.activity_lecture_av_details);
 
 
@@ -98,15 +96,10 @@ public class LectureAudioDetailActivity extends AppCompatActivity {
                 {
                     buttonplay_pause.setSelected(true);
 
-                    if ( link.equals("noLink" ) )
-                    {
+                    if ( link.equals("noLink" )) {
                         Toast.makeText(LectureAudioDetailActivity.this, "抱歉，暂无相关资源", Toast.LENGTH_SHORT).show();
-
-                    }
-                    else
-                    {
+                    }else {
                         Intent intent = new Intent(LectureAudioDetailActivity.this, LectureAudioPlayActivity.class);
-
 //                    //测试
 //                    link  = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
 //                    //测试

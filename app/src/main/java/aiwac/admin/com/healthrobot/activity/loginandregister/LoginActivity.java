@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -104,9 +105,9 @@ public class LoginActivity extends AppCompatActivity {
                                 SharedPreferences pref = getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE);
                                 Boolean isRegister = pref.getBoolean(Constant.USER_DATA_FIELD_REGISTER, false);
                                 if(isRegister){
-                                    ActivityUtil.skipActivity(LoginActivity.this, MainActivity.class);
+                                    ActivityUtil.skipActivity(LoginActivity.this, MainActivity.class,true);
                                 }else{
-                                    ActivityUtil.skipActivity(LoginActivity.this, RegisterActivity.class);
+                                    ActivityUtil.skipActivity(LoginActivity.this, RegisterActivity.class,true);
                                 }
 
                             } else {
@@ -135,6 +136,11 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        //隐藏标题栏
+        ActionBar actionbar = getSupportActionBar();
+        if (actionbar != null) {
+            actionbar.hide();
+        }
 
         numberEdit = (AutoCompleteTextView) findViewById(R.id.register_number_edit);
         checkcodeEidt = (EditText) findViewById(R.id.register_checkcode_edit);
@@ -222,6 +228,7 @@ public class LoginActivity extends AppCompatActivity {
                                     if(errorCode.equals(Constant.MESSAGE_ERRORCODE_2000)){
                                         String token =JsonUtil.parseToken(resultJson);
                                         SharedPreferences.Editor editor = getSharedPreferences(Constant.DB_USER_TABLENAME, MODE_PRIVATE).edit();
+                                        editor.putString(Constant.USER_DATA_FIELD_NUMBER, phoneNumber);
                                         editor.putString(Constant.USER_DATA_FIELD_TOKEN, token);
                                         editor.putLong(Constant.USER_DATA_FIELD_TOKENTIME, System.currentTimeMillis());
                                         editor.apply();
@@ -291,27 +298,6 @@ public class LoginActivity extends AppCompatActivity {
 
             ActivityUtil.skipActivity(LoginActivity.this, ConnectWifiActivity.class,true);
             finish();
-
-
-            /*if(!number.equals("")){
-                UserData.getUserData().setNumber(number);
-                if(isConnectWifi){
-                    //开启服务，创建websocket连接
-                    Intent intent = new Intent(this, WebSocketService.class);
-                    intent.putExtra(Constant.SERVICE_TIMER_TYPE, Constant.SERVICE_TIMER_TYPE_WEBSOCKET);
-                    startService(intent);
-                }else{
-                    ActivityUtil.skipActivity(LoginActivity.this, ConnectWifiActivity.class,true);
-                    finish();
-                }
-
-                if(isRegister){
-                    ActivityUtil.skipActivity(LoginActivity.this, MainActivity.class,true);
-                }else{
-                    ActivityUtil.skipActivity(LoginActivity.this, RegisterActivity.class,true);
-                }
-
-            }*/
         }
 
     }
