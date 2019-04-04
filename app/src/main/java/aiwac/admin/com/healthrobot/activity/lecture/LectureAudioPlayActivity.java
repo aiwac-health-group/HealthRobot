@@ -26,7 +26,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import aiwac.admin.com.healthrobot.R;
-import aiwac.admin.com.healthrobot.ui.VisualizerView;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.Vitamio;
 import io.vov.vitamio.utils.ScreenResolution;
@@ -84,7 +83,6 @@ public class LectureAudioPlayActivity extends AppCompatActivity implements View.
 
     private android.media.MediaPlayer mPlayer;
     private android.media.MediaPlayer mSilentPlayer;  /* to avoid tunnel player issue */
-    private VisualizerView mVisualizerView;
 
     private Handler mHandler = new Handler() {
         @Override
