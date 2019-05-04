@@ -4,7 +4,8 @@
 
     <RelativeLayout style="@style/topbar_bg" >
 
-        <ImageButton style="@style/topbar_return_img" />
+        <ImageButton style="@style/topbar_return_img"
+            android:id="@+id/btn_back"/>
 
         <TextView
             style="@style/topbar_title"

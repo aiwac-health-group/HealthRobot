@@ -14,7 +14,14 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import aiwac.admin.com.healthrobot.R;
+import aiwac.admin.com.healthrobot.bean.MessageEvent;
+import aiwac.admin.com.healthrobot.medicalexam.model.MedicalExam;
+import aiwac.admin.com.healthrobot.utils.JsonUtil;
 
 import java.util.List;
 
@@ -36,6 +43,7 @@ public class SkinMainActivity extends BaseActivity implements HomeFragment.Callb
         }
         setView();
         addFragment(new HomeFragment());
+        EventBus.getDefault().register(this);
     }
 
     public void selected(){
@@ -145,5 +153,20 @@ public class SkinMainActivity extends BaseActivity implements HomeFragment.Callb
 
         });
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(MessageEvent messageEvent) {
+        if(messageEvent.getTo().equals("SkinMainActivity")){
+            if(messageEvent.getMessage().equals("back")){
+                finish();
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -42,7 +42,6 @@ public class MedicalExamRecommendActivity extends BaseHttpListActivity<MedicalEx
         super.onCreate(savedInstanceState);
 
 
-
         setContentView(R.layout.activity_medical_exam_recommend);
 
 

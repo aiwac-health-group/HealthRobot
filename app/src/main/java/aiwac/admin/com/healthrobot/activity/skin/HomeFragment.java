@@ -8,13 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ViewSwitcher.ViewFactory;
 
+import org.greenrobot.eventbus.EventBus;
+
 import aiwac.admin.com.healthrobot.R;
+import aiwac.admin.com.healthrobot.bean.MessageEvent;
 import zuo.biao.library.base.BaseFragment;
 
 public class HomeFragment extends BaseFragment implements ViewFactory{
@@ -26,7 +30,7 @@ public class HomeFragment extends BaseFragment implements ViewFactory{
     private int curPos;
     private LinearLayout linearLayout;
     private ImageView[] tips;
-
+    private ImageButton btn_back;
 
     private LinearLayout testBtn;
 
@@ -122,6 +126,16 @@ public class HomeFragment extends BaseFragment implements ViewFactory{
         if (ori == mConfiguration.ORIENTATION_LANDSCAPE) {
 
         }
+
+        //返回键按钮
+        btn_back=view.findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MessageEvent messageEvent = new MessageEvent("SkinMainActivity", "back");
+                EventBus.getDefault().post(messageEvent);
+            }
+        });
     }
     private void setImageSwitcher(){
         // 图片 index 布局的生成
