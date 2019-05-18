@@ -30,12 +30,15 @@ public class NotificationView extends BaseView<Notification> implements View.OnC
         super.bindView(data_!=null?data_:new Notification());
         if(data_.getMessageType()==1){//1是健康周报  2是挂号信息
             //textViewNotification.setText("您的健康周报已经生成啦");
-            textViewNotification.setText("您的健康周报已经生成啦 Type:"+data_.getMessageType()+"  messageid:"+data_.getMessageID()+"  notiID:"+data_.getNotificationId()+" isread:"+data_.getIsRead());
+            //textViewNotification.setText("您的健康周报已经生成啦 Type:"+data_.getMessageType()+"  messageid:"+data_.getMessageID()+"  notiID:"+data_.getNotificationId()+" isread:"+data_.getIsRead());
+            textViewNotification.setText("您的健康周报已生成，点击查看");
         }else if(data_.getMessageType()==2){
             //textViewNotification.setText("您的挂号信息更新啦");
-            textViewNotification.setText("您的挂号信息更新啦 Type"+data_.getMessageType()+"  messageid:"+data_.getMessageID()+"  notiID:"+data_.getNotificationId()+" isread:"+data_.getIsRead());
+            //textViewNotification.setText("您的挂号信息更新啦 Type"+data_.getMessageType()+"  messageid:"+data_.getMessageID()+"  notiID:"+data_.getNotificationId()+" isread:"+data_.getIsRead());
+            textViewNotification.setText("您的挂号信息已更新，点击查看");
         }else if(data_.getMessageType()==0){
-            textViewNotification.setText("体检推荐（供测试查询） Type"+data_.getMessageType()+"  messageid:"+data_.getMessageID()+"  notiID:"+data_.getNotificationId()+" isread:"+data_.getIsRead());
+            //textViewNotification.setText("体检推荐（供测试查询） Type"+data_.getMessageType()+"  messageid:"+data_.getMessageID()+"  notiID:"+data_.getNotificationId()+" isread:"+data_.getIsRead());
+            textViewNotification.setText("新的体检推荐发布了，点击查看");
         }else{
             textViewNotification.setText("其他消息：Type"+data_.getMessageType()+"  messageid:"+data_.getMessageID()+"  notiID:"+data_.getNotificationId()+" isread:"+data_.getIsRead());
         }

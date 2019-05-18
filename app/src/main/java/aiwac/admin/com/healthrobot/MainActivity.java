@@ -144,26 +144,7 @@ public class MainActivity extends BaseActivity {
         findViewById(R.id.voice_register).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, VoiceRegisterActivity.class);
-                startActivity(intent);
-            }
-        });
 
-        //健康讲座
-        findViewById(R.id.start_lecture).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LectureActivtiy.class);
-                startActivity(intent);
-            }
-        });
-
-
-        //在线问诊
-        btn_voicechat = findViewById(R.id.btn_voicechat);
-        btn_voicechat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 new AlertDialog.Builder(MainActivity.this).setCancelable(true)
                         .setTitle("即将与医生建立语音通话?")
                         .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -183,7 +164,26 @@ public class MainActivity extends BaseActivity {
                             }
                         }
                 ).show();
+            }
+        });
 
+        //健康讲座
+        findViewById(R.id.start_lecture).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LectureActivtiy.class);
+                startActivity(intent);
+            }
+        });
+
+
+        //在线问诊
+        btn_voicechat = findViewById(R.id.btn_voicechat);
+        btn_voicechat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, VoiceRegisterActivity.class);
+                startActivity(intent);
             }
         });
 

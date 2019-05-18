@@ -11,11 +11,8 @@
             <TextView
                 style="@style/topbar_title"
                 android:layout_centerHorizontal="true"
-                android:text="关于" />
+                android:text="关于应用" />
 
-            <Button
-                style="@style/topbar_right_btn"
-                android:text="博客" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -38,7 +35,7 @@
                         android:layout_marginBottom="30dp"
                         android:text="康小智健康机器人" />
 
-                    <LinearLayout
+                   <!-- <LinearLayout
                         android:id="@+id/llAboutMainTabActivity"
                         style="@style/content_item_white" >
 
@@ -193,12 +190,12 @@
                         android:layout_marginLeft="30dp"
                         android:layout_marginRight="30dp"
                         android:background="@color/white" />
-
+-->
                     <TextView
                         style="@style/text_middle"
                         android:layout_marginBottom="180dp"
                         android:lineSpacingMultiplier="1.2"
-                        android:text="扫一扫二维码 下载ZBLibrary" />
+                        android:text="V 1.0" />
                 </LinearLayout>
             </ScrollView>
         </RelativeLayout>
